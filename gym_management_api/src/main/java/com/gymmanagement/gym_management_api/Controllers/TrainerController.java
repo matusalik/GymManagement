@@ -5,6 +5,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/trainers")
-public class TrainersController {
+public class TrainerController {
     
 }
