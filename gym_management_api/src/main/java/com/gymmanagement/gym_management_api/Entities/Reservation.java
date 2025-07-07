@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 import com.gymmanagement.gym_management_api.Enums.ReservationStatus;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -21,25 +23,26 @@ import lombok.Setter;
 public class Reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer reservationId;
+    private Integer reservationId;
 
     @ManyToOne
     @JoinColumn(name = "client_id")
-    Client client;
+    private Client client;
 
     @ManyToOne
     @JoinColumn(name = "equipment_id")
-    Equipment equipment;
+    private Equipment equipment;
 
     @ManyToOne
     @JoinColumn(name = "group_class_id")
-    GroupClass groupClass;
+    private GroupClass groupClass;
 
     @ManyToOne
     @JoinColumn(name = "trainer_id")
-    Trainer trainer;
+    private Trainer trainer;
 
-    LocalDateTime date_time;
+    private LocalDateTime date_time;
 
-    ReservationStatus reservation_status;
+    @Enumerated(EnumType.STRING)
+    private ReservationStatus reservation_status;
 }

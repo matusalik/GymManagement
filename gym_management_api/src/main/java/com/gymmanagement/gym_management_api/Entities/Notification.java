@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import com.gymmanagement.gym_management_api.Enums.NotificationStatus;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -20,17 +22,18 @@ import lombok.Setter;
 public class Notification {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer notificationId;
+    private Integer notificationId;
 
     @ManyToOne
     @JoinColumn(name = "client_id")
-    Client client;
+    private Client client;
 
-    LocalDate sent_date;
+    private LocalDate sent_date;
 
-    String subject;
+    private String subject;
 
-    String content;
+    private String content;
 
-    NotificationStatus status;
+    @Enumerated(EnumType.STRING)
+    private NotificationStatus status;
 }

@@ -4,9 +4,13 @@ import java.time.LocalTime;
 import com.gymmanagement.gym_management_api.Enums.DayOfTheWeek;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,13 +22,16 @@ import lombok.Setter;
 public class TrainerAvailability {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer trainerAvailabilityId;
+    private Integer trainerAvailabilityId;
 
-    Trainer trainer;
+    @ManyToOne
+    @JoinColumn(name = "trainer_id")
+    private Trainer trainer;
 
-    DayOfTheWeek day_of_the_week;
+    @Enumerated(EnumType.STRING)
+    private DayOfTheWeek day_of_the_week;
 
-    LocalTime start_time;
+    private LocalTime start_time;
 
-    LocalTime end_time;
+    private LocalTime end_time;
 }

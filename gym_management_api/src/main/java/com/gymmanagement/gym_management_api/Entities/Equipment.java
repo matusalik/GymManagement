@@ -5,6 +5,8 @@ import com.gymmanagement.gym_management_api.Enums.EquipmentLocation;
 import com.gymmanagement.gym_management_api.Enums.EquipmentType;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -19,15 +21,19 @@ import lombok.Setter;
 public class Equipment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer equipmentId;
+    private Integer equipmentId;
 
-    String name;
+    private String name;
 
-    EquipmentType equipment_type;
+    @Enumerated(EnumType.STRING)
+    private EquipmentType equipment_type;
 
-    EquipmentLocation equipment_location;
+    @Enumerated(EnumType.STRING)
+    private EquipmentLocation equipment_location;
 
-    EquipmentCondition equipment_condition;
+    @Enumerated(EnumType.STRING)
+    private EquipmentCondition equipment_condition;
 
-    EquipmentAvailability equipment_availability;
+    @Enumerated(EnumType.STRING)
+    private EquipmentAvailability equipment_availability;
 }

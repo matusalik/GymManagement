@@ -14,9 +14,9 @@ import lombok.Setter;
 public class TrainingGoal {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer trainingGoalId;
+    private Integer trainingGoalId;
 
-    String name;
+    private String name;
 
-    String description;
+    private String description;
 }

@@ -5,6 +5,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,15 +18,19 @@ import lombok.Setter;
 public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer reviewId;
+    private Integer reviewId;
 
-    Client client;
+    @ManyToOne
+    @JoinColumn(name = "client_id")
+    private Client client;
 
-    Trainer trainer;
+    @ManyToOne
+    @JoinColumn(name = "trainer_id")
+    private Trainer trainer;
 
-    Integer rating;
+    private Integer rating;
 
-    String comment;
+    private String comment;
 
-    LocalDate date;
+    private LocalDate date;
 }

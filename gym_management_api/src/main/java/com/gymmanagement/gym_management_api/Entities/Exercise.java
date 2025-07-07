@@ -2,6 +2,8 @@ package com.gymmanagement.gym_management_api.Entities;
 import com.gymmanagement.gym_management_api.Enums.ExerciseCategory;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -19,17 +21,18 @@ import lombok.Setter;
 public class Exercise {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer exerciseId;
+    private Integer exerciseId;
 
-    String name;
+    private String name;
 
-    String description;
+    private String description;
 
-    ExerciseCategory exercise_category;
+    @Enumerated(EnumType.STRING)
+    private ExerciseCategory exercise_category;
     
     @ManyToOne
     @JoinColumn(name = "equipment_id")
-    Equipment equipment;
+    private Equipment equipment;
 
-    String instructions;
+    private String instructions;
 }

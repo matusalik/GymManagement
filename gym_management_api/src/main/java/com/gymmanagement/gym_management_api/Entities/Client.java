@@ -3,8 +3,6 @@ import java.time.LocalDate;
 
 import com.gymmanagement.gym_management_api.Enums.UserStatus;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,25 +12,22 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 @Entity
-public class Client {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer idClient;
+public class Client extends User{
+    private LocalDate date_of_birth;
 
-    User user;
+    private String adress;
 
-    LocalDate date_of_birth;
+    private LocalDate registration_date;
 
-    String adress;
-
-    LocalDate registration_date;
-
-    UserStatus status;
+    @Enumerated(EnumType.STRING)
+    private UserStatus status;
 
     @ManyToOne
     @JoinColumn(name = "membership_id")
-    Membership membership;
+    private Membership membership;
 
-    TrainingGoal training_goal;
+    @ManyToOne
+    @JoinColumn(name = "training_goal_id")
+    private TrainingGoal training_goal;
 }
 

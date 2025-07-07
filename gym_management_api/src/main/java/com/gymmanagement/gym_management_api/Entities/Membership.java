@@ -14,13 +14,13 @@ import lombok.Setter;
 public class Membership {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer membershipId;
+    private Integer membershipId;
 
-    String name;
+    private String name;
 
-    Double price;
+    private Double price;
 
-    Integer duration;
+    private Integer duration;
 
-    String description;
+    private String description;
 }

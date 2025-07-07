@@ -14,9 +14,9 @@ import lombok.Setter;
 public class Specialization {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer specializationId;
+    private Integer specializationId;
 
-    String name;
+    private String name;
 
-    String description;
+    private String description;
 }

@@ -7,6 +7,8 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -15,23 +17,24 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer userId;
+    private Integer userId;
 
-    String username;
+    private String username;
 
-    String password;
+    private String password;
 
-    String first_name;
+    private String first_name;
 
-    String last_name;
+    private String last_name;
 
-    String phone;
+    private String phone;
 
-    String email;
+    private String email;
 
     @Enumerated(EnumType.STRING)
-    UserType user_type;
+    private UserType user_type;
 }

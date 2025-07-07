@@ -22,15 +22,15 @@ import lombok.Setter;
 public class GroupClass {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer groupClassId;
+    private Integer groupClassId;
 
-    String name;
+    private String name;
 
-    String description;
+    private String description;
 
     @ManyToOne
     @JoinColumn(name = "trainer_id")
-    Trainer trainer;
+    private Trainer trainer;
 
     @ManyToMany
     @JoinTable(
@@ -38,9 +38,9 @@ public class GroupClass {
         joinColumns = @JoinColumn(name = "group_class_id"),
         inverseJoinColumns = @JoinColumn(name = "client_id")
     )
-    List<Client>client_list;
+    private List<Client>client_list;
 
-    LocalDateTime date_time;
+    private LocalDateTime date_time;
 
-    Integer max_participants;
+    private Integer max_participants;
 }
