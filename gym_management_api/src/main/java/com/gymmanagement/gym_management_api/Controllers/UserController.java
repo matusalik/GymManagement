@@ -1,16 +1,15 @@
 package com.gymmanagement.gym_management_api.Controllers;
 
 import com.gymmanagement.gym_management_api.Common.Tags;
-import com.gymmanagement.gym_management_api.DTO.UserCreateDTO;
+import com.gymmanagement.gym_management_api.DTO.User.UserCreateDTO;
 import com.gymmanagement.gym_management_api.Entities.User;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.gymmanagement.gym_management_api.DTO.UserDTO;
+import com.gymmanagement.gym_management_api.DTO.User.UserDTO;
 import com.gymmanagement.gym_management_api.Services.UserService;
 
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor

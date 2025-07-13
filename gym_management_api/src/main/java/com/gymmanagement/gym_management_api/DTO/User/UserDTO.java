@@ -1,4 +1,4 @@
-package com.gymmanagement.gym_management_api.DTO;
+package com.gymmanagement.gym_management_api.DTO.User;
 
 import com.gymmanagement.gym_management_api.Enums.UserType;
 import lombok.Getter;

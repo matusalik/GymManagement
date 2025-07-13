@@ -1,4 +1,4 @@
-package com.gymmanagement.gym_management_api.DTO;
+package com.gymmanagement.gym_management_api.DTO.User;
 
 import com.gymmanagement.gym_management_api.Enums.UserType;
 import lombok.Getter;
@@ -8,6 +8,7 @@ import lombok.Setter;
 @Setter
 public class UserCreateDTO {
     private String username;
+    private String password;
     private String first_name;
     private String last_name;
     private String phone;

@@ -1,15 +1,8 @@
 package com.gymmanagement.gym_management_api.Entities;
 import com.gymmanagement.gym_management_api.Enums.UserType;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Inheritance;
-import jakarta.persistence.InheritanceType;
-import jakarta.persistence.Table;
+import com.gymmanagement.gym_management_api.Security.Password;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -27,7 +20,8 @@ public class User {
 
     private String username;
 
-    private String password;
+    @Column(nullable = false)
+    private Password password;
 
     private String first_name;
 
@@ -39,4 +33,12 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     private UserType user_type;
+
+    public boolean checkPassword(String input){
+        return password.matches(input);
+    }
+
+    public String getPasswordHash(){
+        return password.getHashed();
+    }
 }

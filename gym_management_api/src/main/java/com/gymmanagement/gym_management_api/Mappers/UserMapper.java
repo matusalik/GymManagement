@@ -1,9 +1,9 @@
 package com.gymmanagement.gym_management_api.Mappers;
 
-import com.gymmanagement.gym_management_api.DTO.UserCreateDTO;
-import com.gymmanagement.gym_management_api.DTO.UserDTO;
+import com.gymmanagement.gym_management_api.DTO.User.UserCreateDTO;
+import com.gymmanagement.gym_management_api.DTO.User.UserDTO;
 import com.gymmanagement.gym_management_api.Entities.User;
-import com.gymmanagement.gym_management_api.Enums.UserType;
+import com.gymmanagement.gym_management_api.Security.Password;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +46,7 @@ public class UserMapper {
     public static User toEntity(UserCreateDTO dto){
         User user = new User();
         user.setUsername(dto.getUsername());
+        user.setPassword(Password.ofRaw(dto.getPassword()));
         user.setFirst_name(dto.getFirst_name());
         user.setLast_name(dto.getLast_name());
         user.setPhone(dto.getPhone());

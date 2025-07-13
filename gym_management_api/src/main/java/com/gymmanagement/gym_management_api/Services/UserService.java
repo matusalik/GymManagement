@@ -1,9 +1,9 @@
 package com.gymmanagement.gym_management_api.Services;
 
-import com.gymmanagement.gym_management_api.DTO.UserCreateDTO;
+import com.gymmanagement.gym_management_api.DTO.User.UserCreateDTO;
 import org.springframework.stereotype.Service;
 
-import com.gymmanagement.gym_management_api.DTO.UserDTO;
+import com.gymmanagement.gym_management_api.DTO.User.UserDTO;
 import com.gymmanagement.gym_management_api.Entities.User;
 import com.gymmanagement.gym_management_api.Mappers.UserMapper;
 import com.gymmanagement.gym_management_api.Repositories.UserRepository;
