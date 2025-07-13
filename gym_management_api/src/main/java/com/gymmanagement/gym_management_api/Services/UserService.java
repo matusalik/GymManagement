@@ -1,5 +1,6 @@
 package com.gymmanagement.gym_management_api.Services;
 
+import com.gymmanagement.gym_management_api.DTO.UserCreateDTO;
 import org.springframework.stereotype.Service;
 
 import com.gymmanagement.gym_management_api.DTO.UserDTO;
@@ -15,9 +16,21 @@ import lombok.RequiredArgsConstructor;
 public class UserService {
     private final UserRepository userRepository;
 
+    //-----GET-----//
+
     public UserDTO getUserById(Integer id){
         User user = userRepository.findById(id)
             .orElseThrow(() -> new EntityNotFoundException("User with id: " + id + " not found."));
-        return UserMapper.toDTO(user);
+        return UserMapper.toDetailedDTO(user);
+    }
+
+    public Iterable<UserDTO>getUsers(){
+        return UserMapper.listToDTO(userRepository.findAll());
+    }
+
+    //----POST----//
+
+    public User addUser(UserCreateDTO dto){
+        return userRepository.save(UserMapper.toEntity(dto));
     }
 }
