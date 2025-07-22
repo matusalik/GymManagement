@@ -1,10 +1,32 @@
 package com.gymmanagement.gym_management_api.Controllers;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.gymmanagement.gym_management_api.Common.Tags;
+import com.gymmanagement.gym_management_api.DTO.Trainer.TrainerCreateDTO;
+import com.gymmanagement.gym_management_api.DTO.Trainer.TrainerDTO;
+import com.gymmanagement.gym_management_api.Mappers.TrainerMapper;
+import com.gymmanagement.gym_management_api.Services.TrainerService;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.*;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/trainers")
+@Tag(name = Tags.TrainersTag)
 public class TrainerController {
-    
+    private final TrainerService trainerService;
+
+    //-----GET-----//
+
+    @GetMapping
+    public @ResponseBody Iterable<TrainerDTO>getTrainers(){
+        return trainerService.getTrainers();
+    }
+
+    //----POST----//
+
+    @PostMapping
+    public TrainerDTO addTrainer(@RequestBody TrainerCreateDTO dto){
+        return TrainerMapper.toDto(trainerService.addTrainer(dto));
+    }
 }

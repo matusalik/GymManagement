@@ -2,12 +2,7 @@ package com.gymmanagement.gym_management_api.Entities;
 import java.util.List;
 import com.gymmanagement.gym_management_api.Enums.UserStatus;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -30,5 +25,6 @@ public class Trainer extends User{
 
     private String bio;
 
+    @Enumerated(EnumType.STRING)
     private UserStatus status;
 }

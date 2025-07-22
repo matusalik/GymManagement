@@ -14,7 +14,6 @@ import com.gymmanagement.gym_management_api.Repositories.TrainingGoalRepository;
 import com.gymmanagement.gym_management_api.Repositories.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
