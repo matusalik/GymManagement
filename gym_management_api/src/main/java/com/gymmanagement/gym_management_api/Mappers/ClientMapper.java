@@ -1,6 +1,7 @@
 package com.gymmanagement.gym_management_api.Mappers;
 
 import com.gymmanagement.gym_management_api.DTO.Client.ClientCreateDTO;
+import com.gymmanagement.gym_management_api.DTO.Client.ClientDetailedDTO;
 import com.gymmanagement.gym_management_api.Entities.Client;
 import com.gymmanagement.gym_management_api.DTO.Client.ClientDTO;
 import com.gymmanagement.gym_management_api.Enums.UserType;
@@ -18,12 +19,8 @@ public class ClientMapper {
         dto.setPhone(client.getPhone());
         dto.setEmail(client.getEmail());
         dto.setUser_type(UserType.CLIENT);
-        dto.setDate_of_birth(client.getDate_of_birth());
         dto.setAddress(client.getAddress());
-        dto.setRegistration_date(client.getRegistration_date());
         dto.setStatus(client.getStatus());
-        dto.setMembership_id(client.getMembership().getMembershipId());
-        dto.setTraining_goal_id(client.getTraining_goal().getTrainingGoalId());
         return dto;
     }
 
@@ -41,6 +38,25 @@ public class ClientMapper {
         client.setRegistration_date(dto.getRegistration_date());
         client.setStatus(dto.getStatus());
         return client;
+    }
+
+    public static ClientDetailedDTO toDetailedDto(Client client){
+        ClientDetailedDTO dto = new ClientDetailedDTO();
+        dto.setUser_id(client.getUserId());
+        dto.setUsername(client.getUsername());
+        dto.setPassword(client.getPasswordHash());
+        dto.setFirst_name(client.getFirst_name());
+        dto.setLast_name(client.getLast_name());
+        dto.setPhone(client.getPhone());
+        dto.setEmail(client.getEmail());
+        dto.setUser_type(UserType.CLIENT);
+        dto.setDate_of_birth(client.getDate_of_birth());
+        dto.setAddress(client.getAddress());
+        dto.setRegistration_date(client.getRegistration_date());
+        dto.setStatus(client.getStatus());
+        dto.setMembership_id(client.getMembership().getMembershipId());
+        dto.setTraining_goal_id(client.getTraining_goal().getTrainingGoalId());
+        return dto;
     }
 
     public static Iterable<ClientDTO> listToDto(Iterable<Client>clients){

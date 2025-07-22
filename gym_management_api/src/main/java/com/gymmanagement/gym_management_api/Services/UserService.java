@@ -1,6 +1,7 @@
 package com.gymmanagement.gym_management_api.Services;
 
 import com.gymmanagement.gym_management_api.DTO.User.UserCreateDTO;
+import com.gymmanagement.gym_management_api.DTO.User.UserDetailedDTO;
 import org.springframework.stereotype.Service;
 
 import com.gymmanagement.gym_management_api.DTO.User.UserDTO;
@@ -18,13 +19,13 @@ public class UserService {
 
     //-----GET-----//
 
-    public UserCreateDTO getUserById(Integer id){
+    public UserDetailedDTO getUserById(Integer id){
         User user = userRepository.findById(id)
             .orElseThrow(() -> new EntityNotFoundException("User with id: " + id + " not found."));
         return UserMapper.toDetailedDTO(user);
     }
 
-    public Iterable<UserCreateDTO>getUsers(){
+    public Iterable<UserDTO>getUsers(){
         return UserMapper.listToDTO(userRepository.findAll());
     }
 }

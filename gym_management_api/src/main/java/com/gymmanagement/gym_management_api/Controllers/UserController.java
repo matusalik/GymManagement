@@ -2,6 +2,7 @@ package com.gymmanagement.gym_management_api.Controllers;
 
 import com.gymmanagement.gym_management_api.Common.Tags;
 import com.gymmanagement.gym_management_api.DTO.User.UserCreateDTO;
+import com.gymmanagement.gym_management_api.DTO.User.UserDetailedDTO;
 import com.gymmanagement.gym_management_api.Entities.User;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
@@ -22,13 +23,13 @@ public class UserController {
     //-----GET-----//
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserCreateDTO> getUserById(@PathVariable Integer id){
-        UserCreateDTO userDTO = userService.getUserById(id);
+    public ResponseEntity<UserDetailedDTO> getUserById(@PathVariable Integer id){
+        UserDetailedDTO userDTO = userService.getUserById(id);
         return ResponseEntity.ok(userDTO);
     }
 
     @GetMapping
-    public @ResponseBody Iterable<UserCreateDTO>getUsers(){
+    public @ResponseBody Iterable<UserDTO>getUsers(){
         return userService.getUsers();
     }
 }

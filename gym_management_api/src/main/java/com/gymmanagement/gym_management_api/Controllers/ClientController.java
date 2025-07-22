@@ -3,11 +3,14 @@ package com.gymmanagement.gym_management_api.Controllers;
 import com.gymmanagement.gym_management_api.Common.Tags;
 import com.gymmanagement.gym_management_api.DTO.Client.ClientCreateDTO;
 import com.gymmanagement.gym_management_api.DTO.Client.ClientDTO;
+import com.gymmanagement.gym_management_api.DTO.Client.ClientDetailedDTO;
 import com.gymmanagement.gym_management_api.Mappers.ClientMapper;
 import com.gymmanagement.gym_management_api.Mappers.UserMapper;
 import com.gymmanagement.gym_management_api.Services.ClientService;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
@@ -17,13 +20,31 @@ import org.springframework.web.bind.annotation.*;
 public class ClientController {
     private final ClientService clientService;
 
+    //-----GET------//
+
     @GetMapping
-    public @ResponseBody Iterable<ClientDTO>getClients(){
+    public @ResponseBody Iterable<ClientDTO> getClients() {
         return clientService.getClients();
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<ClientDetailedDTO> getClientById(@PathVariable Integer id) {
+        ClientDetailedDTO clientDto = clientService.getClientById(id);
+        return ResponseEntity.ok(clientDto);
+    }
+
+    //-----POST-----//
+
     @PostMapping
-    public ClientDTO addClient(@RequestBody ClientCreateDTO dto){
+    public ClientDTO addClient(@RequestBody ClientCreateDTO dto) {
         return ClientMapper.toDto(clientService.addClient(dto));
+    }
+
+    //----DELETE----//
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteClient(@PathVariable Integer id) {
+        clientService.deleteClient(id);
+        return ResponseEntity.noContent().build();
     }
 }
