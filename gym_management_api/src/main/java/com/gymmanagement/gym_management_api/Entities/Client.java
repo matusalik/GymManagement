@@ -15,7 +15,7 @@ import lombok.Setter;
 public class Client extends User{
     private LocalDate date_of_birth;
 
-    private String adress;
+    private String address;
 
     private LocalDate registration_date;
 

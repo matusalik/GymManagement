@@ -18,19 +18,13 @@ public class UserService {
 
     //-----GET-----//
 
-    public UserDTO getUserById(Integer id){
+    public UserCreateDTO getUserById(Integer id){
         User user = userRepository.findById(id)
             .orElseThrow(() -> new EntityNotFoundException("User with id: " + id + " not found."));
         return UserMapper.toDetailedDTO(user);
     }
 
-    public Iterable<UserDTO>getUsers(){
+    public Iterable<UserCreateDTO>getUsers(){
         return UserMapper.listToDTO(userRepository.findAll());
-    }
-
-    //----POST----//
-
-    public User addUser(UserCreateDTO dto){
-        return userRepository.save(UserMapper.toEntity(dto));
     }
 }

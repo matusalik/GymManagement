@@ -13,7 +13,6 @@ import com.gymmanagement.gym_management_api.Services.UserService;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-
 @RestController
 @RequestMapping("/api/users")
 @Tag(name = Tags.UsersTag)
@@ -23,21 +22,13 @@ public class UserController {
     //-----GET-----//
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserDTO> getUserById(@PathVariable Integer id){
-        UserDTO userDTO = userService.getUserById(id);
+    public ResponseEntity<UserCreateDTO> getUserById(@PathVariable Integer id){
+        UserCreateDTO userDTO = userService.getUserById(id);
         return ResponseEntity.ok(userDTO);
     }
 
     @GetMapping
-    public @ResponseBody Iterable<UserDTO>getUsers(){
+    public @ResponseBody Iterable<UserCreateDTO>getUsers(){
         return userService.getUsers();
     }
-
-    //----POST----//
-
-    @PostMapping
-    public User addUser(@RequestBody UserCreateDTO dto){
-        return userService.addUser(dto);
-    }
-
 }
