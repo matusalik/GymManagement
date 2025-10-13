@@ -3,7 +3,6 @@ package com.gymmanagement.gym_management_api.Controllers;
 import com.gymmanagement.gym_management_api.Common.Tags;
 import com.gymmanagement.gym_management_api.DTO.Trainer.TrainerCreateDTO;
 import com.gymmanagement.gym_management_api.DTO.Trainer.TrainerDTO;
-import com.gymmanagement.gym_management_api.Mappers.TrainerMapper;
 import com.gymmanagement.gym_management_api.Services.TrainerService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +26,6 @@ public class TrainerController {
 
     @PostMapping
     public TrainerDTO addTrainer(@RequestBody TrainerCreateDTO dto){
-        return TrainerMapper.toDto(trainerService.addTrainer(dto));
+        return trainerService.addTrainer(dto);
     }
 }

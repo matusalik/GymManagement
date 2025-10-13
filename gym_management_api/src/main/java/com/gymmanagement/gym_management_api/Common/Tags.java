@@ -5,4 +5,5 @@ public final class Tags {
     public static final String ClientsTag = "Clients";
     public static final String TrainersTag = "Trainers";
     public static final String ReceptionistsTag = "Receptionists";
+    public static final String EquipmentTag = "Equipment";
 }
