@@ -7,4 +7,5 @@ public final class Tags {
     public static final String ReceptionistsTag = "Receptionists";
     public static final String EquipmentTag = "Equipment";
     public static final String ExercisesTag = "Exercises";
+    public static final String MembershipsTag = "Memberships";
 }
