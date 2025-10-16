@@ -8,4 +8,5 @@ public final class Tags {
     public static final String ExercisesTag = "Exercises";
     public static final String MembershipsTag = "Memberships";
     public static final String SpecializationsTag = "Specializations";
+    public static final String TrainingGoalsTag = "TrainingGoals";
 }
