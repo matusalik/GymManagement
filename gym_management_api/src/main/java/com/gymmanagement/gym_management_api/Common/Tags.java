@@ -9,4 +9,5 @@ public final class Tags {
     public static final String MembershipsTag = "Memberships";
     public static final String SpecializationsTag = "Specializations";
     public static final String TrainingGoalsTag = "TrainingGoals";
+    public static final String TrainingPlansTag = "TrainingPlans";
 }
