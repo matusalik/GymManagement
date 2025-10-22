@@ -30,6 +30,12 @@ public class TrainingPlanService {
         return TrainingPlanMapper.listToDto(tpRepository.findAll());
     }
 
+    public TrainingPlanDTO getTrainingPlanById(Integer id){
+        TrainingPlan tp = tpRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Training Plan with id: " + id + " not found."));
+        return TrainingPlanMapper.toDto(tp);
+    }
+
     //----POST----//
 
     public TrainingPlanDTO addTrainingPlan(TrainingPlanCreateDTO dto){

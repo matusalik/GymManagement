@@ -8,6 +8,7 @@ import com.gymmanagement.gym_management_api.Entities.TrainingGoal;
 import com.gymmanagement.gym_management_api.Services.TrainingPlanService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
@@ -22,6 +23,11 @@ public class TrainingPlanController {
     @GetMapping
     public @ResponseBody Iterable<TrainingPlanDTO>getTrainingPlans(){
         return tpService.getTrainingPlans();
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<TrainingPlanDTO>getTrainingPlanById(@PathVariable Integer id){
+        return ResponseEntity.ok(tpService.getTrainingPlanById(id));
     }
 
     //-----POST-----//
