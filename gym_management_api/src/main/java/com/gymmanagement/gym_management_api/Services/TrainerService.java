@@ -7,6 +7,7 @@ import com.gymmanagement.gym_management_api.Entities.Trainer;
 import com.gymmanagement.gym_management_api.Entities.TrainerAvailability;
 import com.gymmanagement.gym_management_api.Mappers.TrainerMapper;
 import com.gymmanagement.gym_management_api.Repositories.TrainerRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,12 @@ public class TrainerService {
 
     public Iterable<TrainerDTO>getTrainers(){
         return TrainerMapper.listToDto(trainerRepository.findAll());
+    }
+
+    public TrainerDTO getTrainerById(Integer id){
+        Trainer trainer = trainerRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Trainer with id: " + id + " not found."));
+        return TrainerMapper.toDto(trainer);
     }
 
     //------POST-----//

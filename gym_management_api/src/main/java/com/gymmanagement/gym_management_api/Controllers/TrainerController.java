@@ -6,6 +6,7 @@ import com.gymmanagement.gym_management_api.DTO.Trainer.TrainerDTO;
 import com.gymmanagement.gym_management_api.Services.TrainerService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
@@ -20,6 +21,11 @@ public class TrainerController {
     @GetMapping
     public @ResponseBody Iterable<TrainerDTO>getTrainers(){
         return trainerService.getTrainers();
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<TrainerDTO>getTrainerById(@PathVariable Integer id){
+        return ResponseEntity.ok(trainerService.getTrainerById(id));
     }
 
     //----POST----//
