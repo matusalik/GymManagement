@@ -1,10 +1,40 @@
 package com.gymmanagement.gym_management_api.Controllers;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.gymmanagement.gym_management_api.Common.Tags;
+import com.gymmanagement.gym_management_api.DTO.Reservation.ReservationCreateDTO;
+import com.gymmanagement.gym_management_api.DTO.Reservation.ReservationDTO;
+import com.gymmanagement.gym_management_api.Services.ReservationService;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/reservations")
+@Tag(name = Tags.ReservationsTag)
 public class ReservationController {
-    
+    private final ReservationService reservationService;
+
+    //-----GET-----//
+
+    @GetMapping
+    public @ResponseBody Iterable<ReservationDTO>getReservations(){
+        return reservationService.getReservations();
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ReservationDTO>getReservationById(@PathVariable Integer id){
+        return ResponseEntity.ok(reservationService.getReservationById(id));
+    }
+
+    //-----POSt-----//
+
+    @PostMapping
+    public ReservationDTO addReservation(@RequestBody ReservationCreateDTO dto){
+        return reservationService.addReservation(dto);
+    }
+
+
+
 }

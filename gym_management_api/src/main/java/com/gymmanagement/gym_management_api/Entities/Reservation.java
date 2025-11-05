@@ -35,7 +35,7 @@ public class Reservation {
 
     @ManyToOne
     @JoinColumn(name = "group_class_id")
-    private GroupClass groupClass;
+    private GroupClass group_class;
 
     @ManyToOne
     @JoinColumn(name = "trainer_id")
