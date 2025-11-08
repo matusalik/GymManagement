@@ -4,6 +4,7 @@ import com.gymmanagement.gym_management_api.DTO.Client.ClientCreateDTO;
 import com.gymmanagement.gym_management_api.DTO.Client.ClientDetailedDTO;
 import com.gymmanagement.gym_management_api.Entities.Client;
 import com.gymmanagement.gym_management_api.DTO.Client.ClientDTO;
+import com.gymmanagement.gym_management_api.Enums.Role;
 import com.gymmanagement.gym_management_api.Enums.UserType;
 import com.gymmanagement.gym_management_api.Security.Password;
 
@@ -33,6 +34,7 @@ public class ClientMapper {
         client.setPhone(dto.getPhone());
         client.setEmail(dto.getEmail());
         client.setUser_type(UserType.CLIENT);
+        client.setRole(Role.CLIENT);
         client.setDate_of_birth(dto.getDate_of_birth());
         client.setAddress(dto.getAddress());
         client.setRegistration_date(dto.getRegistration_date());

@@ -10,8 +10,9 @@ public final class Tags {
     public static final String SpecializationsTag = "Specializations";
     public static final String TrainingGoalsTag = "TrainingGoals";
     public static final String TrainingPlansTag = "TrainingPlans";
-    public static final String TrainingAvailabilitiesTag = "TrainingAvailabilities";
+    public static final String TrainingAvailabilitiesTag = "TrainerAvailabilities";
     public static final String ReviewsTag = "Reviews";
     public static final String GroupClassesTag = "GroupClasses";
     public static final String ReservationsTag = "Reservations";
+    public static final String AuthenticationTag = "Authentication";
 }
