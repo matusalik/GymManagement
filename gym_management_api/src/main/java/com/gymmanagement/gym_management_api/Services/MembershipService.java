@@ -6,8 +6,10 @@ import com.gymmanagement.gym_management_api.Mappers.MembershipMapper;
 import com.gymmanagement.gym_management_api.Repositories.MembershipRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
+@PreAuthorize("hasRole('CLIENT')")
 @Service
 @RequiredArgsConstructor
 public class MembershipService {

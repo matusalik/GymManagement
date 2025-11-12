@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
@@ -37,7 +38,7 @@ public class ClientController {
 
     @PostMapping
     public ClientDTO addClient(@RequestBody ClientCreateDTO dto) {
-        return ClientMapper.toDto(clientService.addClient(dto));
+        return clientService.addClient(dto);
     }
 
     //----DELETE----//

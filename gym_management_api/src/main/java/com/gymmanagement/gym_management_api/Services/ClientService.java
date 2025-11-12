@@ -8,6 +8,7 @@ import com.gymmanagement.gym_management_api.Entities.Membership;
 import com.gymmanagement.gym_management_api.Entities.TrainingGoal;
 import com.gymmanagement.gym_management_api.Exceptions.ResourceNotFoundException;
 import com.gymmanagement.gym_management_api.Mappers.ClientMapper;
+import com.gymmanagement.gym_management_api.Mappers.UserMapper;
 import com.gymmanagement.gym_management_api.Repositories.ClientRepository;
 import com.gymmanagement.gym_management_api.Repositories.MembershipRepository;
 import com.gymmanagement.gym_management_api.Repositories.TrainingGoalRepository;
@@ -38,7 +39,7 @@ public class ClientService {
 
     //------POST------//
 
-    public Client addClient(ClientCreateDTO dto){
+    public ClientDTO addClient(ClientCreateDTO dto){
         Client client = ClientMapper.toEntityWithoutRelations(dto);
 
         TrainingGoal tg = trainingGoalRepository.findById(dto.getTraining_goal_id())
@@ -51,7 +52,7 @@ public class ClientService {
 
         client.setMembership(m);
 
-        return userRepository.save(client);
+        return ClientMapper.toDto(userRepository.save(client));
     }
 
     //----DELETE----//

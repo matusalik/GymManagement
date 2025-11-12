@@ -3,6 +3,7 @@ package com.gymmanagement.gym_management_api.Mappers;
 import com.gymmanagement.gym_management_api.DTO.Trainer.TrainerCreateDTO;
 import com.gymmanagement.gym_management_api.DTO.Trainer.TrainerDTO;
 import com.gymmanagement.gym_management_api.Entities.Trainer;
+import com.gymmanagement.gym_management_api.Enums.Role;
 import com.gymmanagement.gym_management_api.Enums.UserType;
 import com.gymmanagement.gym_management_api.Security.Password;
 
@@ -32,6 +33,7 @@ public class TrainerMapper {
         trainer.setPhone(dto.getPhone());
         trainer.setEmail(dto.getEmail());
         trainer.setUser_type(UserType.TRAINER);
+        trainer.setRole(Role.TRAINER);
         trainer.setBio(dto.getBio());
         trainer.setStatus(dto.getStatus());
         return trainer;
