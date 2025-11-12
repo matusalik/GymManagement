@@ -16,7 +16,4 @@ import lombok.Setter;
 public class Receptionist extends User{
     @Enumerated(EnumType.STRING)
     private UserStatus status;
-
-    @Enumerated(EnumType.STRING)
-    private Role role;
 }

@@ -16,7 +16,6 @@ public class ReceptionistMapper {
         dto.setPhone(receptionist.getPhone());
         dto.setEmail(receptionist.getEmail());
         dto.setUser_type(UserType.RECEPTIONIST);
-        dto.setStatus(receptionist.getStatus().name());
         return dto;
     }
 
