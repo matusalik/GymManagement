@@ -28,6 +28,11 @@ public class GroupClassController {
         return ResponseEntity.ok(groupClassService.getGroupClassById(id));
     }
 
+    @GetMapping("/count")
+    public ResponseEntity<Long>getGroupClassCount(){
+        return ResponseEntity.ok(groupClassService.getGroupClassCount());
+    }
+
     //----POST----//
 
     @PostMapping

@@ -37,6 +37,18 @@ public class ClientService {
         return ClientMapper.toDetailedDto(client);
     }
 
+    public Long getClientCount(){
+        return clientRepository.count();
+    }
+
+    public Double getClientRevenue(){
+        Double sum = 0D;
+        for(Client i : clientRepository.findAll()){
+            sum += i.getMembership().getPrice();
+        }
+        return sum;
+    }
+
     //------POST------//
 
     public ClientDTO addClient(ClientCreateDTO dto){

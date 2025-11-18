@@ -10,6 +10,7 @@ import com.gymmanagement.gym_management_api.Services.ClientService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -32,6 +33,16 @@ public class ClientController {
     public ResponseEntity<ClientDetailedDTO> getClientById(@PathVariable Integer id) {
         ClientDetailedDTO clientDto = clientService.getClientById(id);
         return ResponseEntity.ok(clientDto);
+    }
+
+    @GetMapping("/count")
+    public ResponseEntity<Long>getClientCount(){
+        return ResponseEntity.ok(clientService.getClientCount());
+    }
+
+    @GetMapping("/revenue")
+    public ResponseEntity<Double>getClientRevenue(){
+        return ResponseEntity.ok(clientService.getClientRevenue());
     }
 
     //-----POST-----//

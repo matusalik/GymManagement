@@ -34,6 +34,10 @@ public class GroupClassService {
         return GroupClassMapper.toDto(groupClass);
     }
 
+    public Long getGroupClassCount(){
+        return groupClassRepository.count();
+    }
+
     //----POST----//
 
     public GroupClassDTO addGroupClass(GroupClassCreateDTO dto){

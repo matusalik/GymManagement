@@ -1,11 +1,6 @@
 import DashboardLayout from '../components/DashboardLayout'
-
-const TRAINER_MENU = [
-  { path: '/dashboard', label: 'Overview', icon: '📊' },
-  { path: '/dashboard/clients', label: 'My Clients', icon: '👥' },
-  { path: '/dashboard/workouts', label: 'Workouts', icon: '💪' },
-  { path: '/dashboard/schedule', label: 'Schedule', icon: '📅' },
-]
+import DashboardCard from '../components/DashboardCard'
+import { TRAINER_MENU } from '../constants/menuItems'
 
 export default function TrainerDashboard() {
   return (
@@ -52,21 +47,5 @@ export default function TrainerDashboard() {
         </div>
       </div>
     </DashboardLayout>
-  )
-}
-
-function DashboardCard({ title, value, icon, color }) {
-  return (
-    <div className="bg-card rounded-lg shadow p-6">
-      <div className="flex justify-between items-start">
-        <div>
-          <p className="text-muted-foreground text-sm">{title}</p>
-          <p className={`text-2xl font-bold mt-2 ${color === 'primary' ? 'text-primary' : 'text-accent'}`}>
-            {value}
-          </p>
-        </div>
-        <span className="text-3xl">{icon}</span>
-      </div>
-    </div>
   )
 }

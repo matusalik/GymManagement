@@ -74,10 +74,12 @@ export function AuthProvider({ children }) {
   }
 
   const logout = () => {
+    console.log('[v0] Logout called')
     setToken(null)
     setUserRole(null)
     setUser(null)
     localStorage.removeItem('authToken')
+    console.log('[v0] After logout - localStorage.authToken:', localStorage.getItem('authToken'))
   }
 
   return (

@@ -22,19 +22,23 @@ function App() {
 
   return (
     <Routes>
-      <Route path="/login" element={!token ? <LoginPage /> : <Navigate to="/dashboard" />} />
+      <Route path="/login" element={!token ? <LoginPage /> : <Navigate to="/dashboard" replace />} />
       
       <Route
         path="/dashboard"
         element={
-          <ProtectedRoute>
-            <DashboardRouter />
-          </ProtectedRoute>
+          token ? (
+            <ProtectedRoute>
+              <DashboardRouter />
+            </ProtectedRoute>
+          ) : (
+            <Navigate to="/login" replace />
+          )
         }
       />
       
-      <Route path="/" element={token ? <Navigate to="/dashboard" /> : <Navigate to="/login" />} />
-      <Route path="*" element={<Navigate to={token ? "/dashboard" : "/login"} />} />
+      <Route path="/" element={token ? <Navigate to="/dashboard" replace /> : <Navigate to="/login" replace />} />
+      <Route path="*" element={<Navigate to={token ? "/dashboard" : "/login"} replace />} />
     </Routes>
   )
 }

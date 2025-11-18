@@ -15,8 +15,9 @@ export default function ProtectedRoute({ children }) {
     )
   }
 
+  // Force redirect with replace to prevent back button issues
   if (!token) {
-    return <Navigate to="/login" />
+    return <Navigate to="/login" replace={true} />
   }
 
   return children
