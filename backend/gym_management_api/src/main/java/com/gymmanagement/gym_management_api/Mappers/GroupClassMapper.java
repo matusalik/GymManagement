@@ -2,6 +2,7 @@ package com.gymmanagement.gym_management_api.Mappers;
 
 import com.gymmanagement.gym_management_api.DTO.GroupClass.GroupClassCreateDTO;
 import com.gymmanagement.gym_management_api.DTO.GroupClass.GroupClassDTO;
+import com.gymmanagement.gym_management_api.DTO.GroupClass.NotDetailedGroupClassDTO;
 import com.gymmanagement.gym_management_api.Entities.Client;
 import com.gymmanagement.gym_management_api.Entities.GroupClass;
 import com.gymmanagement.gym_management_api.Entities.Trainer;
@@ -36,6 +37,26 @@ public class GroupClassMapper {
         List<GroupClassDTO>dtos = new ArrayList<>();
         for(GroupClass i : groupClasses){
             dtos.add(toDto(i));
+        }
+        return dtos;
+    }
+
+    public static NotDetailedGroupClassDTO toNotDetailedDto(GroupClass groupClass){
+        NotDetailedGroupClassDTO dto = new NotDetailedGroupClassDTO();
+        dto.setName(groupClass.getName());
+        dto.setDescription(groupClass.getDescription());
+        dto.setTrainer_name(groupClass.getTrainer().getFirst_name());
+        dto.setTrainer_surname(groupClass.getTrainer().getLast_name());
+        dto.setClients(ClientMapper.listToNotDetailedDto(groupClass.getClient_list()));
+        dto.setDate_time(groupClass.getDate_time());
+        dto.setMax_participants(groupClass.getMax_participants());
+        return dto;
+    }
+
+    public static Iterable<NotDetailedGroupClassDTO>listToNotDetailedDto(Iterable<GroupClass>groupClasses){
+        List<NotDetailedGroupClassDTO>dtos = new ArrayList<>();
+        for(GroupClass i : groupClasses){
+            dtos.add(toNotDetailedDto(i));
         }
         return dtos;
     }

@@ -1,6 +1,6 @@
 export const RECEPTIONIST_MENU = [
   { path: '/dashboard', label: 'Overview', icon: '📊' },
-  { path: '/dashboard/members', label: 'Members', icon: '👥' },
+  { path: '/dashboard/clients', label: 'Clients', icon: '👥' },
   { path: '/dashboard/classes', label: 'Classes', icon: '📅' },
   { path: '/dashboard/registrations', label: 'Registrations', icon: '📋' },
 ]

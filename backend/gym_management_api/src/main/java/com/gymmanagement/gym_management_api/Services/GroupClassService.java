@@ -2,6 +2,7 @@ package com.gymmanagement.gym_management_api.Services;
 
 import com.gymmanagement.gym_management_api.DTO.GroupClass.GroupClassCreateDTO;
 import com.gymmanagement.gym_management_api.DTO.GroupClass.GroupClassDTO;
+import com.gymmanagement.gym_management_api.DTO.GroupClass.NotDetailedGroupClassDTO;
 import com.gymmanagement.gym_management_api.Entities.Client;
 import com.gymmanagement.gym_management_api.Entities.GroupClass;
 import com.gymmanagement.gym_management_api.Entities.Trainer;
@@ -26,6 +27,10 @@ public class GroupClassService {
 
     public Iterable<GroupClassDTO>getGroupClasses(){
         return GroupClassMapper.listToDto(groupClassRepository.findAll());
+    }
+
+    public Iterable<NotDetailedGroupClassDTO>getNotDetailedGroupClasses(){
+        return GroupClassMapper.listToNotDetailedDto(groupClassRepository.findAll());
     }
 
     public GroupClassDTO getGroupClassById(Integer id){

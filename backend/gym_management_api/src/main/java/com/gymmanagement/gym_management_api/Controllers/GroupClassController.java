@@ -3,6 +3,7 @@ package com.gymmanagement.gym_management_api.Controllers;
 import com.gymmanagement.gym_management_api.Common.Tags;
 import com.gymmanagement.gym_management_api.DTO.GroupClass.GroupClassCreateDTO;
 import com.gymmanagement.gym_management_api.DTO.GroupClass.GroupClassDTO;
+import com.gymmanagement.gym_management_api.DTO.GroupClass.NotDetailedGroupClassDTO;
 import com.gymmanagement.gym_management_api.Services.GroupClassService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +22,11 @@ public class GroupClassController {
     @GetMapping
     public @ResponseBody Iterable<GroupClassDTO>getGroupClasses(){
         return groupClassService.getGroupClasses();
+    }
+
+    @GetMapping("/notdetailed")
+    public @ResponseBody Iterable<NotDetailedGroupClassDTO>getNotDetailedGroupClasses(){
+        return groupClassService.getNotDetailedGroupClasses();
     }
 
     @GetMapping("/{id}")

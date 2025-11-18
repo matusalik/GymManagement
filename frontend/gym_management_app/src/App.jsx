@@ -5,6 +5,10 @@ import ReceptionistDashboard from './pages/ReceptionistDashboard'
 import TrainerDashboard from './pages/TrainerDashboard'
 import ClientDashboard from './pages/ClientDashboard'
 import ProtectedRoute from './components/ProtectedRoute'
+import ClientsPage from "./pages/ClientsPage";
+import GroupClassesPage from "./pages/GroupClassesPage";
+
+
 
 function App() {
   const { token, loading } = useAuth()
@@ -37,8 +41,37 @@ function App() {
         }
       />
       
+      <Route
+      path="/dashboard/clients"
+      element={
+        token ? (
+          <ProtectedRoute>
+            <ClientsPage />
+          </ProtectedRoute>
+        ) : (
+          <Navigate to="/login" replace />
+        )
+      }
+     />
+
+      <Route
+      path="/dashboard/classes"
+      element={
+        token ? (
+          <ProtectedRoute>
+            <GroupClassesPage />
+          </ProtectedRoute>
+        ) : (
+          <Navigate to="/login" replace />
+        )
+      }
+      />
+
+
       <Route path="/" element={token ? <Navigate to="/dashboard" replace /> : <Navigate to="/login" replace />} />
       <Route path="*" element={<Navigate to={token ? "/dashboard" : "/login"} replace />} />
+        
+
     </Routes>
   )
 }

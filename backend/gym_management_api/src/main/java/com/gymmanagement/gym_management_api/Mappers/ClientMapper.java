@@ -2,6 +2,7 @@ package com.gymmanagement.gym_management_api.Mappers;
 
 import com.gymmanagement.gym_management_api.DTO.Client.ClientCreateDTO;
 import com.gymmanagement.gym_management_api.DTO.Client.ClientDetailedDTO;
+import com.gymmanagement.gym_management_api.DTO.Client.NotDetailedClientDTO;
 import com.gymmanagement.gym_management_api.Entities.Client;
 import com.gymmanagement.gym_management_api.DTO.Client.ClientDTO;
 import com.gymmanagement.gym_management_api.Enums.Role;
@@ -65,6 +66,21 @@ public class ClientMapper {
         List<ClientDTO> dtos = new ArrayList<>();
         for(Client i : clients){
             dtos.add(toDto(i));
+        }
+        return dtos;
+    }
+
+    public static NotDetailedClientDTO toNotDetailedClientDto(Client client){
+        NotDetailedClientDTO dto = new NotDetailedClientDTO();
+        dto.setName(client.getFirst_name());
+        dto.setSurname(client.getLast_name());
+        return dto;
+    }
+
+    public static Iterable<NotDetailedClientDTO>listToNotDetailedDto(Iterable<Client>clients){
+        List<NotDetailedClientDTO>dtos = new ArrayList<>();
+        for(Client i : clients){
+            dtos.add(toNotDetailedClientDto(i));
         }
         return dtos;
     }
