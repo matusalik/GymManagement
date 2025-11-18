@@ -1,6 +1,7 @@
 package com.gymmanagement.gym_management_api.Controllers;
 
 import com.gymmanagement.gym_management_api.Common.Tags;
+import com.gymmanagement.gym_management_api.DTO.Review.NotDetailedReviewDTO;
 import com.gymmanagement.gym_management_api.DTO.Review.ReviewCreateDTO;
 import com.gymmanagement.gym_management_api.DTO.Review.ReviewDTO;
 import com.gymmanagement.gym_management_api.Services.ReviewService;
@@ -21,6 +22,11 @@ public class ReviewController {
     @GetMapping
     public @ResponseBody Iterable<ReviewDTO>getReviews(){
         return reviewService.getReviews();
+    }
+
+    @GetMapping("/recent")
+    public @ResponseBody Iterable<NotDetailedReviewDTO>getNotDetailedReviews(){
+        return reviewService.getNotDetailedReviews();
     }
 
     @GetMapping("/{id}")

@@ -31,6 +31,10 @@ public class TrainerService {
         return TrainerMapper.toDto(trainer);
     }
 
+    public Long getTrainerCount(){
+        return trainerRepository.count();
+    }
+
     //------POST-----//
 
     public TrainerDTO addTrainer(TrainerCreateDTO dto){

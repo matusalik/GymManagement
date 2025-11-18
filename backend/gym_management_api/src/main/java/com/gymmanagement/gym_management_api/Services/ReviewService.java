@@ -1,5 +1,6 @@
 package com.gymmanagement.gym_management_api.Services;
 
+import com.gymmanagement.gym_management_api.DTO.Review.NotDetailedReviewDTO;
 import com.gymmanagement.gym_management_api.DTO.Review.ReviewCreateDTO;
 import com.gymmanagement.gym_management_api.DTO.Review.ReviewDTO;
 import com.gymmanagement.gym_management_api.Entities.Client;
@@ -28,6 +29,10 @@ public class ReviewService {
         return ReviewMapper.listToDto(reviewRepository.findAll());
     }
 
+    public Iterable<NotDetailedReviewDTO>getNotDetailedReviews(){
+        return ReviewMapper.listToNotDetailedDto(reviewRepository.findAll());
+    }
+
     public ReviewDTO getReviewById(Integer id){
         Review review = reviewRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Review with id: " + id + " not found."));
@@ -46,6 +51,6 @@ public class ReviewService {
                 .orElseThrow(() -> new EntityNotFoundException("Review with id: " + trainer_id + " not found."));
 
         Review review = ReviewMapper.toEntity(dto, client, trainer);
-        return ReviewMapper.toDto(review);
+        return ReviewMapper.toDto(reviewRepository.save(review));
     }
 }
