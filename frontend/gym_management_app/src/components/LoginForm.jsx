@@ -1,83 +1,76 @@
-import { useState } from "react";
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useAuth } from '../context/AuthContext'
 
 export default function LoginForm() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+  const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false)
+  const { login } = useAuth()
+  const navigate = useNavigate()
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    setError('')
+    setLoading(true)
 
-    const res = await fetch("http://localhost:8080/api/auth/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, password })
-    });
-
-    if (res.ok) {
-      const data = await res.json();
-      localStorage.setItem("token", data.token);
-      alert("Zalogowano!");
+    const result = await login(username, password)
+    
+    if (result.success) {
+      navigate('/dashboard')
     } else {
-      alert("Błędne dane logowania");
+      setError(result.error || 'Login failed. Please try again.')
     }
-  };
+    
+    setLoading(false)
+  }
 
   return (
-    <form 
-      onSubmit={handleLogin} 
-      style={{
-        width: "320px",
-        padding: "30px",
-        background: "white",
-        borderRadius: "12px",
-        boxShadow: "0 0 15px rgba(0,0,0,0.1)"
-      }}
-    >
-      <h2 style={{ textAlign: "center", marginBottom: "20px" }}>Logowanie</h2>
+    <form onSubmit={handleSubmit} className="bg-card rounded-lg shadow-lg p-8 space-y-6">
+      {error && (
+        <div className="bg-destructive/10 border border-destructive text-destructive px-4 py-3 rounded-lg text-sm">
+          {error}
+        </div>
+      )}
 
-      <input
-        type="text"
-        placeholder="Username"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-        required
-        style={{
-          width: "100%",
-          padding: "10px",
-          marginBottom: "12px",
-          borderRadius: "8px",
-          border: "1px solid #ccc"
-        }}
-      />
+      <div>
+        <label htmlFor="username" className="block text-sm font-medium text-foreground mb-2">
+          Username
+        </label>
+        <input
+          id="username"
+          type="text"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          className="w-full px-4 py-2 border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 bg-background"
+          placeholder="Enter your username"
+          required
+        />
+      </div>
 
-      <input
-        type="password"
-        placeholder="Hasło"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        required
-        style={{
-          width: "100%",
-          padding: "10px",
-          marginBottom: "12px",
-          borderRadius: "8px",
-          border: "1px solid #ccc"
-        }}
-      />
+      <div>
+        <label htmlFor="password" className="block text-sm font-medium text-foreground mb-2">
+          Password
+        </label>
+        <input
+          id="password"
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          className="w-full px-4 py-2 border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 bg-background"
+          placeholder="Enter your password"
+          required
+        />
+      </div>
 
       <button
-        style={{
-          width: "100%",
-          padding: "10px",
-          borderRadius: "8px",
-          background: "#007bff",
-          color: "white",
-          border: "none",
-          cursor: "pointer"
-        }}
+        type="submit"
+        disabled={loading}
+        className="w-full bg-primary text-primary-foreground py-2 rounded-lg font-medium hover:opacity-90 transition-opacity disabled:opacity-50"
       >
-        Zaloguj
+        {loading ? 'Logging in...' : 'Login'}
       </button>
     </form>
-  );
+  )
 }

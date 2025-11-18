@@ -1,12 +1,75 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Login from "./pages/Login";
+import { Routes, Route, Navigate } from 'react-router-dom'
+import { useAuth } from './context/AuthContext'
+import LoginPage from './pages/LoginPage'
+import ReceptionistDashboard from './pages/ReceptionistDashboard'
+import TrainerDashboard from './pages/TrainerDashboard'
+import ClientDashboard from './pages/ClientDashboard'
+import ProtectedRoute from './components/ProtectedRoute'
 
-export default function App() {
+function App() {
+  const { token, loading } = useAuth()
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-slate-50">
+        <div className="text-center">
+          <div className="h-8 w-8 animate-spin rounded-full border-4 border-blue-600 border-t-blue-200 mx-auto mb-4"></div>
+          <p className="text-slate-600">Loading...</p>
+        </div>
+      </div>
+    )
+  }
+
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Login />} />   {/* domyślna strona */}
-      </Routes>
-    </BrowserRouter>
-  );
+    <Routes>
+      <Route path="/login" element={!token ? <LoginPage /> : <Navigate to="/dashboard" />} />
+      
+      <Route
+        path="/dashboard"
+        element={
+          <ProtectedRoute>
+            <DashboardRouter />
+          </ProtectedRoute>
+        }
+      />
+      
+      <Route path="/" element={token ? <Navigate to="/dashboard" /> : <Navigate to="/login" />} />
+      <Route path="*" element={<Navigate to={token ? "/dashboard" : "/login"} />} />
+    </Routes>
+  )
 }
+
+function DashboardRouter() {
+  const { userRole, loading } = useAuth()
+
+  if (loading || !userRole) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-background">
+        <div className="text-center">
+          <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-primary/30 mx-auto mb-4"></div>
+          <p className="text-muted-foreground">Loading dashboard...</p>
+        </div>
+      </div>
+    )
+  }
+
+  switch (userRole) {
+    case 'ADMIN':
+      return <ReceptionistDashboard />
+    case 'TRAINER':
+      return <TrainerDashboard />
+    case 'CLIENT':
+      return <ClientDashboard />
+    default:
+      return (
+        <div className="min-h-screen flex items-center justify-center bg-background">
+          <div className="text-center">
+            <p className="text-muted-foreground mb-4">Unknown user role: {userRole}</p>
+            <p className="text-sm text-muted-foreground">Please contact support</p>
+          </div>
+        </div>
+      )
+  }
+}
+
+export default App
