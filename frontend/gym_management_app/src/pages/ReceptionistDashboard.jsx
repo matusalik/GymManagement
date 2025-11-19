@@ -3,6 +3,7 @@ import { useAuth } from '../context/AuthContext';
 import DashboardLayout from '../components/DashboardLayout';
 import DashboardCard from '../components/DashboardCard';
 import { RECEPTIONIST_MENU } from '../constants/menuItems';
+import AddClientModal from "../components/AddClientModal";
 
 export default function ReceptionistDashboard() {
   const { token } = useAuth();
@@ -12,6 +13,8 @@ export default function ReceptionistDashboard() {
   const [revenue, setRevenue] = useState(0);
   const [reviews, setReviews] = useState([]);
   const [reviewsLoading, setReviewsLoading] = useState(false);
+  const [showAddClientModal, setShowAddClientModal] = useState(false);
+
 
   useEffect(() => {
     const fetchClassesCount = async () => {
@@ -189,8 +192,10 @@ export default function ReceptionistDashboard() {
           <div className="bg-card rounded-lg shadow p-6">
             <h2 className="text-xl font-bold text-foreground mb-4">Quick Actions</h2>
             <div className="space-y-3">
-              <button className="w-full bg-primary text-primary-foreground py-2 rounded-lg hover:opacity-90 transition-opacity">
-                Register New Member
+              <button 
+                onClick={() => setShowAddClientModal(true)}
+                className="w-full bg-primary text-primary-foreground py-2 rounded-lg hover:opacity-90 transition-opacity">
+                Add New Client
               </button>
               <button className="w-full bg-accent text-accent-foreground py-2 rounded-lg hover:opacity-90 transition-opacity">
                 View All Reviews
@@ -202,6 +207,14 @@ export default function ReceptionistDashboard() {
           </div>
         </div>
       </div>
+      <AddClientModal
+        isOpen={showAddClientModal}
+        onClose={() => setShowAddClientModal(false)}
+        onSuccess={() => {
+          // Optional: refresh counts if backend updates client count immediately  
+          }}
+        />
     </DashboardLayout>
+    
   );
 }

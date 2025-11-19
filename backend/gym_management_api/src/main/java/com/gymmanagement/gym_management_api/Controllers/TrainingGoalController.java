@@ -1,6 +1,7 @@
 package com.gymmanagement.gym_management_api.Controllers;
 
 import com.gymmanagement.gym_management_api.Common.Tags;
+import com.gymmanagement.gym_management_api.DTO.TrainingGoal.TrainingGoalCreateDTO;
 import com.gymmanagement.gym_management_api.DTO.TrainingGoal.TrainingGoalDTO;
 import com.gymmanagement.gym_management_api.Services.TrainingGoalService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -30,7 +31,7 @@ public class TrainingGoalController {
     //-----POST-----//
 
     @PostMapping
-    public TrainingGoalDTO addTrainingGoal(@RequestBody TrainingGoalDTO dto){
+    public TrainingGoalDTO addTrainingGoal(@RequestBody TrainingGoalCreateDTO dto){
         return tgService.addTrainingGoal(dto);
     }
 }

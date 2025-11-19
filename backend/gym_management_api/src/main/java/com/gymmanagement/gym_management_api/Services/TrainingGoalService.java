@@ -1,5 +1,6 @@
 package com.gymmanagement.gym_management_api.Services;
 
+import com.gymmanagement.gym_management_api.DTO.TrainingGoal.TrainingGoalCreateDTO;
 import com.gymmanagement.gym_management_api.DTO.TrainingGoal.TrainingGoalDTO;
 import com.gymmanagement.gym_management_api.Entities.TrainingGoal;
 import com.gymmanagement.gym_management_api.Mappers.TrainingGoalMapper;
@@ -28,7 +29,7 @@ public class TrainingGoalService {
 
     //-----POST-----//
 
-    public TrainingGoalDTO addTrainingGoal(TrainingGoalDTO dto){
+    public TrainingGoalDTO addTrainingGoal(TrainingGoalCreateDTO dto){
         TrainingGoal tg = TrainingGoalMapper.toEntity(dto);
         return TrainingGoalMapper.toDto(tgRepository.save(tg));
     }

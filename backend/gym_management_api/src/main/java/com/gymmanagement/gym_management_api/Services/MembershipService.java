@@ -1,5 +1,6 @@
 package com.gymmanagement.gym_management_api.Services;
 
+import com.gymmanagement.gym_management_api.DTO.Membership.MembershipCreateDTO;
 import com.gymmanagement.gym_management_api.DTO.Membership.MembershipDTO;
 import com.gymmanagement.gym_management_api.Entities.Membership;
 import com.gymmanagement.gym_management_api.Mappers.MembershipMapper;
@@ -29,7 +30,7 @@ public class MembershipService {
 
     //-----POST-----//
 
-    public MembershipDTO addMembership(MembershipDTO dto){
+    public MembershipDTO addMembership(MembershipCreateDTO dto){
         Membership membership = MembershipMapper.toEntity(dto);
         return MembershipMapper.toDto(membershipRepository.save(membership));
     }

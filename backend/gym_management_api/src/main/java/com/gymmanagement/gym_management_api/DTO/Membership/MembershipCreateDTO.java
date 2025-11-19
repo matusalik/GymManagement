@@ -5,8 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class MembershipDTO {
-    public Integer membership_id;
+public class MembershipCreateDTO {
     public String name;
     public Double price;
     private Integer duration;

@@ -1,5 +1,6 @@
 package com.gymmanagement.gym_management_api.Mappers;
 
+import com.gymmanagement.gym_management_api.DTO.Membership.MembershipCreateDTO;
 import com.gymmanagement.gym_management_api.DTO.Membership.MembershipDTO;
 import com.gymmanagement.gym_management_api.Entities.Membership;
 
@@ -9,6 +10,7 @@ import java.util.List;
 public class MembershipMapper {
     public static MembershipDTO toDto(Membership membership){
         MembershipDTO dto = new MembershipDTO();
+        dto.setMembership_id(membership.getMembershipId());
         dto.setName(membership.getName());
         dto.setPrice(membership.getPrice());
         dto.setDuration(membership.getDuration());
@@ -16,7 +18,7 @@ public class MembershipMapper {
         return dto;
     }
 
-    public static Membership toEntity(MembershipDTO dto){
+    public static Membership toEntity(MembershipCreateDTO dto){
         Membership membership = new Membership();
         membership.setName(dto.getName());
         membership.setPrice(dto.getPrice());
