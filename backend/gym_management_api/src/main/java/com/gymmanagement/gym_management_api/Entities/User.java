@@ -25,6 +25,7 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer userId;
 
+    @Column(unique = true, nullable = false)
     private String username;
 
     @Column(nullable = false)
@@ -36,6 +37,7 @@ public class User implements UserDetails {
 
     private String phone;
 
+    @Column(unique = true, nullable = false)
     private String email;
 
     @Enumerated(EnumType.STRING)

@@ -15,7 +15,9 @@ import com.gymmanagement.gym_management_api.Repositories.TrainingGoalRepository;
 import com.gymmanagement.gym_management_api.Repositories.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 @RequiredArgsConstructor
@@ -53,6 +55,14 @@ public class ClientService {
 
     public ClientDTO addClient(ClientCreateDTO dto){
         Client client = ClientMapper.toEntityWithoutRelations(dto);
+
+        if (userRepository.existsByUsername(dto.getUsername())) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Username already in use");
+        }
+        if (userRepository.existsByEmail(dto.getEmail())) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Email already in use");
+        }
+
 
         TrainingGoal tg = trainingGoalRepository.findById(dto.getTraining_goal_id())
                 .orElseThrow(() -> new ResourceNotFoundException("Training goal not found"));
