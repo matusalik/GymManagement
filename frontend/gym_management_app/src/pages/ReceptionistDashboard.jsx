@@ -4,6 +4,7 @@ import DashboardLayout from '../components/DashboardLayout';
 import DashboardCard from '../components/DashboardCard';
 import { RECEPTIONIST_MENU } from '../constants/menuItems';
 import AddClientModal from "../components/AddClientModal";
+import { useNavigate } from "react-router-dom";
 
 export default function ReceptionistDashboard() {
   const { token } = useAuth();
@@ -14,6 +15,7 @@ export default function ReceptionistDashboard() {
   const [reviews, setReviews] = useState([]);
   const [reviewsLoading, setReviewsLoading] = useState(false);
   const [showAddClientModal, setShowAddClientModal] = useState(false);
+  const navigate = useNavigate();
 
 
   useEffect(() => {
@@ -197,11 +199,11 @@ export default function ReceptionistDashboard() {
                 className="w-full bg-primary text-primary-foreground py-2 rounded-lg hover:opacity-90 transition-opacity">
                 Add New Client
               </button>
-              <button className="w-full bg-accent text-accent-foreground py-2 rounded-lg hover:opacity-90 transition-opacity">
+              <button
+                onClick={() => navigate("/dashboard/reviews")}
+                className="w-full bg-accent text-accent-foreground py-2 rounded-lg hover:opacity-90 transition-opacity"
+              >
                 View All Reviews
-              </button>
-              <button className="w-full bg-primary text-primary-foreground py-2 rounded-lg hover:opacity-90 transition-opacity">
-                Generate Report
               </button>
             </div>
           </div>

@@ -7,7 +7,7 @@ import ClientDashboard from './pages/ClientDashboard'
 import ProtectedRoute from './components/ProtectedRoute'
 import ClientsPage from "./pages/ClientsPage";
 import GroupClassesPage from "./pages/GroupClassesPage";
-
+import ReviewsPage from "./pages/ReviewsPage";
 
 
 function App() {
@@ -66,6 +66,20 @@ function App() {
         )
       }
       />
+
+      <Route
+      path="/dashboard/reviews"
+      element={
+        token ? (
+          <ProtectedRoute>
+            <ReviewsPage />
+          </ProtectedRoute>
+        ) : (
+          <Navigate to="/login" replace />
+        )
+      }
+      />
+
 
 
       <Route path="/" element={token ? <Navigate to="/dashboard" replace /> : <Navigate to="/login" replace />} />
