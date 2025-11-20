@@ -5,6 +5,8 @@ import DashboardCard from '../components/DashboardCard';
 import { RECEPTIONIST_MENU } from '../constants/menuItems';
 import AddClientModal from "../components/AddClientModal";
 import { useNavigate } from "react-router-dom";
+import CheckInModal from "../components/CheckInModal";
+
 
 export default function ReceptionistDashboard() {
   const { token } = useAuth();
@@ -15,6 +17,8 @@ export default function ReceptionistDashboard() {
   const [reviews, setReviews] = useState([]);
   const [reviewsLoading, setReviewsLoading] = useState(false);
   const [showAddClientModal, setShowAddClientModal] = useState(false);
+  const [showCheckInModal, setShowCheckInModal] = useState(false);
+
   const navigate = useNavigate();
 
 
@@ -200,10 +204,10 @@ export default function ReceptionistDashboard() {
                 Add New Client
               </button>
               <button
-                onClick={() => navigate("/dashboard/reviews")}
-                className="w-full bg-accent text-accent-foreground py-2 rounded-lg hover:opacity-90 transition-opacity"
+                onClick={() => setShowCheckInModal(true)}
+                className="w-full bg-primary text-primary-foreground py-2 rounded-lg hover:opacity-90 transition-opacity"
               >
-                View All Reviews
+                Check-In Client
               </button>
             </div>
           </div>
@@ -212,10 +216,13 @@ export default function ReceptionistDashboard() {
       <AddClientModal
         isOpen={showAddClientModal}
         onClose={() => setShowAddClientModal(false)}
-        onSuccess={() => {
-          // Optional: refresh counts if backend updates client count immediately  
-          }}
+        onSuccess={() => {}}
         />
+      <CheckInModal
+        isOpen={showCheckInModal}
+        onClose={() => setShowCheckInModal(false)}
+        onSuccess={() => {}}
+      />
     </DashboardLayout>
     
   );
