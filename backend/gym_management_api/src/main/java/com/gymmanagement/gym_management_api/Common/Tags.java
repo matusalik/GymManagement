@@ -16,4 +16,5 @@ public final class Tags {
     public static final String ReservationsTag = "Reservations";
     public static final String AuthenticationTag = "Authentication";
     public static final String ReceptionistsTag = "Receptionists";
+    public static final String ClientAttendancesTag = "ClientAttendances";
 }
