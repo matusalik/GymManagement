@@ -35,6 +35,13 @@ public class TrainerService {
         return trainerRepository.count();
     }
 
+    public String getMyBio(Integer id){
+        Trainer trainer = trainerRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Trainer with id: " + id + " not found."));
+        return trainer.getBio();
+    }
+
+
     //------POST-----//
 
     public TrainerDTO addTrainer(TrainerCreateDTO dto){

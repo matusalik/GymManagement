@@ -34,6 +34,11 @@ public class TrainerController {
         return ResponseEntity.ok(trainerService.getTrainerCount());
     }
 
+    @GetMapping("/bio/{trainer_id}")
+    public ResponseEntity<String>getMyBio(@PathVariable Integer trainer_id){
+        return ResponseEntity.ok(trainerService.getMyBio(trainer_id));
+    }
+
     //----POST----//
 
     @PostMapping

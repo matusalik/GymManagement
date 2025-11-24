@@ -39,6 +39,10 @@ public class GroupClassService {
         return GroupClassMapper.toDto(groupClass);
     }
 
+    public Long getGroupClassCountByTrainerId(Integer trainer_id){
+        return groupClassRepository.countByTrainer_UserId(trainer_id);
+    }
+
     public Long getGroupClassCount(){
         return groupClassRepository.count();
     }

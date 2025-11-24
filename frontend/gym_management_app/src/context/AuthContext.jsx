@@ -8,6 +8,8 @@ export function AuthProvider({ children }) {
   const [userRole, setUserRole] = useState(null)
   const [user, setUser] = useState(null)
   const [loading, setLoading] = useState(true)
+  const [userId, setUserId] = useState(null);
+
 
   // Load token from localStorage on mount
   useEffect(() => {
@@ -18,6 +20,7 @@ export function AuthProvider({ children }) {
         console.log('[v0] Token decoded on mount:', decoded)
         setToken(savedToken)
         setUserRole(decoded.role || decoded.roles?.[0])
+        setUserId(decoded.userId)
         setUser({
           username: decoded.username || decoded.sub,
           email: decoded.email,
@@ -60,6 +63,7 @@ export function AuthProvider({ children }) {
       
       setToken(jwtToken)
       setUserRole(role)
+      setUserId(decoded.userId)
       setUser({
         username: decoded.username || decoded.sub,
         email: decoded.email,
@@ -83,7 +87,7 @@ export function AuthProvider({ children }) {
   }
 
   return (
-    <AuthContext.Provider value={{ token, userRole, user, loading, login, logout }}>
+    <AuthContext.Provider value={{ token, userRole, userId, user, loading, login, logout }}>
       {children}
     </AuthContext.Provider>
   )

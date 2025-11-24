@@ -14,6 +14,8 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 
 @Service
@@ -37,6 +39,23 @@ public class ReviewService {
         Review review = reviewRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Review with id: " + id + " not found."));
         return ReviewMapper.toDto(review);
+    }
+
+    public Long getReviewCountByTrainerId(Integer trainer_id){
+        return reviewRepository.countByTrainer_UserId(trainer_id);
+    }
+
+    public Double getAverageRatingByTrainerId(Integer trainer_id){
+        long reviewCount = reviewRepository.countByTrainer_UserId(trainer_id);
+        if(reviewCount == 0){
+            throw new EntityNotFoundException("Reviews for trainer with id "+ trainer_id + " not found.");
+        }
+        List<Review>reviews = reviewRepository.findAllByTrainer_UserId(trainer_id);
+        Double sum = 0.0;
+        for(Review i : reviews){
+            sum += i.getRating();
+        }
+        return sum/reviewCount;
     }
 
     //-----POST-----//

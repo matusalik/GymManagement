@@ -7,6 +7,7 @@ import com.gymmanagement.gym_management_api.DTO.GroupClass.NotDetailedGroupClass
 import com.gymmanagement.gym_management_api.Services.GroupClassService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,6 +33,11 @@ public class GroupClassController {
     @GetMapping("/{id}")
     public ResponseEntity<GroupClassDTO>getGroupClassById(@PathVariable Integer id){
         return ResponseEntity.ok(groupClassService.getGroupClassById(id));
+    }
+
+    @GetMapping("/countByTrainer/{trainer_id}")
+    public ResponseEntity<Long>getGroupClassCountByTrainerId(@PathVariable Integer trainer_id){
+        return ResponseEntity.ok(groupClassService.getGroupClassCountByTrainerId(trainer_id));
     }
 
     @GetMapping("/count")

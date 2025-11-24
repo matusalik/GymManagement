@@ -7,6 +7,7 @@ import com.gymmanagement.gym_management_api.DTO.Review.ReviewDTO;
 import com.gymmanagement.gym_management_api.Services.ReviewService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,6 +33,16 @@ public class ReviewController {
     @GetMapping("/{id}")
     public ResponseEntity<ReviewDTO>getReviewById(@PathVariable Integer id){
         return ResponseEntity.ok(reviewService.getReviewById(id));
+    }
+
+    @GetMapping("/countByTrainer/{trainer_id}")
+    public ResponseEntity<Long>getReviewCountByTrainerId(@PathVariable Integer trainer_id){
+        return ResponseEntity.ok(reviewService.getReviewCountByTrainerId(trainer_id));
+    }
+
+    @GetMapping("/averageByTrainer/{trainer_id}")
+    public ResponseEntity<Double>getAverageRatingByTrainerId(@PathVariable Integer trainer_id){
+        return ResponseEntity.ok(reviewService.getAverageRatingByTrainerId(trainer_id));
     }
 
     //----POST----//
