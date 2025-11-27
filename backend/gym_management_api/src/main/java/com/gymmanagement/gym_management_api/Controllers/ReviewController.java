@@ -45,6 +45,12 @@ public class ReviewController {
         return ResponseEntity.ok(reviewService.getAverageRatingByTrainerId(trainer_id));
     }
 
+    @GetMapping("/getByTrainer/{trainer_id}")
+    public @ResponseBody Iterable<NotDetailedReviewDTO>getNotDetailedReviewsByTrainerId(@PathVariable Integer trainer_id){
+        return reviewService.getNotDetailedReviewsByTrainerId(trainer_id);
+    }
+
+
     //----POST----//
 
     @PostMapping
