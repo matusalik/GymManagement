@@ -6,11 +6,12 @@ export const RECEPTIONIST_MENU = [
 ]
 
 export const TRAINER_MENU = [
-  { path: '/dashboard', label: 'Overview', icon: '📊' },
-  { path: '/dashboard/clients', label: 'My Clients', icon: '👥' },
-  { path: '/dashboard/workouts', label: 'Workouts', icon: '💪' },
-  { path: '/dashboard/schedule', label: 'Schedule', icon: '📅' },
-]
+  { label: "Dashboard", path: "/dashboard/trainer", icon: "📊" },
+  { label: "My Classes", path: "/dashboard/trainer/classes", icon: "📅" },
+  { label: "My Reviews", path: "/dashboard/trainer/reviews", icon: "⭐" },
+  { label: "Training Plans", path: "/dashboard/trainer/training-plans", icon: "📘" }
+];
+
 
 export const CLIENT_MENU = [
   { path: '/dashboard', label: 'Overview', icon: '📊' },

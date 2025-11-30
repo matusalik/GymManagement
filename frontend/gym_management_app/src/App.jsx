@@ -8,6 +8,7 @@ import ProtectedRoute from './components/ProtectedRoute'
 import ClientsPage from "./pages/ClientsPage";
 import GroupClassesPage from "./pages/GroupClassesPage";
 import ReviewsPage from "./pages/ReviewsPage";
+import TrainerClassesPage from "./pages/TrainerClassesPage";
 
 
 function App() {
@@ -80,12 +81,22 @@ function App() {
       }
       />
 
+      <Route
+        path="/dashboard/trainer/classes"
+        element={
+          token ? (
+            <ProtectedRoute allowedRole="TRAINER">
+              <TrainerClassesPage />
+            </ProtectedRoute>
+          ) : (
+            <Navigate to="/login" replace />
+          )
+        }
+      />
 
 
       <Route path="/" element={token ? <Navigate to="/dashboard" replace /> : <Navigate to="/login" replace />} />
       <Route path="*" element={<Navigate to={token ? "/dashboard" : "/login"} replace />} />
-        
-
     </Routes>
   )
 }

@@ -45,6 +45,11 @@ public class GroupClassController {
         return ResponseEntity.ok(groupClassService.getGroupClassCount());
     }
 
+    @GetMapping("/notdetailed/{trainer_id}")
+    public @ResponseBody Iterable<NotDetailedGroupClassDTO>getNotDetailedGroupClassesByTrainerId(@PathVariable Integer trainer_id){
+        return groupClassService.getNotDetailedGroupClassesByTrainerId(trainer_id);
+    }
+
     //----POST----//
 
     @PostMapping

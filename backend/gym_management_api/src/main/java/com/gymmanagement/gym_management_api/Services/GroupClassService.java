@@ -47,6 +47,10 @@ public class GroupClassService {
         return groupClassRepository.count();
     }
 
+    public Iterable<NotDetailedGroupClassDTO>getNotDetailedGroupClassesByTrainerId(Integer trainer_id){
+        return GroupClassMapper.listToNotDetailedDto(groupClassRepository.findAllByTrainer_UserId(trainer_id));
+    }
+
     //----POST----//
 
     public GroupClassDTO addGroupClass(GroupClassCreateDTO dto){
