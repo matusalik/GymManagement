@@ -9,6 +9,8 @@ import ClientsPage from "./pages/ClientsPage";
 import GroupClassesPage from "./pages/GroupClassesPage";
 import ReviewsPage from "./pages/ReviewsPage";
 import TrainerClassesPage from "./pages/TrainerClassesPage";
+import TrainerReviewsPage from "./pages/TrainerReviewsPage";
+import TrainerTrainingPlansPage from './pages/TrainerTrainingPlansPage'
 
 
 function App() {
@@ -93,6 +95,33 @@ function App() {
           )
         }
       />
+
+      <Route
+        path="/dashboard/trainer/reviews"
+        element={
+          token ? (
+            <ProtectedRoute allowedRole="TRAINER">
+              <TrainerReviewsPage />
+            </ProtectedRoute>
+          ) : (
+            <Navigate to="/login" replace />
+          )
+        }
+      />
+
+      <Route
+        path="/dashboard/trainer/training-plans"
+        element={
+          token ? (
+            <ProtectedRoute allowedRole="TRAINER">
+              <TrainerTrainingPlansPage />
+            </ProtectedRoute>
+          ) : (
+            <Navigate to="/login" replace />
+          )
+        }
+      />
+
 
 
       <Route path="/" element={token ? <Navigate to="/dashboard" replace /> : <Navigate to="/login" replace />} />

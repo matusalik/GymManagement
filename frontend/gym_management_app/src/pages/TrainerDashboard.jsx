@@ -254,11 +254,6 @@ export default function TrainerDashboard() {
           >
             Add New Training Plan
           </button>
-
-
-          <button className="w-full bg-primary text-primary-foreground py-2 rounded-lg hover:opacity-90 transition-opacity">
-            Action 3
-          </button>
         </div>
       </div>
     </div>

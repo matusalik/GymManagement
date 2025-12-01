@@ -1,6 +1,7 @@
 package com.gymmanagement.gym_management_api.Services;
 
 import com.gymmanagement.gym_management_api.DTO.TrainingGoal.TrainingGoalDTO;
+import com.gymmanagement.gym_management_api.DTO.TrainingPlan.NotDetailedTrainingPlanDTO;
 import com.gymmanagement.gym_management_api.DTO.TrainingPlan.TrainingPlanCreateDTO;
 import com.gymmanagement.gym_management_api.DTO.TrainingPlan.TrainingPlanDTO;
 import com.gymmanagement.gym_management_api.Entities.Exercise;
@@ -28,6 +29,10 @@ public class TrainingPlanService {
 
     public Iterable<TrainingPlanDTO>getTrainingPlans(){
         return TrainingPlanMapper.listToDto(tpRepository.findAll());
+    }
+
+    public Iterable<NotDetailedTrainingPlanDTO>getNotDetailedTrainingPlans(){
+        return TrainingPlanMapper.listToNotDetailedDto(tpRepository.findAll());
     }
 
     public TrainingPlanDTO getTrainingPlanById(Integer id){

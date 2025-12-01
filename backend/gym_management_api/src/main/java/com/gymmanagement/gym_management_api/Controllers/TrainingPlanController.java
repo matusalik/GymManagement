@@ -2,6 +2,7 @@ package com.gymmanagement.gym_management_api.Controllers;
 
 import com.gymmanagement.gym_management_api.Common.Tags;
 import com.gymmanagement.gym_management_api.DTO.TrainingGoal.TrainingGoalDTO;
+import com.gymmanagement.gym_management_api.DTO.TrainingPlan.NotDetailedTrainingPlanDTO;
 import com.gymmanagement.gym_management_api.DTO.TrainingPlan.TrainingPlanCreateDTO;
 import com.gymmanagement.gym_management_api.DTO.TrainingPlan.TrainingPlanDTO;
 import com.gymmanagement.gym_management_api.Entities.TrainingGoal;
@@ -23,6 +24,11 @@ public class TrainingPlanController {
     @GetMapping
     public @ResponseBody Iterable<TrainingPlanDTO>getTrainingPlans(){
         return tpService.getTrainingPlans();
+    }
+
+    @GetMapping("/notdetailed")
+    public @ResponseBody Iterable<NotDetailedTrainingPlanDTO>getNotDetailedTrainingPlans(){
+        return tpService.getNotDetailedTrainingPlans();
     }
 
     @GetMapping("/{id}")

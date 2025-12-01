@@ -3,6 +3,7 @@ package com.gymmanagement.gym_management_api.Mappers;
 import com.gymmanagement.gym_management_api.DTO.Equipment.EquipmentDTO;
 import com.gymmanagement.gym_management_api.DTO.Exercise.ExerciseCreateDTO;
 import com.gymmanagement.gym_management_api.DTO.Exercise.ExerciseDTO;
+import com.gymmanagement.gym_management_api.DTO.Exercise.NotDetailedExerciseDTO;
 import com.gymmanagement.gym_management_api.Entities.Equipment;
 import com.gymmanagement.gym_management_api.Entities.Exercise;
 import com.gymmanagement.gym_management_api.Enums.ExerciseCategory;
@@ -31,12 +32,24 @@ public class ExerciseMapper {
         return exercise;
     }
 
-
+    public static NotDetailedExerciseDTO toNotDetailedDto(Exercise exercise){
+        NotDetailedExerciseDTO dto = new NotDetailedExerciseDTO();
+        dto.setName(exercise.getName());
+        return dto;
+    }
 
     public static Iterable<ExerciseDTO>listToDto(Iterable<Exercise>exercises){
         List<ExerciseDTO> dtos = new ArrayList<>();
         for(Exercise i : exercises){
             dtos.add(toDto(i));
+        }
+        return dtos;
+    }
+
+    public static Iterable<NotDetailedExerciseDTO>listToNotDetailedDto(Iterable<Exercise>exercises){
+        List<NotDetailedExerciseDTO>dtos = new ArrayList<>();
+        for(Exercise i : exercises){
+            dtos.add(toNotDetailedDto(i));
         }
         return dtos;
     }

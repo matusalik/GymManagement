@@ -1,5 +1,6 @@
 package com.gymmanagement.gym_management_api.Mappers;
 
+import com.gymmanagement.gym_management_api.DTO.TrainingPlan.NotDetailedTrainingPlanDTO;
 import com.gymmanagement.gym_management_api.DTO.TrainingPlan.TrainingPlanCreateDTO;
 import com.gymmanagement.gym_management_api.DTO.TrainingPlan.TrainingPlanDTO;
 import com.gymmanagement.gym_management_api.Entities.Exercise;
@@ -31,6 +32,16 @@ public class TrainingPlanMapper {
         return trainingPlan;
     }
 
+    public static NotDetailedTrainingPlanDTO toNotDetailedDto(TrainingPlan trainingPlan){
+        NotDetailedTrainingPlanDTO dto = new NotDetailedTrainingPlanDTO();
+        dto.setName(trainingPlan.getName());
+        dto.setDescription(trainingPlan.getDescription());
+        dto.setDifficulty_level(trainingPlan.getDifficulty_level().name());
+        dto.setTraining_goal(TrainingGoalMapper.toDto(trainingPlan.getTraining_goal()));
+        dto.setExercises(ExerciseMapper.listToNotDetailedDto(trainingPlan.getExercises()));
+        return dto;
+    }
+
     public static Iterable<TrainingPlanDTO>listToDto(Iterable<TrainingPlan>tps){
         List<TrainingPlanDTO> dtos = new ArrayList<>();
         for(TrainingPlan i : tps){
@@ -38,4 +49,13 @@ public class TrainingPlanMapper {
         }
         return dtos;
     }
+
+    public static Iterable<NotDetailedTrainingPlanDTO>listToNotDetailedDto(Iterable<TrainingPlan>tps){
+        List<NotDetailedTrainingPlanDTO>dtos = new ArrayList<>();
+        for(TrainingPlan i : tps){
+            dtos.add(toNotDetailedDto(i));
+        }
+        return dtos;
+    }
+
 }
