@@ -47,6 +47,12 @@ public class ClientController {
         return ResponseEntity.ok(status);
     }
 
+    @GetMapping("/training_goal_name/{id}")
+    public ResponseEntity<String>getClientTrainingGoalName(@PathVariable Integer id){
+        String training_goal = clientService.getClientTrainingGoalName(id);
+        return ResponseEntity.ok(training_goal);
+    }
+
     @GetMapping("/count")
     public ResponseEntity<Long>getClientCount(){
         return ResponseEntity.ok(clientService.getClientCount());

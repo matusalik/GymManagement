@@ -1,5 +1,6 @@
 package com.gymmanagement.gym_management_api.Mappers;
 
+import com.gymmanagement.gym_management_api.DTO.Trainer.NotDetailedTrainerDTO;
 import com.gymmanagement.gym_management_api.DTO.Trainer.TrainerCreateDTO;
 import com.gymmanagement.gym_management_api.DTO.Trainer.TrainerDTO;
 import com.gymmanagement.gym_management_api.Entities.Trainer;
@@ -39,10 +40,26 @@ public class TrainerMapper {
         return trainer;
     }
 
+    public static NotDetailedTrainerDTO toNotDetailedDto(Trainer trainer){
+        NotDetailedTrainerDTO dto = new NotDetailedTrainerDTO();
+        dto.setTrainer_id(trainer.getUserId());
+        dto.setName(trainer.getFirst_name());
+        dto.setLast_name(trainer.getLast_name());
+        return dto;
+    }
+
     public static Iterable<TrainerDTO>listToDto(Iterable<Trainer>trainers){
         List<TrainerDTO> dtos = new ArrayList<>();
         for(Trainer i : trainers){
             dtos.add(toDto(i));
+        }
+        return dtos;
+    }
+
+    public static Iterable<NotDetailedTrainerDTO>listToNotDetailedDto(Iterable<Trainer>trainers){
+        List<NotDetailedTrainerDTO> dtos = new ArrayList<>();
+        for(Trainer i : trainers){
+            dtos.add(toNotDetailedDto(i));
         }
         return dtos;
     }

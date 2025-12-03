@@ -51,6 +51,12 @@ public class ClientService {
         return client.getMembership().getName();
     }
 
+    public String getClientTrainingGoalName(Integer id){
+        Client client = clientRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Client with id: " + id + " not found."));
+        return client.getTraining_goal().getName();
+    }
+
     public Long getClientCount(){
         return clientRepository.count();
     }

@@ -1,5 +1,6 @@
 package com.gymmanagement.gym_management_api.Services;
 
+import com.gymmanagement.gym_management_api.DTO.Trainer.NotDetailedTrainerDTO;
 import com.gymmanagement.gym_management_api.DTO.Trainer.TrainerCreateDTO;
 import com.gymmanagement.gym_management_api.DTO.Trainer.TrainerDTO;
 import com.gymmanagement.gym_management_api.Entities.Specialization;
@@ -25,6 +26,10 @@ public class TrainerService {
         return TrainerMapper.listToDto(trainerRepository.findAll());
     }
 
+    public Iterable<NotDetailedTrainerDTO>getNotDetailedTrainers(){
+        return TrainerMapper.listToNotDetailedDto(trainerRepository.findAll());
+    }
+
     public TrainerDTO getTrainerById(Integer id){
         Trainer trainer = trainerRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Trainer with id: " + id + " not found."));
@@ -40,7 +45,6 @@ public class TrainerService {
                 .orElseThrow(() -> new EntityNotFoundException("Trainer with id: " + id + " not found."));
         return trainer.getBio();
     }
-
 
     //------POST-----//
 

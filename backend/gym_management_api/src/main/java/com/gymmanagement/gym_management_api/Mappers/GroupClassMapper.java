@@ -2,6 +2,7 @@ package com.gymmanagement.gym_management_api.Mappers;
 
 import com.gymmanagement.gym_management_api.DTO.GroupClass.GroupClassCreateDTO;
 import com.gymmanagement.gym_management_api.DTO.GroupClass.GroupClassDTO;
+import com.gymmanagement.gym_management_api.DTO.GroupClass.NameDateGroupClassDTO;
 import com.gymmanagement.gym_management_api.DTO.GroupClass.NotDetailedGroupClassDTO;
 import com.gymmanagement.gym_management_api.Entities.Client;
 import com.gymmanagement.gym_management_api.Entities.GroupClass;
@@ -57,6 +58,22 @@ public class GroupClassMapper {
         List<NotDetailedGroupClassDTO>dtos = new ArrayList<>();
         for(GroupClass i : groupClasses){
             dtos.add(toNotDetailedDto(i));
+        }
+        return dtos;
+    }
+
+    public static NameDateGroupClassDTO toNameDateDto(GroupClass groupClass){
+        NameDateGroupClassDTO dto = new NameDateGroupClassDTO();
+        dto.setGroup_class_id(groupClass.getGroupClassId());
+        dto.setName(groupClass.getName());
+        dto.setDate_time(groupClass.getDate_time());
+        return dto;
+    }
+
+    public static Iterable<NameDateGroupClassDTO>listToNameDateDto(Iterable<GroupClass>groupClasses){
+        List<NameDateGroupClassDTO>dtos = new ArrayList<>();
+        for(GroupClass i : groupClasses){
+            dtos.add(toNameDateDto(i));
         }
         return dtos;
     }

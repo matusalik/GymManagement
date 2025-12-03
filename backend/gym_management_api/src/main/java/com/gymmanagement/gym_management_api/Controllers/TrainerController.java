@@ -1,6 +1,7 @@
 package com.gymmanagement.gym_management_api.Controllers;
 
 import com.gymmanagement.gym_management_api.Common.Tags;
+import com.gymmanagement.gym_management_api.DTO.Trainer.NotDetailedTrainerDTO;
 import com.gymmanagement.gym_management_api.DTO.Trainer.TrainerCreateDTO;
 import com.gymmanagement.gym_management_api.DTO.Trainer.TrainerDTO;
 import com.gymmanagement.gym_management_api.Services.TrainerService;
@@ -22,6 +23,11 @@ public class TrainerController {
     @GetMapping
     public @ResponseBody Iterable<TrainerDTO>getTrainers(){
         return trainerService.getTrainers();
+    }
+
+    @GetMapping("/notdetailed")
+    public @ResponseBody Iterable<NotDetailedTrainerDTO>getNotDetailedTrainers(){
+        return trainerService.getNotDetailedTrainers();
     }
 
     @GetMapping("/{id}")

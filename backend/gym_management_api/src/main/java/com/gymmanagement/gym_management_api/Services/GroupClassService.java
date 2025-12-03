@@ -2,6 +2,7 @@ package com.gymmanagement.gym_management_api.Services;
 
 import com.gymmanagement.gym_management_api.DTO.GroupClass.GroupClassCreateDTO;
 import com.gymmanagement.gym_management_api.DTO.GroupClass.GroupClassDTO;
+import com.gymmanagement.gym_management_api.DTO.GroupClass.NameDateGroupClassDTO;
 import com.gymmanagement.gym_management_api.DTO.GroupClass.NotDetailedGroupClassDTO;
 import com.gymmanagement.gym_management_api.Entities.Client;
 import com.gymmanagement.gym_management_api.Entities.GroupClass;
@@ -14,6 +15,7 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -51,6 +53,18 @@ public class GroupClassService {
         return GroupClassMapper.listToNotDetailedDto(groupClassRepository.findAllByTrainer_UserId(trainer_id));
     }
 
+    public Iterable<NotDetailedGroupClassDTO>getNotDetailedGroupClassesByClientId(Integer client_id){
+        return GroupClassMapper.listToNotDetailedDto(groupClassRepository.findAllByClientId(client_id));
+    }
+
+    public Iterable<NotDetailedGroupClassDTO>getFutureNotDetailedGroupClassesByClientId(Integer client_id){
+        return GroupClassMapper.listToNotDetailedDto(groupClassRepository.findAllFutureByClientId(client_id, LocalDateTime.now()));
+    }
+
+    public Iterable<NameDateGroupClassDTO>getAvailableToSignUp(Integer client_id){
+        return GroupClassMapper.listToNameDateDto(groupClassRepository.findAllFutureWhereClientNotPresent(client_id, LocalDateTime.now()));
+    }
+
     //----POST----//
 
     public GroupClassDTO addGroupClass(GroupClassCreateDTO dto){
@@ -62,5 +76,18 @@ public class GroupClassService {
 
         GroupClass groupClass = GroupClassMapper.toEntity(dto, trainer, clients);
         return GroupClassMapper.toDto(groupClassRepository.save(groupClass));
+    }
+
+    public void addClientToGroupClass(Integer group_class_id, Integer client_id){
+        GroupClass groupClass = groupClassRepository.findById(group_class_id)
+                .orElseThrow(() -> new EntityNotFoundException("Group Class with id: " + group_class_id + " not found."));
+
+        Client client = clientRepository.findById(client_id)
+                .orElseThrow(() -> new EntityNotFoundException("Client with id: " + client_id + " not found."));
+
+        if(!groupClass.getClient_list().contains(client)){
+            groupClass.getClient_list().add(client);
+            groupClassRepository.save(groupClass);
+        }
     }
 }

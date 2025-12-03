@@ -14,8 +14,8 @@ export const TRAINER_MENU = [
 
 
 export const CLIENT_MENU = [
-  { path: '/dashboard', label: 'Overview', icon: '📊' },
-  { path: '/dashboard/my-workouts', label: 'My Workouts', icon: '💪' },
-  { path: '/dashboard/classes', label: 'Classes', icon: '📅' },
-  { path: '/dashboard/progress', label: 'Progress', icon: '📈' },
+  { path: '/dashboard/client', label: 'Overview', icon: '📊' },
+  { path: '/dashboard/client/my-workouts', label: 'My Workouts', icon: '💪' },
+  { path: '/dashboard/client/classes', label: 'Classes', icon: '📅' },
+  { path: '/dashboard/client/progress', label: 'Progress', icon: '📈' },
 ]
