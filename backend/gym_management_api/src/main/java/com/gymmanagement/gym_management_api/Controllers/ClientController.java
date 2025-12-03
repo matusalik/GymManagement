@@ -35,6 +35,18 @@ public class ClientController {
         return ResponseEntity.ok(clientDto);
     }
 
+    @GetMapping("/status/{id}")
+    public ResponseEntity<String> getClientStatus(@PathVariable Integer id) {
+        String status = clientService.getClientStatus(id);
+        return ResponseEntity.ok(status);
+    }
+
+    @GetMapping("/membership_name/{id}")
+    public ResponseEntity<String> getClientMembershipName(@PathVariable Integer id) {
+        String status = clientService.getClientMembershipName(id);
+        return ResponseEntity.ok(status);
+    }
+
     @GetMapping("/count")
     public ResponseEntity<Long>getClientCount(){
         return ResponseEntity.ok(clientService.getClientCount());

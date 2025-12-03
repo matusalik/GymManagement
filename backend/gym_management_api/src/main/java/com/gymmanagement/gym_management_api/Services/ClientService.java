@@ -39,6 +39,18 @@ public class ClientService {
         return ClientMapper.toDetailedDto(client);
     }
 
+    public String getClientStatus(Integer id){
+        Client client = clientRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Client with id: " + id + " not found."));
+        return client.getStatus().name();
+    }
+
+    public String getClientMembershipName(Integer id){
+        Client client = clientRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Client with id: " + id + " not found."));
+        return client.getMembership().getName();
+    }
+
     public Long getClientCount(){
         return clientRepository.count();
     }

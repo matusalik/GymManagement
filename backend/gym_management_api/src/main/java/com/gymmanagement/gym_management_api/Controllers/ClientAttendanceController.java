@@ -6,6 +6,7 @@ import com.gymmanagement.gym_management_api.DTO.ClientAttendance.ClientAttendanc
 import com.gymmanagement.gym_management_api.Services.ClientAttendanceService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
@@ -20,6 +21,11 @@ public class ClientAttendanceController {
     @GetMapping
     public @ResponseBody Iterable<ClientAttendanceDTO>getClientAttendances(){
         return clientAttendanceService.getClientAttendances();
+    }
+
+    @GetMapping("/count/{clientId}")
+    public ResponseEntity<Long>getClientAttendanceCountByClientId(@PathVariable Integer clientId){
+        return ResponseEntity.ok(clientAttendanceService.getClientAttendanceCountByClientId(clientId));
     }
 
     //----POST----//

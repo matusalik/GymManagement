@@ -23,6 +23,10 @@ public class ClientAttendanceService {
         return ClientAttendanceMapper.listToDto(clientAttendanceRepository.findAll());
     }
 
+    public Long getClientAttendanceCountByClientId(Integer clientId){
+        return clientAttendanceRepository.countByClient_UserId(clientId);
+    }
+
     //-----POST-----//
 
     public ClientAttendanceDTO addAttendance(ClientAttendanceCreateDTO dto){
