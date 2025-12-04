@@ -11,6 +11,8 @@ import ReviewsPage from "./pages/ReviewsPage";
 import TrainerClassesPage from "./pages/TrainerClassesPage";
 import TrainerReviewsPage from "./pages/TrainerReviewsPage";
 import TrainerTrainingPlansPage from './pages/TrainerTrainingPlansPage'
+import ClientProfilePage from "./pages/ClientProfilePage";
+
 
 
 function App() {
@@ -121,6 +123,20 @@ function App() {
           )
         }
       />
+
+      <Route
+        path="/dashboard/client/profile"
+        element={
+          token ? (
+            <ProtectedRoute allowedRole="CLIENT">
+              <ClientProfilePage />
+            </ProtectedRoute>
+          ) : (
+            <Navigate to="/login" replace />
+          )
+        }
+      />
+
 
 
 

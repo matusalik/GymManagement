@@ -1,5 +1,6 @@
 package com.gymmanagement.gym_management_api.Mappers;
 
+import com.gymmanagement.gym_management_api.DTO.User.NotDetailedUserDTO;
 import com.gymmanagement.gym_management_api.DTO.User.UserCreateDTO;
 import com.gymmanagement.gym_management_api.DTO.User.UserDTO;
 import com.gymmanagement.gym_management_api.DTO.User.UserDetailedDTO;
@@ -32,6 +33,16 @@ public class UserMapper {
         dto.setPhone(user.getPhone());
         dto.setEmail(user.getEmail());
         dto.setUser_type(user.getUser_type());
+        return dto;
+    }
+
+    public static NotDetailedUserDTO toNotDetailedDto(User user){
+        NotDetailedUserDTO dto = new NotDetailedUserDTO();
+        dto.setUsername(user.getUsername());
+        dto.setFirst_name(user.getFirst_name());
+        dto.setLast_name(user.getLast_name());
+        dto.setPhone(user.getPhone());
+        dto.setEmail(user.getEmail());
         return dto;
     }
 
