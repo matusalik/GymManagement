@@ -12,8 +12,7 @@ import TrainerClassesPage from "./pages/TrainerClassesPage";
 import TrainerReviewsPage from "./pages/TrainerReviewsPage";
 import TrainerTrainingPlansPage from './pages/TrainerTrainingPlansPage'
 import ClientProfilePage from "./pages/ClientProfilePage";
-
-
+import ClientAttendancePage from "./pages/ClientAttendancePage";
 
 function App() {
   const { token, loading } = useAuth()
@@ -137,9 +136,18 @@ function App() {
         }
       />
 
-
-
-
+        <Route
+        path="/dashboard/client/attendance"
+        element={
+          token ? (
+            <ProtectedRoute allowedRole="CLIENT">
+              <ClientAttendancePage />
+            </ProtectedRoute>
+          ) : (
+            <Navigate to="/login" replace />
+          )
+        }
+      />
       <Route path="/" element={token ? <Navigate to="/dashboard" replace /> : <Navigate to="/login" replace />} />
       <Route path="*" element={<Navigate to={token ? "/dashboard" : "/login"} replace />} />
     </Routes>

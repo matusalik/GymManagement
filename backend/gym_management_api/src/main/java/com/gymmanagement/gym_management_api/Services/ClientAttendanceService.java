@@ -2,6 +2,7 @@ package com.gymmanagement.gym_management_api.Services;
 
 import com.gymmanagement.gym_management_api.DTO.ClientAttendance.ClientAttendanceCreateDTO;
 import com.gymmanagement.gym_management_api.DTO.ClientAttendance.ClientAttendanceDTO;
+import com.gymmanagement.gym_management_api.DTO.ClientAttendance.ClientAttendanceDateDTO;
 import com.gymmanagement.gym_management_api.Entities.Client;
 import com.gymmanagement.gym_management_api.Entities.ClientAttendance;
 import com.gymmanagement.gym_management_api.Mappers.ClientAttendanceMapper;
@@ -21,6 +22,10 @@ public class ClientAttendanceService {
 
     public Iterable<ClientAttendanceDTO>getClientAttendances(){
         return ClientAttendanceMapper.listToDto(clientAttendanceRepository.findAll());
+    }
+
+    public Iterable<ClientAttendanceDateDTO>getClientAttendancesByClientId(Integer client_id){
+        return ClientAttendanceMapper.listToDateDto(clientAttendanceRepository.findAllByClient_UserId(client_id));
     }
 
     public Long getClientAttendanceCountByClientId(Integer clientId){

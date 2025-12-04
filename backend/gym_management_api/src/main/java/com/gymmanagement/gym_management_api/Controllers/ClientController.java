@@ -70,6 +70,14 @@ public class ClientController {
         return clientService.addClient(dto);
     }
 
+    //----PATCH----//
+
+    @PatchMapping("/training_goal/{client_id}/{training_goal_id}")
+    public ResponseEntity<Void>changeTrainingGoal(@PathVariable Integer client_id, @PathVariable Integer training_goal_id){
+        clientService.changeTrainingGoal(client_id, training_goal_id);
+        return ResponseEntity.ok().build();
+    }
+
     //----DELETE----//
 
     @DeleteMapping("/{id}")

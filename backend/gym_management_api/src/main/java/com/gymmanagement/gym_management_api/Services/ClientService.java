@@ -95,6 +95,19 @@ public class ClientService {
         return ClientMapper.toDto(userRepository.save(client));
     }
 
+    //----PATCH----//
+
+    public void changeTrainingGoal(Integer client_id, Integer training_goal_id){
+        Client client = clientRepository.findById(client_id)
+                .orElseThrow(() -> new ResourceNotFoundException("Client not found."));
+
+        TrainingGoal trainingGoal = trainingGoalRepository.findById(training_goal_id)
+                .orElseThrow(() -> new ResourceNotFoundException("TrainingGoal not found."));
+
+        client.setTraining_goal(trainingGoal);
+        clientRepository.save(client);
+    }
+
     //----DELETE----//
 
     public void deleteClient(Integer id){

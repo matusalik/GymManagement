@@ -1,5 +1,6 @@
 package com.gymmanagement.gym_management_api.Services;
 
+import com.gymmanagement.gym_management_api.DTO.TrainingGoal.NotDetailedTrainingGoalDTO;
 import com.gymmanagement.gym_management_api.DTO.TrainingGoal.TrainingGoalCreateDTO;
 import com.gymmanagement.gym_management_api.DTO.TrainingGoal.TrainingGoalDTO;
 import com.gymmanagement.gym_management_api.Entities.TrainingGoal;
@@ -19,6 +20,10 @@ public class TrainingGoalService {
 
     public Iterable<TrainingGoalDTO>getTrainingGoals(){
         return TrainingGoalMapper.listToDto(tgRepository.findAll());
+    }
+
+    public Iterable<NotDetailedTrainingGoalDTO>getNotDetailedTrainingGoals(){
+        return TrainingGoalMapper.listToNotDetailedDto(tgRepository.findAll());
     }
 
     public TrainingGoalDTO getTrainingGoalById(@PathVariable Integer id){

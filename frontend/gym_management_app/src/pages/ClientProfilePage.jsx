@@ -4,6 +4,8 @@ import { CLIENT_MENU } from "../constants/menuItems";
 import { useAuth } from "../context/AuthContext";
 import EditProfileModal from "../components/EditProfileModal";
 import ChangePasswordModal from "../components/ChangePasswordModal";
+import ChangeTrainingGoalModal from "../components/ChangeTrainingGoalModal";
+
 
 
 
@@ -15,6 +17,8 @@ export default function ClientProfilePage() {
   const [showChangePassModal, setShowChangePassModal] = useState(false);
   const [trainingGoalName, setTrainingGoalName] = useState("Loading...");
   const [loadingTrainingGoal, setLoadingTrainingGoal] = useState(true);
+  const [showTrainingGoalModal, setShowTrainingGoalModal] = useState(false);
+
 
 
 
@@ -138,9 +142,13 @@ export default function ClientProfilePage() {
                 </button>
 
 
-              <button className="w-full bg-primary text-primary-foreground py-2 rounded-lg hover:opacity-90 transition">
-                Action 3
+              <button
+                onClick={() => setShowTrainingGoalModal(true)}
+                className="w-full bg-primary text-primary-foreground py-2 rounded-lg hover:opacity-90 transition"
+              >
+                Change Training Goal
               </button>
+
 
             </div>
           </div>
@@ -158,6 +166,12 @@ export default function ClientProfilePage() {
     isOpen={showChangePassModal}
     onClose={() => setShowChangePassModal(false)}
     />
+    <ChangeTrainingGoalModal
+      isOpen={showTrainingGoalModal}
+      onClose={() => setShowTrainingGoalModal(false)}
+      onSuccess={() => window.location.reload()} 
+    />
+
   </DashboardLayout>
 );
 }

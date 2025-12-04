@@ -1,6 +1,7 @@
 package com.gymmanagement.gym_management_api.Mappers;
 
 import com.gymmanagement.gym_management_api.DTO.ClientAttendance.ClientAttendanceDTO;
+import com.gymmanagement.gym_management_api.DTO.ClientAttendance.ClientAttendanceDateDTO;
 import com.gymmanagement.gym_management_api.Entities.Client;
 import com.gymmanagement.gym_management_api.Entities.ClientAttendance;
 
@@ -23,10 +24,24 @@ public class ClientAttendanceMapper {
         return clientAttendance;
     }
 
+    public static ClientAttendanceDateDTO toDateDto(ClientAttendance clientAttendance){
+        ClientAttendanceDateDTO dto = new ClientAttendanceDateDTO();
+        dto.setDate_time(clientAttendance.getDate_time());
+        return dto;
+    }
+
     public static Iterable<ClientAttendanceDTO>listToDto(Iterable<ClientAttendance>clientAttendances){
         List<ClientAttendanceDTO> dtos = new ArrayList<>();
         for(ClientAttendance i : clientAttendances){
             dtos.add(toDto(i));
+        }
+        return dtos;
+    }
+
+    public static Iterable<ClientAttendanceDateDTO>listToDateDto(Iterable<ClientAttendance>clientAttendances){
+        List<ClientAttendanceDateDTO> dtos = new ArrayList<>();
+        for(ClientAttendance i : clientAttendances){
+            dtos.add(toDateDto(i));
         }
         return dtos;
     }

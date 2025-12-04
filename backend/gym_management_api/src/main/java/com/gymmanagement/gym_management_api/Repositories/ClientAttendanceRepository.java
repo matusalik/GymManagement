@@ -5,4 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ClientAttendanceRepository extends JpaRepository<ClientAttendance, Integer> {
     long countByClient_UserId(Integer clientId);
+    Iterable<ClientAttendance>findAllByClient_UserId(Integer clientId);
 }

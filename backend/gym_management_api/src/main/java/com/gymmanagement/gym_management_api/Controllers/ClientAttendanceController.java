@@ -3,6 +3,7 @@ package com.gymmanagement.gym_management_api.Controllers;
 import com.gymmanagement.gym_management_api.Common.Tags;
 import com.gymmanagement.gym_management_api.DTO.ClientAttendance.ClientAttendanceCreateDTO;
 import com.gymmanagement.gym_management_api.DTO.ClientAttendance.ClientAttendanceDTO;
+import com.gymmanagement.gym_management_api.DTO.ClientAttendance.ClientAttendanceDateDTO;
 import com.gymmanagement.gym_management_api.Services.ClientAttendanceService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +22,11 @@ public class ClientAttendanceController {
     @GetMapping
     public @ResponseBody Iterable<ClientAttendanceDTO>getClientAttendances(){
         return clientAttendanceService.getClientAttendances();
+    }
+
+    @GetMapping("/{clientId}")
+    public @ResponseBody Iterable<ClientAttendanceDateDTO>getClientAttendancesByClientId(@PathVariable Integer clientId){
+        return clientAttendanceService.getClientAttendancesByClientId(clientId);
     }
 
     @GetMapping("/count/{clientId}")
