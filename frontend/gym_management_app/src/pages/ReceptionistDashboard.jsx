@@ -6,6 +6,10 @@ import { RECEPTIONIST_MENU } from '../constants/menuItems';
 import AddClientModal from "../components/AddClientModal";
 import { useNavigate } from "react-router-dom";
 import CheckInModal from "../components/CheckInModal";
+import ChangeEquipmentConditionModal from "../components/ChangeEquipmentConditionModal";
+import ChangeEquipmentLocationModal from "../components/ChangeEquipmentLocationModal";
+
+
 
 
 export default function ReceptionistDashboard() {
@@ -18,6 +22,10 @@ export default function ReceptionistDashboard() {
   const [reviewsLoading, setReviewsLoading] = useState(false);
   const [showAddClientModal, setShowAddClientModal] = useState(false);
   const [showCheckInModal, setShowCheckInModal] = useState(false);
+  const [showEquipmentModal, setShowEquipmentModal] = useState(false);
+  const [showLocationModal, setShowLocationModal] = useState(false);
+
+
 
   const navigate = useNavigate();
 
@@ -209,6 +217,18 @@ export default function ReceptionistDashboard() {
               >
                 Check-In Client
               </button>
+              <button
+                onClick={() => setShowEquipmentModal(true)}
+                className="w-full bg-primary text-primary-foreground py-2 rounded-lg hover:opacity-90 transition-opacity"
+              >
+                Change Equipment Condition
+              </button>
+              <button
+                onClick={() => setShowLocationModal(true)}
+                className="w-full bg-primary text-primary-foreground py-2 rounded-lg hover:opacity-90 transition-opacity"
+              >
+                Change Equipment Location
+              </button>
             </div>
           </div>
         </div>
@@ -221,6 +241,16 @@ export default function ReceptionistDashboard() {
       <CheckInModal
         isOpen={showCheckInModal}
         onClose={() => setShowCheckInModal(false)}
+        onSuccess={() => {}}
+      />
+      <ChangeEquipmentConditionModal
+        isOpen={showEquipmentModal}
+        onClose={() => setShowEquipmentModal(false)}
+        onSuccess={() => {}}
+      />
+      <ChangeEquipmentLocationModal
+        isOpen={showLocationModal}
+        onClose={() => setShowLocationModal(false)}
         onSuccess={() => {}}
       />
     </DashboardLayout>

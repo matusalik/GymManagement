@@ -2,7 +2,9 @@ export const RECEPTIONIST_MENU = [
   { path: '/dashboard', label: 'Overview', icon: '📊' },
   { path: '/dashboard/clients', label: 'Clients', icon: '👥' },
   { path: '/dashboard/classes', label: 'Classes', icon: '📅' },
-  {  path: "/dashboard/reviews", label: "Reviews", icon: '📈'},
+  { path: "/dashboard/reviews", label: "Reviews", icon: '📈'},
+  { path: "/dashboard/equipment", label: "Equipment", icon: '🏋️'},
+  { path: "/dashboard/trainers", label: "Trainers", icon: '🏋️‍♂️'},
 ]
 
 export const TRAINER_MENU = [

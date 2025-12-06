@@ -1,6 +1,7 @@
 package com.gymmanagement.gym_management_api.Mappers;
 
 import com.gymmanagement.gym_management_api.DTO.Equipment.EquipmentDTO;
+import com.gymmanagement.gym_management_api.DTO.Equipment.NotDetailedEquipmentDTO;
 import com.gymmanagement.gym_management_api.Entities.Equipment;
 import com.gymmanagement.gym_management_api.Enums.EquipmentAvailability;
 import com.gymmanagement.gym_management_api.Enums.EquipmentCondition;
@@ -32,10 +33,26 @@ public class EquipmentMapper {
         return eq;
     }
 
+    public static NotDetailedEquipmentDTO toNotDetailedDto(Equipment equipment){
+        NotDetailedEquipmentDTO dto = new NotDetailedEquipmentDTO();
+        dto.setEquipment_id(equipment.getEquipmentId());
+        dto.setName(equipment.getName());
+        dto.setEquipment_location(equipment.getEquipment_location().name());
+        return dto;
+    }
+
     public static Iterable<EquipmentDTO>listToDto(Iterable<Equipment>equipment){
         List<EquipmentDTO> dtos = new ArrayList<>();
         for(Equipment i : equipment){
             dtos.add(toDto(i));
+        }
+        return dtos;
+    }
+
+    public static Iterable<NotDetailedEquipmentDTO>listToNotDetailedDto(Iterable<Equipment>equipment){
+        List<NotDetailedEquipmentDTO> dtos = new ArrayList<>();
+        for(Equipment i : equipment){
+            dtos.add(toNotDetailedDto(i));
         }
         return dtos;
     }

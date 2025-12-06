@@ -13,6 +13,10 @@ import TrainerReviewsPage from "./pages/TrainerReviewsPage";
 import TrainerTrainingPlansPage from './pages/TrainerTrainingPlansPage'
 import ClientProfilePage from "./pages/ClientProfilePage";
 import ClientAttendancePage from "./pages/ClientAttendancePage";
+import EquipmentPage from "./pages/EquipmentPage";
+import TrainersPage from "./pages/TrainersPage";
+
+
 
 function App() {
   const { token, loading } = useAuth()
@@ -148,6 +152,34 @@ function App() {
           )
         }
       />
+
+      <Route
+        path="/dashboard/equipment"
+        element={
+          token ? (
+            <ProtectedRoute allowedRole="ADMIN">
+              <EquipmentPage />
+            </ProtectedRoute>
+          ) : (
+            <Navigate to="/login" replace />
+          )
+        }
+      />
+
+      <Route
+        path="/dashboard/trainers"
+        element={
+          token ? (
+            <ProtectedRoute allowedRole="ADMIN">
+              <TrainersPage />
+            </ProtectedRoute>
+          ) : (
+            <Navigate to="/login" replace />
+          )
+        }
+      />
+
+
       <Route path="/" element={token ? <Navigate to="/dashboard" replace /> : <Navigate to="/login" replace />} />
       <Route path="*" element={<Navigate to={token ? "/dashboard" : "/login"} replace />} />
     </Routes>
