@@ -42,6 +42,12 @@ public class TrainerAvailabilityService {
 
     public TrainerAvailabilityDTO addTrainerAvailability(TrainerAvailabilityCreateDTO dto){
         Integer trainer_id = dto.getTrainer_id();
+        String day_of_the_week = dto.getDay_of_the_week();
+
+        if(trainerAvailabilityRepository.existsByTrainerIdAndDayOfTheWeek(trainer_id, day_of_the_week)){
+            throw new IllegalArgumentException("Availability for " + day_of_the_week + " already exists.");
+        }
+
         Trainer trainer = trainerRepository.findById(trainer_id)
                 .orElseThrow(() -> new EntityNotFoundException("Trainer with id: " + trainer_id + " not found."));
 

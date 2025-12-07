@@ -7,6 +7,7 @@ import com.gymmanagement.gym_management_api.DTO.TrainerAvailability.TrainerAvail
 import com.gymmanagement.gym_management_api.Services.TrainerAvailabilityService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,7 +43,13 @@ public class TrainerAvailabilityController {
     //-----POST-----//
 
     @PostMapping
-    public TrainerAvailabilityDTO addTrainerAvailability(@RequestBody TrainerAvailabilityCreateDTO dto){
-        return trainerAvailabilityService.addTrainerAvailability(dto);
+    public ResponseEntity<String> addTrainerAvailability(@RequestBody TrainerAvailabilityCreateDTO dto){
+        try{
+            trainerAvailabilityService.addTrainerAvailability(dto);
+            return ResponseEntity.ok().build();
+        }
+        catch(IllegalArgumentException e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
     }
 }
