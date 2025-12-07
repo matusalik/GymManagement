@@ -1,17 +1,19 @@
 export const RECEPTIONIST_MENU = [
   { path: '/dashboard', label: 'Overview', icon: '📊' },
   { path: '/dashboard/clients', label: 'Clients', icon: '👥' },
+  { path: "/dashboard/trainers", label: "Trainers", icon: '🏋️‍♂️'},
   { path: '/dashboard/classes', label: 'Classes', icon: '📅' },
   { path: "/dashboard/reviews", label: "Reviews", icon: '📈'},
   { path: "/dashboard/equipment", label: "Equipment", icon: '🏋️'},
-  { path: "/dashboard/trainers", label: "Trainers", icon: '🏋️‍♂️'},
+  
 ]
 
 export const TRAINER_MENU = [
   { label: "Dashboard", path: "/dashboard/trainer", icon: "📊" },
   { label: "My Classes", path: "/dashboard/trainer/classes", icon: "📅" },
   { label: "My Reviews", path: "/dashboard/trainer/reviews", icon: "⭐" },
-  { label: "Training Plans", path: "/dashboard/trainer/training-plans", icon: "📘" }
+  { label: "Training Plans", path: "/dashboard/trainer/training-plans", icon: "📘" },
+  { label: "My Availability", icon: "🗓️", path: "/dashboard/trainer/availability" }
 ];
 
 

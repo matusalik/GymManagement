@@ -15,6 +15,8 @@ import ClientProfilePage from "./pages/ClientProfilePage";
 import ClientAttendancePage from "./pages/ClientAttendancePage";
 import EquipmentPage from "./pages/EquipmentPage";
 import TrainersPage from "./pages/TrainersPage";
+import TrainerAvailabilityPage from "./pages/TrainerAvailabilityPage";
+
 
 
 
@@ -179,6 +181,20 @@ function App() {
         }
       />
 
+    <Route
+      path="/dashboard/trainer/availability"
+      element={
+        token ? (
+          <ProtectedRoute allowedRole="TRAINER">
+            <TrainerAvailabilityPage />
+          </ProtectedRoute>
+        ) : (
+          <Navigate to="/login" replace />
+        )
+      }
+    />
+
+        
 
       <Route path="/" element={token ? <Navigate to="/dashboard" replace /> : <Navigate to="/login" replace />} />
       <Route path="*" element={<Navigate to={token ? "/dashboard" : "/login"} replace />} />

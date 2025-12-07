@@ -14,7 +14,7 @@ export default function ReviewsPage() {
   useEffect(() => {
     const fetchReviews = async () => {
       try {
-        const response = await fetch("http://localhost:8080/api/reviews/recent", {
+        const response = await fetch("http://localhost:8080/api/reviews/notdetailed", {
           method: "GET",
           headers: {
             Authorization: `Bearer ${token}`,

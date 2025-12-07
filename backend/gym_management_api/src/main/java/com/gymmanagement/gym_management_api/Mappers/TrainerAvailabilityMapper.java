@@ -1,5 +1,6 @@
 package com.gymmanagement.gym_management_api.Mappers;
 
+import com.gymmanagement.gym_management_api.DTO.TrainerAvailability.NotDetailedTrainerAvailabilityDTO;
 import com.gymmanagement.gym_management_api.DTO.TrainerAvailability.TrainerAvailabilityCreateDTO;
 import com.gymmanagement.gym_management_api.DTO.TrainerAvailability.TrainerAvailabilityDTO;
 import com.gymmanagement.gym_management_api.Entities.Trainer;
@@ -28,10 +29,27 @@ public class TrainerAvailabilityMapper {
         return trainerAvailability;
     }
 
+    public static NotDetailedTrainerAvailabilityDTO toNotDetailedDto(TrainerAvailability trainerAvailability){
+        NotDetailedTrainerAvailabilityDTO dto = new NotDetailedTrainerAvailabilityDTO();
+        dto.setTrainer_id(trainerAvailability.getTrainer().getUserId());
+        dto.setDay_of_the_week(trainerAvailability.getDay_of_the_week().name());
+        dto.setStart_time(trainerAvailability.getStart_time());
+        dto.setEnd_time(trainerAvailability.getEnd_time());
+        return dto;
+    }
+
     public static Iterable<TrainerAvailabilityDTO>listToDto(Iterable<TrainerAvailability>trainerAvailabilities){
         List<TrainerAvailabilityDTO>dtos = new ArrayList<>();
         for(TrainerAvailability i : trainerAvailabilities){
             dtos.add(toDto(i));
+        }
+        return dtos;
+    }
+
+    public static Iterable<NotDetailedTrainerAvailabilityDTO>listToNotDetailedDto(Iterable<TrainerAvailability>trainerAvailabilities){
+        List<NotDetailedTrainerAvailabilityDTO>dtos = new ArrayList<>();
+        for(TrainerAvailability i : trainerAvailabilities){
+            dtos.add(toNotDetailedDto(i));
         }
         return dtos;
     }

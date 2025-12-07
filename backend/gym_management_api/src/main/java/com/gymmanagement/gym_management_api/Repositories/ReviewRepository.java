@@ -8,4 +8,5 @@ import java.util.List;
 public interface ReviewRepository extends JpaRepository<Review, Integer> {
     long countByTrainer_UserId(Integer trainerId);
     Iterable<Review>findAllByTrainer_UserId(Integer trainerId);
+    Iterable<Review>findTop3ByOrderByDateDesc();
 }

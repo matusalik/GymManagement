@@ -35,6 +35,10 @@ public class ReviewService {
         return ReviewMapper.listToNotDetailedDto(reviewRepository.findAll());
     }
 
+    public Iterable<NotDetailedReviewDTO>getRecentNotDetailedReviews(){
+        return ReviewMapper.listToNotDetailedDto(reviewRepository.findTop3ByOrderByDateDesc());
+    }
+
     public ReviewDTO getReviewById(Integer id){
         Review review = reviewRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Review with id: " + id + " not found."));

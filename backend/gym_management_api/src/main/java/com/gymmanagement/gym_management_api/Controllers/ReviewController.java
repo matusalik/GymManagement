@@ -26,6 +26,11 @@ public class ReviewController {
     }
 
     @GetMapping("/recent")
+    public @ResponseBody Iterable<NotDetailedReviewDTO>getRecentNotDetailedReviews(){
+        return reviewService.getRecentNotDetailedReviews();
+    }
+
+    @GetMapping("/notdetailed")
     public @ResponseBody Iterable<NotDetailedReviewDTO>getNotDetailedReviews(){
         return reviewService.getNotDetailedReviews();
     }

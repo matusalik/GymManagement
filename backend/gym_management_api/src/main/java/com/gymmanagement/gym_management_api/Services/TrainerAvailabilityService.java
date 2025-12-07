@@ -1,5 +1,6 @@
 package com.gymmanagement.gym_management_api.Services;
 
+import com.gymmanagement.gym_management_api.DTO.TrainerAvailability.NotDetailedTrainerAvailabilityDTO;
 import com.gymmanagement.gym_management_api.DTO.TrainerAvailability.TrainerAvailabilityCreateDTO;
 import com.gymmanagement.gym_management_api.DTO.TrainerAvailability.TrainerAvailabilityDTO;
 import com.gymmanagement.gym_management_api.Entities.Trainer;
@@ -23,6 +24,14 @@ public class TrainerAvailabilityService {
         return TrainerAvailabilityMapper.listToDto(trainerAvailabilityRepository.findAll());
     }
 
+    public Iterable<NotDetailedTrainerAvailabilityDTO>getNotDetailedTrainerAvailabilities(){
+        return TrainerAvailabilityMapper.listToNotDetailedDto(trainerAvailabilityRepository.findAll());
+    }
+
+    public Iterable<NotDetailedTrainerAvailabilityDTO>getNotDetailedTrainerAvailabilitiesByTrainerId(Integer trainer_id){
+        return TrainerAvailabilityMapper.listToNotDetailedDto(trainerAvailabilityRepository.findAllByTrainer_UserId(trainer_id));
+    }
+
     public TrainerAvailabilityDTO getTrainerAvailabilityById(Integer id){
         TrainerAvailability trainerAvailability = trainerAvailabilityRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Trainer Availability with id: " + id + " not found."));
@@ -37,6 +46,6 @@ public class TrainerAvailabilityService {
                 .orElseThrow(() -> new EntityNotFoundException("Trainer with id: " + trainer_id + " not found."));
 
         TrainerAvailability trainerAvailability = TrainerAvailabilityMapper.toEntity(dto, trainer);
-        return TrainerAvailabilityMapper.toDto(trainerAvailability);
+        return TrainerAvailabilityMapper.toDto(trainerAvailabilityRepository.save(trainerAvailability));
     }
 }

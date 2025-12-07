@@ -2,11 +2,13 @@ import React, { useEffect, useState } from "react";
 import DashboardLayout from "../components/DashboardLayout";
 import { RECEPTIONIST_MENU } from "../constants/menuItems";
 import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 export default function TrainersPage() {
   const { token } = useAuth();
   const [trainers, setTrainers] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchTrainers = async () => {
@@ -33,11 +35,18 @@ export default function TrainersPage() {
 
   return (
     <DashboardLayout menuItems={RECEPTIONIST_MENU}>
-      <div className="p-6">
+      <div>
         <h1 className="text-3xl font-bold text-foreground mb-6">
           Trainers
         </h1>
         
+        <button
+          onClick={() => navigate("/dashboard")}
+          className="mb-4 bg-primary text-primary-foreground px-4 py-2 rounded-lg hover:opacity-90 transition"
+        >
+          ← Back to Dashboard
+        </button>
+
         {loading ? (
           <p className="text-muted-foreground">Loading trainers...</p>
         ) : trainers.length === 0 ? (

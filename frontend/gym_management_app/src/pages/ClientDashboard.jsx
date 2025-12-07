@@ -4,6 +4,8 @@ import { CLIENT_MENU } from "../constants/menuItems";
 import { useAuth } from "../context/AuthContext";
 import LeaveReviewModal from "../components/LeaveReviewModal";
 import SignUpClassModal from "../components/SignUpClassModal";
+import DashboardCard from "../components/DashboardCard";
+
 
 export default function ClientDashboard() {
   const { token, userId } = useAuth();
@@ -162,16 +164,33 @@ export default function ClientDashboard() {
         <h1 className="text-3xl font-bold mb-6">Client Dashboard</h1>
 
         {/* TOP CARDS */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
-
-          <Card title="Status" loading={loadingStatus} value={status.toUpperCase()} />
-
-          <Card title="Membership" loading={loadingMembership} value={membershipName} />
-
-          <Card title="Training Goal" loading={loadingTrainingGoal} value={trainingGoalName} />
-
-          <Card title="Total Visits" loading={loadingVisits} value={totalVisits} />
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          <DashboardCard
+            title="Status"
+            value={status.toUpperCase()}
+            icon="🔵"
+            color="primary"
+          />
+          <DashboardCard
+            title="Membership"
+            value={membershipName}
+            icon="🎟️"
+            color="accent"
+          />
+          <DashboardCard
+            title="Training Goal"
+            value={trainingGoalName}
+            icon="🏋️"
+            color="primary"
+          />
+          <DashboardCard
+            title="Total Visits"
+            value={totalVisits}
+            icon="📅"
+            color="accent"
+          />
         </div>
+
 
         {/* BOTTOM SECTIONS */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
@@ -231,7 +250,7 @@ export default function ClientDashboard() {
 
               <button
                 onClick={() => setShowReviewModal(true)}
-                className="w-full bg-primary text-primary-foreground py-2 rounded-lg hover:opacity-90 transition-opacity"
+                className="w-full bg-accent text-accent-foreground py-2 rounded-lg hover:opacity-90 transition-opacity"
               >
                 Leave a Review
               </button>

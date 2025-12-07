@@ -170,8 +170,8 @@ export default function ReceptionistDashboard() {
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           <DashboardCard title="Total Clients" value={clientsCount} icon="👥" color="primary" />
-          <DashboardCard title="Total Trainers" value={trainersCount} icon="🏋️" color="primary" />
-          <DashboardCard title="Active Classes" value={classesCount} icon="📅" color="accent" />
+          <DashboardCard title="Total Trainers" value={trainersCount} icon="🏋️" color="accent" />
+          <DashboardCard title="Active Classes" value={classesCount} icon="📅" color="primary" />
           <DashboardCard title="Monthly Revenue" value={`$${revenue.toFixed(2)}`} icon="💰" color="accent" />
         </div>
 
@@ -213,7 +213,7 @@ export default function ReceptionistDashboard() {
               </button>
               <button
                 onClick={() => setShowCheckInModal(true)}
-                className="w-full bg-primary text-primary-foreground py-2 rounded-lg hover:opacity-90 transition-opacity"
+                className="w-full bg-accent text-accent-foreground py-2 rounded-lg hover:opacity-90 transition-opacity"
               >
                 Check-In Client
               </button>
@@ -225,7 +225,7 @@ export default function ReceptionistDashboard() {
               </button>
               <button
                 onClick={() => setShowLocationModal(true)}
-                className="w-full bg-primary text-primary-foreground py-2 rounded-lg hover:opacity-90 transition-opacity"
+                className="w-full bg-accent text-accent-foreground py-2 rounded-lg hover:opacity-90 transition-opacity"
               >
                 Change Equipment Location
               </button>
