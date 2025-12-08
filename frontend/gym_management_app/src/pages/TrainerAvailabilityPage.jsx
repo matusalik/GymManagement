@@ -2,6 +2,11 @@ import React, { useEffect, useState } from "react";
 import DashboardLayout from "../components/DashboardLayout";
 import { TRAINER_MENU } from "../constants/menuItems";
 import { useAuth } from "../context/AuthContext";
+import AddAvailabilityModal from "../components/AddAvailabilityModal";
+import EditAvailabilityModal from "../components/EditAvailabilityModal";
+import DeleteAvailabilityModal from "../components/DeleteAvailabilityModal";
+import { useNavigate } from "react-router-dom";
+
 
 const START_HOUR = 6;
 const END_HOUR = 22; // 6–22 inclusive
@@ -10,6 +15,11 @@ export default function TrainerAvailabilityPage() {
   const { token, userId } = useAuth();
   const [availability, setAvailability] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const navigate = useNavigate();
+
 
   const DAYS = [
     "MONDAY",
@@ -77,7 +87,12 @@ export default function TrainerAvailabilityPage() {
           <h1 className="text-3xl font-bold text-foreground mb-6">
             Weekly Availability
           </h1>
-
+          <button
+            onClick={() => navigate("/dashboard")}
+            className="mb-4 bg-primary text-primary-foreground px-4 py-2 rounded-lg hover:opacity-90 transition"
+          >
+            ← Back to Dashboard
+          </button>
           {loading ? (
             <p className="text-muted-foreground">Loading...</p>
           ) : (
@@ -148,10 +163,8 @@ export default function TrainerAvailabilityPage() {
 
                             if (end <= start) return null;
 
-                            const leftPercent =
-                              ((start - START_HOUR) / totalHours) * 100;
-                            const widthPercent =
-                              ((end - start) / totalHours) * 100;
+                            const leftPercent = ((start - START_HOUR) / totalHours) * 100;
+                            const widthPercent = Math.max(((end - start) / totalHours) * 100, 0.5);
 
                             return (
                               <div
@@ -182,20 +195,43 @@ export default function TrainerAvailabilityPage() {
           <h2 className="text-xl font-bold mb-4">Quick Actions</h2>
 
           <div className="space-y-3">
-            <button className="w-full py-2 bg-primary text-primary-foreground rounded-lg hover:opacity-90 transition">
-              Action 1
+            <button
+              onClick={() => setShowAddModal(true)}
+              className="w-full py-2 bg-primary text-primary-foreground rounded-lg hover:opacity-90 transition"
+            >
+              Add New Availability
+            </button>
+            <button
+              onClick={() => setShowEditModal(true)}
+              className="w-full py-2 bg-accent text-accent-foreground rounded-lg hover:opacity-90 transition"
+            >
+              Change Availability Hours
+            </button>
+            <button
+              onClick={() => setShowDeleteModal(true)}
+              className="w-full py-2 bg-destructive text-destructive-foreground rounded-lg hover:opacity-90 transition"
+            >
+              Delete Availability
             </button>
 
-            <button className="w-full py-2 bg-primary text-primary-foreground rounded-lg hover:opacity-90 transition">
-              Action 2
-            </button>
-
-            <button className="w-full py-2 bg-primary text-primary-foreground rounded-lg hover:opacity-90 transition">
-              Action 3
-            </button>
           </div>
         </div>
       </div>
+      <AddAvailabilityModal
+        isOpen={showAddModal}
+        onClose={() => setShowAddModal(false)}
+        onSuccess={() => window.location.reload()}
+      />
+      <EditAvailabilityModal
+        isOpen={showEditModal}
+        onClose={() => setShowEditModal(false)}
+        onSuccess={() => window.location.reload()}
+      />
+      <DeleteAvailabilityModal
+        isOpen={showDeleteModal}
+        onClose={() => setShowDeleteModal(false)}
+        onSuccess={() => window.location.reload()}
+      />
     </DashboardLayout>
   );
 }

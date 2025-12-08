@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.Optional;
+
 public interface TrainerAvailabilityRepository extends JpaRepository<TrainerAvailability, Integer> {
     Iterable<TrainerAvailability>findAllByTrainer_UserId(Integer trainerId);
 
@@ -22,4 +24,15 @@ public interface TrainerAvailabilityRepository extends JpaRepository<TrainerAvai
             nativeQuery = true
     )
     boolean existsByTrainerIdAndDayOfTheWeek(@Param("trainer_id") Integer trainer_id, @Param("day_of_the_week") String day_of_the_week);
+
+    @Query(
+            value = """
+        SELECT *
+        FROM trainer_availability
+        WHERE trainer_id = :trainer_id
+          AND day_of_the_week = :day_of_the_week
+        """,
+            nativeQuery = true
+    )
+    TrainerAvailability findByTrainerIdAndDayOfTheWeek(@Param("trainer_id") Integer trainer_id, @Param("day_of_the_week") String day_of_the_week);
 }

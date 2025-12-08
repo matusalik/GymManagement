@@ -1,9 +1,7 @@
 package com.gymmanagement.gym_management_api.Controllers;
 
 import com.gymmanagement.gym_management_api.Common.Tags;
-import com.gymmanagement.gym_management_api.DTO.TrainerAvailability.NotDetailedTrainerAvailabilityDTO;
-import com.gymmanagement.gym_management_api.DTO.TrainerAvailability.TrainerAvailabilityCreateDTO;
-import com.gymmanagement.gym_management_api.DTO.TrainerAvailability.TrainerAvailabilityDTO;
+import com.gymmanagement.gym_management_api.DTO.TrainerAvailability.*;
 import com.gymmanagement.gym_management_api.Services.TrainerAvailabilityService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -46,6 +44,32 @@ public class TrainerAvailabilityController {
     public ResponseEntity<String> addTrainerAvailability(@RequestBody TrainerAvailabilityCreateDTO dto){
         try{
             trainerAvailabilityService.addTrainerAvailability(dto);
+            return ResponseEntity.ok().build();
+        }
+        catch(IllegalArgumentException e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
+
+    //----PATCH----//
+
+    @PatchMapping("/startEndTime")
+    public ResponseEntity<String>changeStartEndTime(@RequestBody ChangeStartEndTimeRequest request){
+        try{
+            trainerAvailabilityService.changeStartEndTime(request);
+            return ResponseEntity.ok().build();
+        }
+        catch(IllegalArgumentException e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
+
+    //----DELETE----//
+
+    @DeleteMapping
+    public ResponseEntity<String>deleteTrainerAvailability(@RequestBody DeleteTrainerAvailabilityRequest request){
+        try{
+            trainerAvailabilityService.deleteTrainerAvailability(request);
             return ResponseEntity.ok().build();
         }
         catch(IllegalArgumentException e){

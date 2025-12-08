@@ -1,6 +1,7 @@
 package com.gymmanagement.gym_management_api.Entities;
 import java.time.LocalTime;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.gymmanagement.gym_management_api.Enums.DayOfTheWeek;
 
 import jakarta.persistence.Entity;
@@ -31,7 +32,9 @@ public class TrainerAvailability {
     @Enumerated(EnumType.STRING)
     private DayOfTheWeek day_of_the_week;
 
+    @JsonFormat(pattern = "HH:mm")
     private LocalTime start_time;
 
+    @JsonFormat(pattern = "HH:mm")
     private LocalTime end_time;
 }

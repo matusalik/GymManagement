@@ -1,8 +1,6 @@
 package com.gymmanagement.gym_management_api.Services;
 
-import com.gymmanagement.gym_management_api.DTO.TrainerAvailability.NotDetailedTrainerAvailabilityDTO;
-import com.gymmanagement.gym_management_api.DTO.TrainerAvailability.TrainerAvailabilityCreateDTO;
-import com.gymmanagement.gym_management_api.DTO.TrainerAvailability.TrainerAvailabilityDTO;
+import com.gymmanagement.gym_management_api.DTO.TrainerAvailability.*;
 import com.gymmanagement.gym_management_api.Entities.Trainer;
 import com.gymmanagement.gym_management_api.Entities.TrainerAvailability;
 import com.gymmanagement.gym_management_api.Mappers.TrainerAvailabilityMapper;
@@ -53,5 +51,35 @@ public class TrainerAvailabilityService {
 
         TrainerAvailability trainerAvailability = TrainerAvailabilityMapper.toEntity(dto, trainer);
         return TrainerAvailabilityMapper.toDto(trainerAvailabilityRepository.save(trainerAvailability));
+    }
+
+    //----PATCH----//
+
+    public void changeStartEndTime(ChangeStartEndTimeRequest request){
+        Integer trainer_id = request.getTrainer_id();
+        String day_of_the_week = request.getDay_of_the_week();
+
+        if(!trainerAvailabilityRepository.existsByTrainerIdAndDayOfTheWeek(trainer_id, day_of_the_week)){
+            throw new IllegalArgumentException("Availability for " + day_of_the_week + " doesn't exist.");
+        }
+
+        TrainerAvailability trainerAvailability = trainerAvailabilityRepository.findByTrainerIdAndDayOfTheWeek(trainer_id, day_of_the_week);
+        trainerAvailability.setStart_time(request.getStart_time());
+        trainerAvailability.setEnd_time(request.getEnd_time());
+        trainerAvailabilityRepository.save(trainerAvailability);
+    }
+
+    //----DELETE----//
+
+    public void deleteTrainerAvailability(DeleteTrainerAvailabilityRequest request){
+        Integer trainer_id = request.getTrainer_id();
+        String day_of_the_week = request.getDay_of_the_week();
+
+        if(!trainerAvailabilityRepository.existsByTrainerIdAndDayOfTheWeek(trainer_id, day_of_the_week)){
+            throw new IllegalArgumentException("Availability for " + day_of_the_week + " doesn't exist.");
+        }
+
+        TrainerAvailability trainerAvailability = trainerAvailabilityRepository.findByTrainerIdAndDayOfTheWeek(trainer_id, day_of_the_week);
+        trainerAvailabilityRepository.delete(trainerAvailability);
     }
 }
