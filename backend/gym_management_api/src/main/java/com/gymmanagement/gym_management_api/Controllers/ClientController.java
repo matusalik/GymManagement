@@ -1,6 +1,7 @@
 package com.gymmanagement.gym_management_api.Controllers;
 
 import com.gymmanagement.gym_management_api.Common.Tags;
+import com.gymmanagement.gym_management_api.DTO.Client.ChangeStatusRequest;
 import com.gymmanagement.gym_management_api.DTO.Client.ClientCreateDTO;
 import com.gymmanagement.gym_management_api.DTO.Client.ClientDTO;
 import com.gymmanagement.gym_management_api.DTO.Client.ClientDetailedDTO;
@@ -75,6 +76,12 @@ public class ClientController {
     @PatchMapping("/training_goal/{client_id}/{training_goal_id}")
     public ResponseEntity<Void>changeTrainingGoal(@PathVariable Integer client_id, @PathVariable Integer training_goal_id){
         clientService.changeTrainingGoal(client_id, training_goal_id);
+        return ResponseEntity.ok().build();
+    }
+
+    @PatchMapping("/status")
+    public ResponseEntity<Void>changeStatus(@RequestBody ChangeStatusRequest request){
+        clientService.changeStatus(request);
         return ResponseEntity.ok().build();
     }
 

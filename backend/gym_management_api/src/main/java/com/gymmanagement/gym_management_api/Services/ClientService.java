@@ -1,11 +1,13 @@
 package com.gymmanagement.gym_management_api.Services;
 
+import com.gymmanagement.gym_management_api.DTO.Client.ChangeStatusRequest;
 import com.gymmanagement.gym_management_api.DTO.Client.ClientCreateDTO;
 import com.gymmanagement.gym_management_api.DTO.Client.ClientDTO;
 import com.gymmanagement.gym_management_api.DTO.Client.ClientDetailedDTO;
 import com.gymmanagement.gym_management_api.Entities.Client;
 import com.gymmanagement.gym_management_api.Entities.Membership;
 import com.gymmanagement.gym_management_api.Entities.TrainingGoal;
+import com.gymmanagement.gym_management_api.Enums.UserStatus;
 import com.gymmanagement.gym_management_api.Exceptions.ResourceNotFoundException;
 import com.gymmanagement.gym_management_api.Mappers.ClientMapper;
 import com.gymmanagement.gym_management_api.Mappers.UserMapper;
@@ -105,6 +107,16 @@ public class ClientService {
                 .orElseThrow(() -> new ResourceNotFoundException("TrainingGoal not found."));
 
         client.setTraining_goal(trainingGoal);
+        clientRepository.save(client);
+    }
+
+    public void changeStatus(ChangeStatusRequest request){
+        Integer client_id = request.getClient_id();
+        String user_status = request.getStatus();
+        Client client = clientRepository.findById(client_id)
+                .orElseThrow(() -> new ResourceNotFoundException("Client not found."));
+
+        client.setStatus(UserStatus.valueOf(user_status));
         clientRepository.save(client);
     }
 

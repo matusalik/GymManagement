@@ -8,9 +8,7 @@ import { useNavigate } from "react-router-dom";
 import CheckInModal from "../components/CheckInModal";
 import ChangeEquipmentConditionModal from "../components/ChangeEquipmentConditionModal";
 import ChangeEquipmentLocationModal from "../components/ChangeEquipmentLocationModal";
-
-
-
+import ChangeClientStatusModal from "../components/ChangeClientStatusModal";
 
 export default function ReceptionistDashboard() {
   const { token } = useAuth();
@@ -24,11 +22,8 @@ export default function ReceptionistDashboard() {
   const [showCheckInModal, setShowCheckInModal] = useState(false);
   const [showEquipmentModal, setShowEquipmentModal] = useState(false);
   const [showLocationModal, setShowLocationModal] = useState(false);
-
-
-
+  const [showStatusModal, setShowStatusModal] = useState(false);
   const navigate = useNavigate();
-
 
   useEffect(() => {
     const fetchClassesCount = async () => {
@@ -218,14 +213,20 @@ export default function ReceptionistDashboard() {
                 Check-In Client
               </button>
               <button
-                onClick={() => setShowEquipmentModal(true)}
+                onClick={() => setShowStatusModal(true)}
                 className="w-full bg-primary text-primary-foreground py-2 rounded-lg hover:opacity-90 transition-opacity"
+              >
+                Change Client Status
+              </button>
+              <button
+                onClick={() => setShowEquipmentModal(true)}
+                className="w-full bg-accent text-accent-foreground py-2 rounded-lg hover:opacity-90 transition-opacity"
               >
                 Change Equipment Condition
               </button>
               <button
                 onClick={() => setShowLocationModal(true)}
-                className="w-full bg-accent text-accent-foreground py-2 rounded-lg hover:opacity-90 transition-opacity"
+                className="w-full bg-primary text-primary-foreground py-2 rounded-lg hover:opacity-90 transition-opacity"
               >
                 Change Equipment Location
               </button>
@@ -253,6 +254,12 @@ export default function ReceptionistDashboard() {
         onClose={() => setShowLocationModal(false)}
         onSuccess={() => {}}
       />
+      <ChangeClientStatusModal
+        isOpen={showStatusModal}
+        onClose={() => setShowStatusModal(false)}
+        onSuccess={() => {}}
+      />
+
     </DashboardLayout>
     
   );
