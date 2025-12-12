@@ -1,5 +1,6 @@
 package com.gymmanagement.gym_management_api.Services;
 
+import com.gymmanagement.gym_management_api.DTO.Specialization.NotDetailedSpecializationDTO;
 import com.gymmanagement.gym_management_api.DTO.Specialization.SpecializationDTO;
 import com.gymmanagement.gym_management_api.Entities.Specialization;
 import com.gymmanagement.gym_management_api.Mappers.SpecializationMapper;
@@ -17,6 +18,10 @@ public class SpecializationService {
 
     public Iterable<SpecializationDTO>getSpecializations(){
         return SpecializationMapper.listToDto(specializationRepository.findAll());
+    }
+
+    public Iterable<NotDetailedSpecializationDTO> getNotDetailedSpecializations(){
+        return SpecializationMapper.listToNotDetailedDto(specializationRepository.findAll());
     }
 
     public SpecializationDTO getSpecializationById(Integer id){

@@ -1,5 +1,6 @@
 package com.gymmanagement.gym_management_api.Mappers;
 
+import com.gymmanagement.gym_management_api.DTO.Specialization.NotDetailedSpecializationDTO;
 import com.gymmanagement.gym_management_api.DTO.Specialization.SpecializationDTO;
 import com.gymmanagement.gym_management_api.Entities.Specialization;
 
@@ -21,10 +22,25 @@ public class SpecializationMapper {
         return specialization;
     }
 
+    public static NotDetailedSpecializationDTO toNotDetailedDto(Specialization specialization){
+        NotDetailedSpecializationDTO dto = new NotDetailedSpecializationDTO();
+        dto.setId(specialization.getSpecializationId());
+        dto.setName(specialization.getName());
+        return dto;
+    }
+
     public static Iterable<SpecializationDTO> listToDto(Iterable<Specialization>specializations){
         List<SpecializationDTO>dtos = new ArrayList<>();
         for(Specialization i : specializations){
             dtos.add(toDto(i));
+        }
+        return dtos;
+    }
+
+    public static Iterable<NotDetailedSpecializationDTO> listToNotDetailedDto(Iterable<Specialization>specializations){
+        List<NotDetailedSpecializationDTO>dtos = new ArrayList<>();
+        for(Specialization i : specializations){
+            dtos.add(toNotDetailedDto(i));
         }
         return dtos;
     }

@@ -1,6 +1,7 @@
 package com.gymmanagement.gym_management_api.Controllers;
 
 import com.gymmanagement.gym_management_api.Common.Tags;
+import com.gymmanagement.gym_management_api.DTO.Specialization.NotDetailedSpecializationDTO;
 import com.gymmanagement.gym_management_api.DTO.Specialization.SpecializationDTO;
 import com.gymmanagement.gym_management_api.Services.SpecializationService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -20,6 +21,11 @@ public class SpecializationController {
     @GetMapping
     public @ResponseBody Iterable<SpecializationDTO>getSpecializations(){
         return specializationService.getSpecializations();
+    }
+
+    @GetMapping("/notdetailed")
+    public @ResponseBody Iterable<NotDetailedSpecializationDTO>getNotDetailedSpecializations(){
+        return specializationService.getNotDetailedSpecializations();
     }
 
     @GetMapping("/{id}")
