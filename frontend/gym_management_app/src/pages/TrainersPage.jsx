@@ -2,13 +2,15 @@ import React, { useEffect, useState } from "react";
 import DashboardLayout from "../components/DashboardLayout";
 import { RECEPTIONIST_MENU } from "../constants/menuItems";
 import { useAuth } from "../context/AuthContext";
-import { useNavigate } from "react-router-dom";
+import PageHeader from "../components/PageHeader";
 
 export default function TrainersPage() {
   const { token } = useAuth();
-  const [trainers, setTrainers] = useState([]);
+
+  const [allTrainers, setAllTrainers] = useState([]);
+  const [filteredTrainers, setFilteredTrainers] = useState([]);
+  const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchTrainers = async () => {
@@ -16,15 +18,23 @@ export default function TrainersPage() {
         const res = await fetch("http://localhost:8080/api/trainers", {
           headers: {
             Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
+            "Content-Type": "application/json"
+          }
         });
 
+        if (!res.ok) {
+          throw new Error("Failed to fetch trainers");
+        }
+
         const data = await res.json();
-        setTrainers(Array.isArray(data) ? data : []);
+        const list = Array.isArray(data) ? data : [];
+
+        setAllTrainers(list);
+        setFilteredTrainers(list);
       } catch (err) {
         console.error("Error fetching trainers:", err);
-        setTrainers([]);
+        setAllTrainers([]);
+        setFilteredTrainers([]);
       } finally {
         setLoading(false);
       }
@@ -33,23 +43,35 @@ export default function TrainersPage() {
     if (token) fetchTrainers();
   }, [token]);
 
+  // Client-side search
+  useEffect(() => {
+    const q = search.toLowerCase();
+
+    setFilteredTrainers(
+      allTrainers.filter((t) =>
+        t.username.toLowerCase().includes(q) ||
+        t.first_name.toLowerCase().includes(q) ||
+        t.last_name.toLowerCase().includes(q) ||
+        t.email.toLowerCase().includes(q) ||
+        (t.bio && t.bio.toLowerCase().includes(q))
+      )
+    );
+  }, [search, allTrainers]);
+
   return (
     <DashboardLayout menuItems={RECEPTIONIST_MENU}>
-      <div>
-        <h1 className="text-3xl font-bold text-foreground mb-6">
-          Trainers
-        </h1>
-        
-        <button
-          onClick={() => navigate("/dashboard")}
-          className="mb-4 bg-primary text-primary-foreground px-4 py-2 rounded-lg hover:opacity-90 transition"
-        >
-          ← Back to Dashboard
-        </button>
+      <div className="p-6">
+        <PageHeader
+          title="Trainers"
+          showSearch
+          searchValue={search}
+          onSearchChange={setSearch}
+          searchPlaceholder="Search by username, name, email or bio..."
+        />
 
         {loading ? (
           <p className="text-muted-foreground">Loading trainers...</p>
-        ) : trainers.length === 0 ? (
+        ) : filteredTrainers.length === 0 ? (
           <p className="text-muted-foreground">No trainers found.</p>
         ) : (
           <div className="rounded-lg shadow bg-card overflow-hidden">
@@ -66,27 +88,19 @@ export default function TrainersPage() {
               </thead>
 
               <tbody>
-                {trainers.map((t, index) => (
+                {filteredTrainers.map((t, index) => (
                   <tr
                     key={index}
                     className="border-b border-border hover:bg-muted/60 transition"
                   >
                     <td className="p-3">{t.username}</td>
-                    <td className="p-3">{t.first_name} {t.last_name}</td>
+                    <td className="p-3">
+                      {t.first_name} {t.last_name}
+                    </td>
                     <td className="p-3">{t.phone}</td>
                     <td className="p-3">{t.email}</td>
                     <td className="p-3">{t.bio}</td>
-                    <td className="p-3">
-                      <span
-                        className={`px-2 py-1 rounded text-xs font-medium ${
-                          t.status === "ACTIVE"
-                            ? "bg-primary/20 text-primary"
-                            : "bg-destructive/20 text-destructive"
-                        }`}
-                      >
-                        {t.status}
-                      </span>
-                    </td>                       
+                    <td className="p-3">{t.status}</td>
                   </tr>
                 ))}
               </tbody>

@@ -6,6 +6,8 @@ import { useAuth } from "../context/AuthContext";
 export default function ClientAttendancePage() {
   const { token, userId } = useAuth();
   const [attendance, setAttendance] = useState([]);
+  const [filteredAttendance, setFilteredAttendance] = useState([]);
+  const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
 
   const formatDateTime = (iso) => {
@@ -30,10 +32,14 @@ export default function ClientAttendancePage() {
         );
 
         const data = await res.json();
-        setAttendance(Array.isArray(data) ? data : []);
+        const list = Array.isArray(data) ? data : [];
+
+        setAttendance(list);
+        setFilteredAttendance(list);
       } catch (err) {
         console.error("Error fetching attendance history:", err);
         setAttendance([]);
+        setFilteredAttendance([]);
       } finally {
         setLoading(false);
       }
@@ -42,14 +48,34 @@ export default function ClientAttendancePage() {
     if (token && userId) fetchAttendance();
   }, [token, userId]);
 
+  // 🔍 SEARCH by date & time
+  useEffect(() => {
+    const q = search.toLowerCase();
+
+    setFilteredAttendance(
+      attendance.filter((entry) =>
+        formatDateTime(entry.date_time).toLowerCase().includes(q)
+      )
+    );
+  }, [search, attendance]);
+
   return (
     <DashboardLayout menuItems={CLIENT_MENU}>
       <div className="p-6">
         <h1 className="text-3xl font-bold mb-6">Attendance History</h1>
 
+        {/* SEARCH BAR (only addition) */}
+        <input
+          type="text"
+          placeholder="Search by date or time..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className="mb-4 block w-full md:w-1/3 px-3 py-2 border border-border rounded bg-input"
+        />
+
         {loading ? (
           <p className="text-muted-foreground">Loading...</p>
-        ) : attendance.length === 0 ? (
+        ) : filteredAttendance.length === 0 ? (
           <p className="text-muted-foreground">No attendance records found.</p>
         ) : (
           <div className="rounded-lg shadow bg-card overflow-hidden">
@@ -61,7 +87,7 @@ export default function ClientAttendancePage() {
               </thead>
 
               <tbody>
-                {attendance
+                {filteredAttendance
                   .sort((a, b) => new Date(b.date_time) - new Date(a.date_time))
                   .map((entry, index) => (
                     <tr

@@ -4,13 +4,13 @@ import { RECEPTIONIST_MENU } from "../constants/menuItems";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 
-
 export default function EquipmentPage() {
   const { token } = useAuth();
   const [equipment, setEquipment] = useState([]);
+  const [filteredEquipment, setFilteredEquipment] = useState([]);
+  const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
-
 
   useEffect(() => {
     const fetchEquipment = async () => {
@@ -23,10 +23,14 @@ export default function EquipmentPage() {
         });
 
         const data = await res.json();
-        setEquipment(Array.isArray(data) ? data : []);
+        const list = Array.isArray(data) ? data : [];
+
+        setEquipment(list);
+        setFilteredEquipment(list);
       } catch (err) {
         console.error("Error fetching equipment:", err);
         setEquipment([]);
+        setFilteredEquipment([]);
       } finally {
         setLoading(false);
       }
@@ -37,21 +41,46 @@ export default function EquipmentPage() {
     }
   }, [token]);
 
+  useEffect(() => {
+    const q = search.toLowerCase();
+
+    setFilteredEquipment(
+      equipment.filter((eq) =>
+        eq.name.toLowerCase().includes(q) ||
+        eq.equipment_type.toLowerCase().includes(q) ||
+        eq.equipment_location.toLowerCase().includes(q) ||
+        eq.equipment_condition.toLowerCase().includes(q) ||
+        eq.equipment_availability.toLowerCase().includes(q)
+      )
+    );
+  }, [search, equipment]);
+
   return (
     <DashboardLayout menuItems={RECEPTIONIST_MENU}>
       <div>
         <h1 className="text-3xl font-bold text-foreground mb-6">
           Gym Equipment
         </h1>
+
         <button
           onClick={() => navigate("/dashboard")}
           className="mb-4 bg-primary text-primary-foreground px-4 py-2 rounded-lg hover:opacity-90 transition"
         >
           ← Back to Dashboard
         </button>
+
+        {/* SEARCH BAR (only addition) */}
+        <input
+          type="text"
+          placeholder="Search by name, type, location or condition..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className="mb-4 block w-full md:w-1/3 px-3 py-2 border border-border rounded bg-input"
+        />
+
         {loading ? (
           <p className="text-muted-foreground">Loading equipment...</p>
-        ) : equipment.length === 0 ? (
+        ) : filteredEquipment.length === 0 ? (
           <p className="text-muted-foreground">No equipment found.</p>
         ) : (
           <div className="rounded-lg shadow bg-card overflow-hidden">
@@ -67,7 +96,7 @@ export default function EquipmentPage() {
               </thead>
 
               <tbody>
-                {equipment.map((eq, index) => (
+                {filteredEquipment.map((eq, index) => (
                   <tr
                     key={index}
                     className="border-b border-border hover:bg-muted/60 transition"

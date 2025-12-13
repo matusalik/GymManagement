@@ -1,38 +1,43 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import DashboardLayout from "../components/DashboardLayout";
 import { RECEPTIONIST_MENU } from "../constants/menuItems";
-import { useNavigate } from "react-router-dom";
+import PageHeader from "../components/PageHeader";
 
 export default function GroupClassesPage() {
   const { token } = useAuth();
-  const [classes, setClasses] = useState([]);
-  const [loading, setLoading] = useState(true);
 
-  const navigate = useNavigate();
+  const [allClasses, setAllClasses] = useState([]);
+  const [filteredClasses, setFilteredClasses] = useState([]);
+  const [search, setSearch] = useState("");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchClasses = async () => {
       try {
-        const response = await fetch(
+        const res = await fetch(
           "http://localhost:8080/api/group_classes/notdetailed",
           {
-            method: "GET",
             headers: {
               Authorization: `Bearer ${token}`,
-              "Content-Type": "application/json",
-            },
+              "Content-Type": "application/json"
+            }
           }
         );
 
-        if (!response.ok) {
-          throw new Error("Failed to fetch classes");
+        if (!res.ok) {
+          throw new Error("Failed to fetch group classes");
         }
 
-        const data = await response.json();
-        setClasses(Array.isArray(data) ? data : []);
+        const data = await res.json();
+        const list = Array.isArray(data) ? data : [];
+
+        setAllClasses(list);
+        setFilteredClasses(list);
       } catch (err) {
-        console.error("Error fetching group classes:", err);
+        console.error("Error fetching classes:", err);
+        setAllClasses([]);
+        setFilteredClasses([]);
       } finally {
         setLoading(false);
       }
@@ -41,25 +46,35 @@ export default function GroupClassesPage() {
     if (token) fetchClasses();
   }, [token]);
 
+  // Client-side search
+  useEffect(() => {
+    const q = search.toLowerCase();
+
+    setFilteredClasses(
+      allClasses.filter((cls) =>
+        cls.name.toLowerCase().includes(q) ||
+        cls.description.toLowerCase().includes(q) ||
+        cls.trainer_name.toLowerCase().includes(q) ||
+        cls.trainer_surname.toLowerCase().includes(q)
+      )
+    );
+  }, [search, allClasses]);
+
   return (
     <DashboardLayout menuItems={RECEPTIONIST_MENU}>
       <div>
-        <h1 className="text-3xl font-bold text-foreground mb-6">
-          Group Classes
-        </h1>
-
-        {/* Back Button */}
-        <button
-          onClick={() => navigate("/dashboard")}
-          className="mb-4 bg-primary text-primary-foreground px-4 py-2 rounded-lg hover:opacity-90 transition"
-        >
-          ← Back to Dashboard
-        </button>
+        <PageHeader
+          title="Group Classes"
+          showSearch
+          searchValue={search}
+          onSearchChange={setSearch}
+          searchPlaceholder="Search by class name, description or trainer..."
+        />
 
         {loading ? (
           <p className="text-muted-foreground">Loading group classes...</p>
-        ) : classes.length === 0 ? (
-          <p className="text-muted-foreground">No classes found.</p>
+        ) : filteredClasses.length === 0 ? (
+          <p className="text-muted-foreground">No group classes found.</p>
         ) : (
           <div className="rounded-lg shadow bg-card overflow-hidden">
             <table className="w-full border-collapse">
@@ -70,12 +85,12 @@ export default function GroupClassesPage() {
                   <th className="p-3 text-left">Trainer</th>
                   <th className="p-3 text-left">Participants</th>
                   <th className="p-3 text-left">Date & Time</th>
-                  <th className="p-3 text-left">Max Participants</th>
+                  <th className="p-3 text-left">Max</th>
                 </tr>
               </thead>
 
               <tbody>
-                {classes.map((cls, index) => (
+                {filteredClasses.map((cls, index) => (
                   <tr
                     key={index}
                     className="border-b border-border hover:bg-muted/60 transition"
@@ -86,7 +101,7 @@ export default function GroupClassesPage() {
                       {cls.trainer_name} {cls.trainer_surname}
                     </td>
                     <td className="p-3">
-                      {cls.clients.length} enrolled
+                      {cls.clients.length}
                       <div className="text-xs text-muted-foreground mt-1">
                         {cls.clients.map((c, i) => (
                           <span key={i}>
