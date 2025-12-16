@@ -10,6 +10,7 @@ import ChangeEquipmentConditionModal from "../components/ChangeEquipmentConditio
 import ChangeEquipmentLocationModal from "../components/ChangeEquipmentLocationModal";
 import ChangeClientStatusModal from "../components/ChangeClientStatusModal";
 import AddTrainerModal from "../components/AddTrainerModal";
+import AddEquipmentModal from "../components/AddEquipmentModal";
 
 
 export default function ReceptionistDashboard() {
@@ -26,6 +27,7 @@ export default function ReceptionistDashboard() {
   const [showLocationModal, setShowLocationModal] = useState(false);
   const [showStatusModal, setShowStatusModal] = useState(false);
   const [showAddTrainerModal, setShowAddTrainerModal] = useState(false);
+  const [showAddEquipmentModal, setShowAddEquipmentModal] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -228,14 +230,20 @@ export default function ReceptionistDashboard() {
                 Add New Trainer
               </button>
               <button
-                onClick={() => setShowEquipmentModal(true)}
+                onClick={() => setShowAddEquipmentModal(true)}
                 className="w-full bg-primary text-primary-foreground py-2 rounded-lg hover:opacity-90 transition-opacity"
+              >
+                Add Equipment
+              </button>
+              <button
+                onClick={() => setShowEquipmentModal(true)}
+                className="w-full bg-accent text-accent-foreground py-2 rounded-lg hover:opacity-90 transition-opacity"
               >
                 Change Equipment Condition
               </button>
               <button
                 onClick={() => setShowLocationModal(true)}
-                className="w-full bg-accent text-accent-foreground py-2 rounded-lg hover:opacity-90 transition-opacity"
+                className="w-full bg-primary text-primary-foreground py-2 rounded-lg hover:opacity-90 transition-opacity"
               >
                 Change Equipment Location
               </button>
@@ -271,6 +279,11 @@ export default function ReceptionistDashboard() {
       <AddTrainerModal
         isOpen={showAddTrainerModal}
         onClose={() => setShowAddTrainerModal(false)}
+        onSuccess={() => {}}
+      />
+      <AddEquipmentModal
+        isOpen={showAddEquipmentModal}
+        onClose={() => setShowAddEquipmentModal(false)}
         onSuccess={() => {}}
       />
     </DashboardLayout>

@@ -21,6 +21,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class ClientService {
@@ -82,7 +84,6 @@ public class ClientService {
         if (userRepository.existsByEmail(dto.getEmail())) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Email already in use");
         }
-
 
         TrainingGoal tg = trainingGoalRepository.findById(dto.getTraining_goal_id())
                 .orElseThrow(() -> new ResourceNotFoundException("Training goal not found"));
