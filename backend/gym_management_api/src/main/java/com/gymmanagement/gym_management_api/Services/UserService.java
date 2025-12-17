@@ -1,11 +1,9 @@
 package com.gymmanagement.gym_management_api.Services;
 
-import com.gymmanagement.gym_management_api.DTO.Security.ChangePasswordDTO;
+import com.gymmanagement.gym_management_api.DTO.Security.ChangePasswordRequestDTO;
 import com.gymmanagement.gym_management_api.DTO.User.NotDetailedUserDTO;
-import com.gymmanagement.gym_management_api.DTO.User.UserCreateDTO;
 import com.gymmanagement.gym_management_api.DTO.User.UserDetailedDTO;
 import com.gymmanagement.gym_management_api.Security.Password;
-import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import com.gymmanagement.gym_management_api.DTO.User.UserDTO;
@@ -41,7 +39,7 @@ public class UserService {
 
     //---PATCH---//
 
-    public void changeUserPassword(Integer id, ChangePasswordDTO dto){
+    public void changeUserPassword(Integer id, ChangePasswordRequestDTO dto){
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("User with id: " + id + " not found."));
         Password newPassword = Password.ofRaw(dto.getNewPassword());

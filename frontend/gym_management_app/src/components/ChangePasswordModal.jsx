@@ -1,63 +1,74 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
 
 export default function ChangePasswordModal({ isOpen, onClose }) {
-  const { token, userId } = useAuth();
+  const { token, user } = useAuth();
 
+  const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [newPasswordRepeat, setNewPasswordRepeat] = useState("");
 
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
+  const [successMsg, setSuccessMsg] = useState("");
+
+  // Reset modal every time it opens
+  useEffect(() => {
+    if (isOpen) {
+      setOldPassword("");
+      setNewPassword("");
+      setNewPasswordRepeat("");
+      setErrorMsg("");
+      setSuccessMsg("");
+    }
+  }, [isOpen]);
 
   if (!isOpen) return null;
 
   const handleSubmit = async () => {
-    setError("");
-    setSuccess("");
+    setErrorMsg("");
+    setSuccessMsg("");
 
-    if (!newPassword || !confirmPassword) {
-      setError("Both fields are required.");
+    if (!oldPassword || !newPassword || !newPasswordRepeat) {
+      setErrorMsg("All fields are required.");
       return;
     }
 
-    if (newPassword !== confirmPassword) {
-      setError("Passwords do not match.");
+    if (newPassword !== newPasswordRepeat) {
+      setErrorMsg("New passwords do not match.");
       return;
     }
 
     setLoading(true);
 
     try {
-      const res = await fetch(
-        `http://localhost:8080/api/users/password/${userId}`,
-        {
-          method: "PATCH", 
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            newPassword: newPassword
-          })
-        }
-      );
+      const res = await fetch("http://localhost:8080/api/auth/change_password", {
+        method: "PATCH",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          username: user.username,
+          oldPassword,
+          newPassword,
+          newPasswordRepeat
+        })
+      });
 
       if (!res.ok) {
-        const txt = await res.text();
-        throw new Error(txt || "Failed to change password.");
+        const text = await res.text();
+        throw new Error(text || "Failed to change password");
       }
 
-      setSuccess("Password updated successfully!");
-
-      setTimeout(() => {
-        onClose();
-      }, 1000);
+      setSuccessMsg("Password changed successfully.");
+      setOldPassword("");
+      setNewPassword("");
+      setNewPasswordRepeat("");
 
     } catch (err) {
-      console.error("Password change error:", err);
-      setError("Failed to update password.");
+      console.error("Change password error:", err);
+      setErrorMsg(err.message);
     } finally {
       setLoading(false);
     }
@@ -68,41 +79,44 @@ export default function ChangePasswordModal({ isOpen, onClose }) {
       <div className="bg-card p-6 rounded-xl shadow-lg w-full max-w-md">
         <h2 className="text-2xl font-bold mb-4">Change Password</h2>
 
-        {/* New Password */}
-        <label className="block text-sm mb-1">New Password</label>
         <input
           type="password"
+          placeholder="Current password"
+          value={oldPassword}
+          onChange={(e) => setOldPassword(e.target.value)}
+          className="w-full mb-3 px-3 py-2 border border-border bg-input rounded"
+        />
+
+        <input
+          type="password"
+          placeholder="New password"
           value={newPassword}
-          onChange={(e) => {
-            setNewPassword(e.target.value);
-            setError("");
-          }}
-          className="w-full mb-3 px-3 py-2 bg-input border border-border rounded"
+          onChange={(e) => setNewPassword(e.target.value)}
+          className="w-full mb-3 px-3 py-2 border border-border bg-input rounded"
         />
 
-        {/* Confirm Password */}
-        <label className="block text-sm mb-1">Confirm New Password</label>
         <input
           type="password"
-          value={confirmPassword}
-          onChange={(e) => {
-            setConfirmPassword(e.target.value);
-            setError("");
-          }}
-          className="w-full mb-4 px-3 py-2 bg-input border border-border rounded"
+          placeholder="Repeat new password"
+          value={newPasswordRepeat}
+          onChange={(e) => setNewPasswordRepeat(e.target.value)}
+          className="w-full mb-4 px-3 py-2 border border-border bg-input rounded"
         />
 
-        {/* Errors */}
-        {error && <p className="text-red-500 text-sm mb-2">{error}</p>}
-        {success && <p className="text-green-500 text-sm mb-2">{success}</p>}
+        {errorMsg && (
+          <p className="text-red-500 text-sm mb-3">{errorMsg}</p>
+        )}
 
-        {/* Buttons */}
-        <div className="flex justify-end space-x-3 mt-3">
+        {successMsg && (
+          <p className="text-green-600 text-sm mb-3">{successMsg}</p>
+        )}
+
+        <div className="flex justify-end gap-3">
           <button
             onClick={onClose}
             className="px-4 py-2 bg-muted rounded hover:opacity-80"
           >
-            Cancel
+            Close
           </button>
 
           <button

@@ -1,11 +1,9 @@
 package com.gymmanagement.gym_management_api.Controllers;
 
 import com.gymmanagement.gym_management_api.Common.Tags;
-import com.gymmanagement.gym_management_api.DTO.Security.ChangePasswordDTO;
+import com.gymmanagement.gym_management_api.DTO.Security.ChangePasswordRequestDTO;
 import com.gymmanagement.gym_management_api.DTO.User.NotDetailedUserDTO;
-import com.gymmanagement.gym_management_api.DTO.User.UserCreateDTO;
 import com.gymmanagement.gym_management_api.DTO.User.UserDetailedDTO;
-import com.gymmanagement.gym_management_api.Entities.User;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -42,7 +40,7 @@ public class UserController {
     //----PATCH----//
 
     @PatchMapping("/password/{id}")
-    public ResponseEntity<Void>changeUserPassword(@PathVariable Integer id, @RequestBody ChangePasswordDTO dto){
+    public ResponseEntity<Void>changeUserPassword(@PathVariable Integer id, @RequestBody ChangePasswordRequestDTO dto){
         userService.changeUserPassword(id, dto);
         return ResponseEntity.ok().build();
     }
