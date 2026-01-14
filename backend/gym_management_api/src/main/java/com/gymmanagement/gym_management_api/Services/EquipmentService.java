@@ -35,9 +35,9 @@ public class EquipmentService {
 
     //-----POST-----//
 
-    public EquipmentDTO addEquipment(EquipmentDTO dto){
+    public void addEquipment(EquipmentDTO dto){
         Equipment eq = EquipmentMapper.toEntity(dto);
-        return EquipmentMapper.toDto(equipmentRepository.save(eq));
+        equipmentRepository.save(eq);
     }
 
     //----PATCH----//

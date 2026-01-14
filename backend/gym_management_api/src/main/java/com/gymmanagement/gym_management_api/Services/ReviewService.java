@@ -68,7 +68,7 @@ public class ReviewService {
 
     //-----POST-----//
 
-    public ReviewDTO addReview(ReviewCreateDTO dto){
+    public void addReview(ReviewCreateDTO dto){
         Integer client_id = dto.getClient_id();
         Client client = clientRepository.findById(dto.getClient_id())
                 .orElseThrow(() -> new EntityNotFoundException("Client with id: " + client_id + " not found."));
@@ -78,6 +78,6 @@ public class ReviewService {
                 .orElseThrow(() -> new EntityNotFoundException("Review with id: " + trainer_id + " not found."));
 
         Review review = ReviewMapper.toEntity(dto, client, trainer);
-        return ReviewMapper.toDto(reviewRepository.save(review));
+        reviewRepository.save(review);
     }
 }

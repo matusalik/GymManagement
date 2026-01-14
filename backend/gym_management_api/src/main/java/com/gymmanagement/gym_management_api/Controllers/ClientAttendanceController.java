@@ -20,13 +20,13 @@ public class ClientAttendanceController {
     //-----GET-----//
 
     @GetMapping
-    public @ResponseBody Iterable<ClientAttendanceDTO>getClientAttendances(){
-        return clientAttendanceService.getClientAttendances();
+    public ResponseEntity<Iterable<ClientAttendanceDTO>>getClientAttendances(){
+        return ResponseEntity.ok(clientAttendanceService.getClientAttendances());
     }
 
     @GetMapping("/{clientId}")
-    public @ResponseBody Iterable<ClientAttendanceDateDTO>getClientAttendancesByClientId(@PathVariable Integer clientId){
-        return clientAttendanceService.getClientAttendancesByClientId(clientId);
+    public ResponseEntity<Iterable<ClientAttendanceDateDTO>>getClientAttendancesByClientId(@PathVariable Integer clientId){
+        return ResponseEntity.ok(clientAttendanceService.getClientAttendancesByClientId(clientId));
     }
 
     @GetMapping("/count/{clientId}")
@@ -37,7 +37,7 @@ public class ClientAttendanceController {
     //----POST----//
 
     @PostMapping
-    public ClientAttendanceDTO addClientAttendance(@RequestBody ClientAttendanceCreateDTO dto){
-        return clientAttendanceService.addAttendance(dto);
+    public ResponseEntity<ClientAttendanceDTO>addClientAttendance(@RequestBody ClientAttendanceCreateDTO dto){
+        return ResponseEntity.ok(clientAttendanceService.addAttendance(dto));
     }
 }

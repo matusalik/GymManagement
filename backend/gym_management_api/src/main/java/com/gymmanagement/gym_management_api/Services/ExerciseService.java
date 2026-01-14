@@ -32,10 +32,10 @@ public class ExerciseService {
 
     //-----POST-----//
 
-    public ExerciseDTO addExercise(ExerciseCreateDTO dto){
+    public void addExercise(ExerciseCreateDTO dto){
         Equipment eq = equipmentRepository.findById(dto.getEquipmentId())
                 .orElseThrow(() -> new EntityNotFoundException("Exercise with id: " + dto.getEquipmentId() + " not found."));
         Exercise ex = ExerciseMapper.toEntity(dto, eq);
-        return ExerciseMapper.toDto(exerciseRepository.save(ex));
+        exerciseRepository.save(ex);
     }
 }

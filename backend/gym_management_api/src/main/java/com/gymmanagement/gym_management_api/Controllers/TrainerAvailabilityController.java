@@ -2,9 +2,12 @@ package com.gymmanagement.gym_management_api.Controllers;
 
 import com.gymmanagement.gym_management_api.Common.Tags;
 import com.gymmanagement.gym_management_api.DTO.TrainerAvailability.*;
+import com.gymmanagement.gym_management_api.Entities.TrainerAvailability;
 import com.gymmanagement.gym_management_api.Services.TrainerAvailabilityService;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.actuate.autoconfigure.observation.ObservationProperties;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -35,45 +38,31 @@ public class TrainerAvailabilityController {
 
     @GetMapping("/{id}")
     public ResponseEntity<TrainerAvailabilityDTO>getTrainerAvailabilityById(@PathVariable Integer id){
-        return ResponseEntity.ok(trainerAvailabilityService.getTrainerAvailabilityById(id));
+        TrainerAvailabilityDTO dto = trainerAvailabilityService.getTrainerAvailabilityById(id);
+        return ResponseEntity.ok(dto);
     }
 
     //-----POST-----//
 
     @PostMapping
-    public ResponseEntity<String> addTrainerAvailability(@RequestBody TrainerAvailabilityCreateDTO dto){
-        try{
-            trainerAvailabilityService.addTrainerAvailability(dto);
-            return ResponseEntity.ok().build();
-        }
-        catch(IllegalArgumentException e){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        }
+    public ResponseEntity<Void> addTrainerAvailability(@RequestBody TrainerAvailabilityCreateDTO dto){
+        trainerAvailabilityService.addTrainerAvailability(dto);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     //----PATCH----//
 
     @PatchMapping("/startEndTime")
-    public ResponseEntity<String>changeStartEndTime(@RequestBody ChangeStartEndTimeRequest request){
-        try{
-            trainerAvailabilityService.changeStartEndTime(request);
-            return ResponseEntity.ok().build();
-        }
-        catch(IllegalArgumentException e){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        }
+    public ResponseEntity<Void>changeStartEndTime(@RequestBody ChangeStartEndTimeRequest request){
+        trainerAvailabilityService.changeStartEndTime(request);
+        return ResponseEntity.ok().build();
     }
 
     //----DELETE----//
 
     @DeleteMapping
-    public ResponseEntity<String>deleteTrainerAvailability(@RequestBody DeleteTrainerAvailabilityRequest request){
-        try{
-            trainerAvailabilityService.deleteTrainerAvailability(request);
-            return ResponseEntity.ok().build();
-        }
-        catch(IllegalArgumentException e){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        }
+    public ResponseEntity<Void>deleteTrainerAvailability(@RequestBody DeleteTrainerAvailabilityRequest request){
+        trainerAvailabilityService.deleteTrainerAvailability(request);
+        return ResponseEntity.noContent().build();
     }
 }

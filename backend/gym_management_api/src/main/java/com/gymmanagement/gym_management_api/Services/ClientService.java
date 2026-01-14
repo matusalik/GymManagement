@@ -8,7 +8,10 @@ import com.gymmanagement.gym_management_api.Entities.Client;
 import com.gymmanagement.gym_management_api.Entities.Membership;
 import com.gymmanagement.gym_management_api.Entities.TrainingGoal;
 import com.gymmanagement.gym_management_api.Enums.UserStatus;
+import com.gymmanagement.gym_management_api.Exceptions.EmailAlreadyInUseException;
+import com.gymmanagement.gym_management_api.Exceptions.PasswordTooShortException;
 import com.gymmanagement.gym_management_api.Exceptions.ResourceNotFoundException;
+import com.gymmanagement.gym_management_api.Exceptions.UsernameAlreadyInUseException;
 import com.gymmanagement.gym_management_api.Mappers.ClientMapper;
 import com.gymmanagement.gym_management_api.Mappers.UserMapper;
 import com.gymmanagement.gym_management_api.Repositories.ClientRepository;
@@ -78,20 +81,24 @@ public class ClientService {
     public ClientDTO addClient(ClientCreateDTO dto){
         Client client = ClientMapper.toEntityWithoutRelations(dto);
 
+        if(dto.getPassword().length() < 8){
+            throw new PasswordTooShortException();
+        }
+
         if (userRepository.existsByUsername(dto.getUsername())) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "Username already in use");
+            throw new UsernameAlreadyInUseException(dto.getUsername());
         }
         if (userRepository.existsByEmail(dto.getEmail())) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "Email already in use");
+            throw new EmailAlreadyInUseException(dto.getEmail());
         }
 
         TrainingGoal tg = trainingGoalRepository.findById(dto.getTraining_goal_id())
-                .orElseThrow(() -> new ResourceNotFoundException("Training goal not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Training goal not found"));
 
         client.setTraining_goal(tg);
 
         Membership m = membershipRepository.findById(dto.getMembership_id())
-                .orElseThrow(() -> new ResourceNotFoundException("Membership not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Membership not found"));
 
         client.setMembership(m);
 

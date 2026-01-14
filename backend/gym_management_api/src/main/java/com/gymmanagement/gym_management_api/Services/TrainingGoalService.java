@@ -34,8 +34,8 @@ public class TrainingGoalService {
 
     //-----POST-----//
 
-    public TrainingGoalDTO addTrainingGoal(TrainingGoalCreateDTO dto){
+    public void addTrainingGoal(TrainingGoalCreateDTO dto){
         TrainingGoal tg = TrainingGoalMapper.toEntity(dto);
-        return TrainingGoalMapper.toDto(tgRepository.save(tg));
+        tgRepository.save(tg);
     }
 }

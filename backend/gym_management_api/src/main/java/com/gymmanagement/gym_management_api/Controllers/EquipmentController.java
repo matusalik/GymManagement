@@ -9,6 +9,7 @@ import com.gymmanagement.gym_management_api.Mappers.EquipmentMapper;
 import com.gymmanagement.gym_management_api.Services.EquipmentService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,8 +28,8 @@ public class EquipmentController {
     }
 
     @GetMapping("/notdetailed")
-    public @ResponseBody Iterable<NotDetailedEquipmentDTO>getNotDetailedEquipment(){
-        return equipmentService.getNotDetailedEquipment();
+    public ResponseEntity<Iterable<NotDetailedEquipmentDTO>>getNotDetailedEquipment(){
+        return ResponseEntity.ok(equipmentService.getNotDetailedEquipment());
     }
 
     @GetMapping("/{id}")
@@ -39,32 +40,22 @@ public class EquipmentController {
     //----POST----//
 
     @PostMapping
-    public EquipmentDTO addEquipment(@RequestBody EquipmentDTO dto){
-        return equipmentService.addEquipment(dto);
+    public ResponseEntity<Void>addEquipment(@RequestBody EquipmentDTO dto){
+        equipmentService.addEquipment(dto);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     //----PATCH----//
 
     @PatchMapping("/condition")
     public ResponseEntity<Void>changeEquipmentCondition(@RequestBody ChangeEquipmentConditionRequestDTO requestDTO){
-        try{
-            equipmentService.changeEquipmentCondition(requestDTO.getCondition(), requestDTO.getEquipment_id());
-        }
-        catch(Exception e){
-            return ResponseEntity.badRequest().build();
-        }
+        equipmentService.changeEquipmentCondition(requestDTO.getCondition(), requestDTO.getEquipment_id());
         return ResponseEntity.ok().build();
     }
 
     @PatchMapping("/location")
     public ResponseEntity<Void>changeEquipmentLocation(@RequestBody ChangeEquipmentLocationDTO requestDTO){
-        try{
-            equipmentService.changeEquipmentLocation(requestDTO.getLocation(), requestDTO.getEquipment_id());
-        }
-        catch(Exception e){
-            return ResponseEntity.badRequest().build();
-        }
+        equipmentService.changeEquipmentLocation(requestDTO.getLocation(), requestDTO.getEquipment_id());
         return ResponseEntity.ok().build();
     }
-
 }

@@ -6,6 +6,7 @@ import com.gymmanagement.gym_management_api.DTO.Reservation.ReservationDTO;
 import com.gymmanagement.gym_management_api.Services.ReservationService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,8 +20,8 @@ public class ReservationController {
     //-----GET-----//
 
     @GetMapping
-    public @ResponseBody Iterable<ReservationDTO>getReservations(){
-        return reservationService.getReservations();
+    public ResponseEntity<Iterable<ReservationDTO>>getReservations(){
+        return ResponseEntity.ok(reservationService.getReservations());
     }
 
     @GetMapping("/{id}")
@@ -28,13 +29,11 @@ public class ReservationController {
         return ResponseEntity.ok(reservationService.getReservationById(id));
     }
 
-    //-----POSt-----//
+    //-----POST-----//
 
     @PostMapping
-    public ReservationDTO addReservation(@RequestBody ReservationCreateDTO dto){
-        return reservationService.addReservation(dto);
+    public ResponseEntity<Void>addReservation(@RequestBody ReservationCreateDTO dto){
+        reservationService.addReservation(dto);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
-
-
-
 }

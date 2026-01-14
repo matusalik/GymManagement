@@ -8,6 +8,8 @@ import com.gymmanagement.gym_management_api.Services.TrainerService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.apache.coyote.Response;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,13 +23,13 @@ public class TrainerController {
     //-----GET-----//
 
     @GetMapping
-    public @ResponseBody Iterable<TrainerDTO>getTrainers(){
-        return trainerService.getTrainers();
+    public ResponseEntity<Iterable<TrainerDTO>>getTrainers(){
+        return ResponseEntity.ok(trainerService.getTrainers());
     }
 
     @GetMapping("/notdetailed")
-    public @ResponseBody Iterable<NotDetailedTrainerDTO>getNotDetailedTrainers(){
-        return trainerService.getNotDetailedTrainers();
+    public ResponseEntity<Iterable<NotDetailedTrainerDTO>>getNotDetailedTrainers(){
+        return ResponseEntity.ok(trainerService.getNotDetailedTrainers());
     }
 
     @GetMapping("/{id}")
@@ -48,7 +50,8 @@ public class TrainerController {
     //----POST----//
 
     @PostMapping
-    public TrainerDTO addTrainer(@RequestBody TrainerCreateDTO dto){
-        return trainerService.addTrainer(dto);
+    public ResponseEntity<Void> addTrainer(@RequestBody TrainerCreateDTO dto){
+        trainerService.addTrainer(dto);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 }

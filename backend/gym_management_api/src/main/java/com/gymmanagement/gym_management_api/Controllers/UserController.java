@@ -33,8 +33,8 @@ public class UserController {
     }
 
     @GetMapping
-    public @ResponseBody Iterable<UserDTO>getUsers(){
-        return userService.getUsers();
+    public ResponseEntity<Iterable<UserDTO>>getUsers(){
+        return ResponseEntity.ok(userService.getUsers());
     }
 
     //----PATCH----//

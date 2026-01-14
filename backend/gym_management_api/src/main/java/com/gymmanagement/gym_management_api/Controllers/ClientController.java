@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.apache.coyote.Response;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -26,8 +27,8 @@ public class ClientController {
     //-----GET------//
 
     @GetMapping
-    public @ResponseBody Iterable<ClientDTO> getClients() {
-        return clientService.getClients();
+    public ResponseEntity<Iterable<ClientDTO>>getClients() {
+        return ResponseEntity.ok(clientService.getClients());
     }
 
     @GetMapping("/{id}")
@@ -67,8 +68,9 @@ public class ClientController {
     //-----POST-----//
 
     @PostMapping
-    public ClientDTO addClient(@RequestBody ClientCreateDTO dto) {
-        return clientService.addClient(dto);
+    public ResponseEntity<Void>addClient(@RequestBody ClientCreateDTO dto) {
+        clientService.addClient(dto);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     //----PATCH----//

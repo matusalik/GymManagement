@@ -67,7 +67,7 @@ public class GroupClassService {
 
     //----POST----//
 
-    public GroupClassDTO addGroupClass(GroupClassCreateDTO dto){
+    public void addGroupClass(GroupClassCreateDTO dto){
         Integer trainer_id = dto.getTrainer_id();
         Trainer trainer = trainerRepository.findById(trainer_id)
                 .orElseThrow(() -> new EntityNotFoundException("Trainer with id: " + trainer_id + " not found."));
@@ -75,7 +75,7 @@ public class GroupClassService {
         List<Client> clients = clientRepository.findAllById(dto.getClients_ids());
 
         GroupClass groupClass = GroupClassMapper.toEntity(dto, trainer, clients);
-        return GroupClassMapper.toDto(groupClassRepository.save(groupClass));
+        groupClassRepository.save(groupClass);
     }
 
     public void addClientToGroupClass(Integer group_class_id, Integer client_id){

@@ -31,6 +31,6 @@ public class AuthController {
     @PatchMapping("change_password")
     public ResponseEntity<Void>changePassword(@RequestBody ChangePasswordRequestDTO requestDTO){
         authService.changePassword(requestDTO);
-        return ResponseEntity.status(HttpStatus.ACCEPTED).build();
+        return ResponseEntity.ok().build();
     }
 }

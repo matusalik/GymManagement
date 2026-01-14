@@ -24,8 +24,8 @@ public class ReceptionistService {
 
     //-----POST-----//
 
-    public ReceptionistDTO addReceptionist(ReceptionistCreateDTO dto){
+    public void addReceptionist(ReceptionistCreateDTO dto){
         Receptionist receptionist = ReceptionistMapper.toEntity(dto);
-        return ReceptionistMapper.toDto(receptionistRepository.save(receptionist));
+        receptionistRepository.save(receptionist);
     }
 }

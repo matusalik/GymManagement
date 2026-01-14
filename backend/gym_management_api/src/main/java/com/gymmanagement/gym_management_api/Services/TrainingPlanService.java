@@ -43,12 +43,12 @@ public class TrainingPlanService {
 
     //----POST----//
 
-    public TrainingPlanDTO addTrainingPlan(TrainingPlanCreateDTO dto){
+    public void addTrainingPlan(TrainingPlanCreateDTO dto){
         Integer tgId = dto.getTraining_goal_id();
         TrainingGoal tg = tgRepository.findById(tgId)
                 .orElseThrow(() -> new EntityNotFoundException("TrainingGoal with id: " + tgId + " not found."));
         List<Exercise> exercises = exerciseRepository.findAllById(dto.getExercises_ids());
         TrainingPlan tp = TrainingPlanMapper.toEntity(dto, tg, exercises);
-        return TrainingPlanMapper.toDto(tpRepository.save(tp));
+        tpRepository.save(tp);
     }
 }

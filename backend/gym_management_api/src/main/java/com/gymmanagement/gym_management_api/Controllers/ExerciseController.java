@@ -6,6 +6,7 @@ import com.gymmanagement.gym_management_api.DTO.Exercise.ExerciseDTO;
 import com.gymmanagement.gym_management_api.Services.ExerciseService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,8 +20,8 @@ public class ExerciseController {
     //-----GET-----//
 
     @GetMapping
-    public @ResponseBody Iterable<ExerciseDTO>getExercises(){
-        return exerciseService.getExercises();
+    public ResponseEntity<Iterable<ExerciseDTO>>getExercises(){
+        return ResponseEntity.ok(exerciseService.getExercises());
     }
 
     @GetMapping("/{id}")
@@ -31,7 +32,8 @@ public class ExerciseController {
     //-----POST-----//
 
     @PostMapping
-    public ExerciseDTO addExercise(@RequestBody ExerciseCreateDTO dto){
-        return exerciseService.addExercise(dto);
+    public ResponseEntity<Void>addExercise(@RequestBody ExerciseCreateDTO dto){
+        exerciseService.addExercise(dto);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 }

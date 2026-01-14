@@ -7,6 +7,8 @@ import com.gymmanagement.gym_management_api.Mappers.SpecializationMapper;
 import com.gymmanagement.gym_management_api.Repositories.SpecializationRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -32,8 +34,8 @@ public class SpecializationService {
 
     //-----POST-----//
 
-    public SpecializationDTO addSpecialization(SpecializationDTO dto){
+    public void addSpecialization(SpecializationDTO dto){
         Specialization specialization = SpecializationMapper.toEntity(dto);
-        return SpecializationMapper.toDto(specializationRepository.save(specialization));
+        specializationRepository.save(specialization);
     }
 }

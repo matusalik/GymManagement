@@ -8,6 +8,7 @@ import com.gymmanagement.gym_management_api.Services.ReviewService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.apache.coyote.Response;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,18 +22,18 @@ public class ReviewController {
     //-----GET-----//
 
     @GetMapping
-    public @ResponseBody Iterable<ReviewDTO>getReviews(){
-        return reviewService.getReviews();
+    public ResponseEntity<Iterable<ReviewDTO>>getReviews(){
+        return ResponseEntity.ok(reviewService.getReviews());
     }
 
     @GetMapping("/recent")
-    public @ResponseBody Iterable<NotDetailedReviewDTO>getRecentNotDetailedReviews(){
-        return reviewService.getRecentNotDetailedReviews();
+    public ResponseEntity<Iterable<NotDetailedReviewDTO>>getRecentNotDetailedReviews(){
+        return ResponseEntity.ok(reviewService.getRecentNotDetailedReviews());
     }
 
     @GetMapping("/notdetailed")
-    public @ResponseBody Iterable<NotDetailedReviewDTO>getNotDetailedReviews(){
-        return reviewService.getNotDetailedReviews();
+    public ResponseEntity<Iterable<NotDetailedReviewDTO>>getNotDetailedReviews(){
+        return ResponseEntity.ok(reviewService.getNotDetailedReviews());
     }
 
     @GetMapping("/{id}")
@@ -51,15 +52,16 @@ public class ReviewController {
     }
 
     @GetMapping("/getByTrainer/{trainer_id}")
-    public @ResponseBody Iterable<NotDetailedReviewDTO>getNotDetailedReviewsByTrainerId(@PathVariable Integer trainer_id){
-        return reviewService.getNotDetailedReviewsByTrainerId(trainer_id);
+    public ResponseEntity<Iterable<NotDetailedReviewDTO>>getNotDetailedReviewsByTrainerId(@PathVariable Integer trainer_id){
+        return ResponseEntity.ok(reviewService.getNotDetailedReviewsByTrainerId(trainer_id));
     }
 
 
     //----POST----//
 
     @PostMapping
-    public ReviewDTO addReview(@RequestBody ReviewCreateDTO dto){
-        return reviewService.addReview(dto);
+    public ResponseEntity<Void>addReview(@RequestBody ReviewCreateDTO dto){
+        reviewService.addReview(dto);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 }

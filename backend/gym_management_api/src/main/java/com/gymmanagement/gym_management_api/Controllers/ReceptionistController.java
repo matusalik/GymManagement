@@ -6,6 +6,7 @@ import com.gymmanagement.gym_management_api.DTO.Receptionist.ReceptionistDTO;
 import com.gymmanagement.gym_management_api.Services.ReceptionistService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,7 +28,8 @@ public class ReceptionistController {
     //-----POST-----//
 
     @PostMapping
-    public ReceptionistDTO addReceptionist(@RequestBody ReceptionistCreateDTO dto){
-        return receptionistService.addReceptionist(dto);
+    public ResponseEntity<Void> addReceptionist(@RequestBody ReceptionistCreateDTO dto){
+        receptionistService.addReceptionist(dto);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 }

@@ -48,7 +48,7 @@ public class TrainerService {
 
     //------POST-----//
 
-    public TrainerDTO addTrainer(TrainerCreateDTO dto){
+    public void addTrainer(TrainerCreateDTO dto){
         Trainer trainer = TrainerMapper.toEntityWithoutRelations(dto);
 
         List<Specialization> s = new ArrayList<>();
@@ -57,6 +57,6 @@ public class TrainerService {
         List<TrainerAvailability> a = new ArrayList<>();
         trainer.setAvailability(a);
 
-        return TrainerMapper.toDto(trainerRepository.save(trainer));
+        trainerRepository.save(trainer);
     }
 }

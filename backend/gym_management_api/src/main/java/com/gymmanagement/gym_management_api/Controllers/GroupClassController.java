@@ -9,6 +9,7 @@ import com.gymmanagement.gym_management_api.Services.GroupClassService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.apache.coyote.Response;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,13 +23,13 @@ public class GroupClassController {
     //----GET----//
 
     @GetMapping
-    public @ResponseBody Iterable<GroupClassDTO>getGroupClasses(){
-        return groupClassService.getGroupClasses();
+    public ResponseEntity<Iterable<GroupClassDTO>>getGroupClasses(){
+        return ResponseEntity.ok(groupClassService.getGroupClasses());
     }
 
     @GetMapping("/notdetailed")
-    public @ResponseBody Iterable<NotDetailedGroupClassDTO>getNotDetailedGroupClasses(){
-        return groupClassService.getNotDetailedGroupClasses();
+    public ResponseEntity<Iterable<NotDetailedGroupClassDTO>>getNotDetailedGroupClasses(){
+        return ResponseEntity.ok(groupClassService.getNotDetailedGroupClasses());
     }
 
     @GetMapping("/{id}")
@@ -47,35 +48,36 @@ public class GroupClassController {
     }
 
     @GetMapping("/notdetailed/{trainer_id}")
-    public @ResponseBody Iterable<NotDetailedGroupClassDTO>getNotDetailedGroupClassesByTrainerId(@PathVariable Integer trainer_id){
-        return groupClassService.getNotDetailedGroupClassesByTrainerId(trainer_id);
+    public ResponseEntity<Iterable<NotDetailedGroupClassDTO>>getNotDetailedGroupClassesByTrainerId(@PathVariable Integer trainer_id){
+        return ResponseEntity.ok(groupClassService.getNotDetailedGroupClassesByTrainerId(trainer_id));
     }
 
     @GetMapping("/notdetailed_by_client/{client_id}")
-    public @ResponseBody Iterable<NotDetailedGroupClassDTO>getNotDetailedGroupClassesByClientId(@PathVariable Integer client_id){
-        return groupClassService.getNotDetailedGroupClassesByClientId(client_id);
+    public ResponseEntity<Iterable<NotDetailedGroupClassDTO>>getNotDetailedGroupClassesByClientId(@PathVariable Integer client_id){
+        return ResponseEntity.ok(groupClassService.getNotDetailedGroupClassesByClientId(client_id));
     }
 
     @GetMapping("/notdetailed_future_by_client/{client_id}")
-    public @ResponseBody Iterable<NotDetailedGroupClassDTO>getFutureNotDetailedGroupClassesByClientId(@PathVariable Integer client_id){
-        return groupClassService.getFutureNotDetailedGroupClassesByClientId(client_id);
+    public ResponseEntity<Iterable<NotDetailedGroupClassDTO>>getFutureNotDetailedGroupClassesByClientId(@PathVariable Integer client_id){
+        return ResponseEntity.ok(groupClassService.getFutureNotDetailedGroupClassesByClientId(client_id));
     }
 
     @GetMapping("available/{client_id}")
-    public @ResponseBody Iterable<NameDateGroupClassDTO>getAvailableToSignUp(@PathVariable Integer client_id){
-        return groupClassService.getAvailableToSignUp(client_id);
+    public ResponseEntity<Iterable<NameDateGroupClassDTO>>getAvailableToSignUp(@PathVariable Integer client_id){
+        return ResponseEntity.ok(groupClassService.getAvailableToSignUp(client_id));
     }
 
     //----POST----//
 
     @PostMapping
-    public GroupClassDTO addGroupClass(@RequestBody GroupClassCreateDTO dto){
-        return groupClassService.addGroupClass(dto);
+    public ResponseEntity<Void>addGroupClass(@RequestBody GroupClassCreateDTO dto){
+        groupClassService.addGroupClass(dto);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PostMapping("/{group_class_id}/{client_id}")
     public ResponseEntity<Void>addClientToGroupClass(@PathVariable Integer group_class_id, @PathVariable Integer client_id){
         groupClassService.addClientToGroupClass(group_class_id, client_id);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 }

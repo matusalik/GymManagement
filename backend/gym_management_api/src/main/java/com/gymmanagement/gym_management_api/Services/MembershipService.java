@@ -30,8 +30,8 @@ public class MembershipService {
 
     //-----POST-----//
 
-    public MembershipDTO addMembership(MembershipCreateDTO dto){
+    public void addMembership(MembershipCreateDTO dto){
         Membership membership = MembershipMapper.toEntity(dto);
-        return MembershipMapper.toDto(membershipRepository.save(membership));
+        membershipRepository.save(membership);
     }
 }

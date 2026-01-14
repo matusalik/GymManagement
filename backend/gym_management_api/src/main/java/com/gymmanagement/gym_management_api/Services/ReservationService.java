@@ -32,7 +32,7 @@ public class ReservationService {
 
     //-----POST-----//
 
-    public ReservationDTO addReservation(ReservationCreateDTO dto){
+    public void addReservation(ReservationCreateDTO dto){
         Integer client_id = dto.getClient_id();
 
         Client client = clientRepository.findById(client_id)
@@ -54,7 +54,7 @@ public class ReservationService {
                 .orElseThrow(() -> new EntityNotFoundException("Trainer with id: " + trainer_id + " not found."));
 
         Reservation reservation = ReservationMapper.toEntity(dto, client, equipment, group_class, trainer);
-        return ReservationMapper.toDto(reservationRepository.save(reservation));
+        reservationRepository.save(reservation);
     }
 }
 

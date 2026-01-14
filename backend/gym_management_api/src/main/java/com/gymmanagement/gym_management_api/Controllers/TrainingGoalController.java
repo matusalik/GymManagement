@@ -7,6 +7,7 @@ import com.gymmanagement.gym_management_api.DTO.TrainingGoal.TrainingGoalDTO;
 import com.gymmanagement.gym_management_api.Services.TrainingGoalService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,13 +21,13 @@ public class TrainingGoalController {
     //------GET------//
 
     @GetMapping
-    public @ResponseBody Iterable<TrainingGoalDTO>getTrainingGoals(){
-        return tgService.getTrainingGoals();
+    public ResponseEntity<Iterable<TrainingGoalDTO>>getTrainingGoals(){
+        return ResponseEntity.ok(tgService.getTrainingGoals());
     }
 
     @GetMapping("/notdetailed")
-    public @ResponseBody Iterable<NotDetailedTrainingGoalDTO>getNotDetailedTrainingGoals(){
-        return tgService.getNotDetailedTrainingGoals();
+    public ResponseEntity<Iterable<NotDetailedTrainingGoalDTO>>getNotDetailedTrainingGoals(){
+        return ResponseEntity.ok(tgService.getNotDetailedTrainingGoals());
     }
 
     @GetMapping("/{id}")
@@ -37,7 +38,8 @@ public class TrainingGoalController {
     //-----POST-----//
 
     @PostMapping
-    public TrainingGoalDTO addTrainingGoal(@RequestBody TrainingGoalCreateDTO dto){
-        return tgService.addTrainingGoal(dto);
+    public ResponseEntity<Void> addTrainingGoal(@RequestBody TrainingGoalCreateDTO dto){
+        tgService.addTrainingGoal(dto);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 }

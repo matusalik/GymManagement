@@ -7,6 +7,7 @@ import com.gymmanagement.gym_management_api.Services.MembershipService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.apache.coyote.Response;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -21,8 +22,8 @@ public class MembershipController {
     //------GET------//
 
     @GetMapping
-    public @ResponseBody Iterable<MembershipDTO>getMemberships(){
-        return membershipService.getMemberships();
+    public ResponseEntity<Iterable<MembershipDTO>>getMemberships(){
+        return ResponseEntity.ok(membershipService.getMemberships());
     }
 
     @GetMapping("/{id}")
@@ -33,7 +34,8 @@ public class MembershipController {
     //------POST------//
 
     @PostMapping
-    public MembershipDTO addMembership(@RequestBody MembershipCreateDTO dto){
-        return membershipService.addMembership(dto);
+    public ResponseEntity<Void>addMembership(@RequestBody MembershipCreateDTO dto){
+        membershipService.addMembership(dto);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 }
