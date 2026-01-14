@@ -1,5 +1,6 @@
 package com.gymmanagement.gym_management_api.Controllers;
 
+import com.gymmanagement.gym_management_api.Common.RoleClaims;
 import com.gymmanagement.gym_management_api.Common.Tags;
 import com.gymmanagement.gym_management_api.DTO.Review.NotDetailedReviewDTO;
 import com.gymmanagement.gym_management_api.DTO.Review.ReviewCreateDTO;
@@ -10,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
@@ -21,36 +23,43 @@ public class ReviewController {
 
     //-----GET-----//
 
+    @PreAuthorize(RoleClaims.ReceptionistClaim)
     @GetMapping
     public ResponseEntity<Iterable<ReviewDTO>>getReviews(){
         return ResponseEntity.ok(reviewService.getReviews());
     }
 
+    @PreAuthorize(RoleClaims.ReceptionistClaim)
     @GetMapping("/recent")
     public ResponseEntity<Iterable<NotDetailedReviewDTO>>getRecentNotDetailedReviews(){
         return ResponseEntity.ok(reviewService.getRecentNotDetailedReviews());
     }
 
+    @PreAuthorize(RoleClaims.ReceptionistClaim)
     @GetMapping("/notdetailed")
     public ResponseEntity<Iterable<NotDetailedReviewDTO>>getNotDetailedReviews(){
         return ResponseEntity.ok(reviewService.getNotDetailedReviews());
     }
 
+    @PreAuthorize(RoleClaims.ReceptionistClaim)
     @GetMapping("/{id}")
     public ResponseEntity<ReviewDTO>getReviewById(@PathVariable Integer id){
         return ResponseEntity.ok(reviewService.getReviewById(id));
     }
 
+    @PreAuthorize(RoleClaims.ReceptionistTrainerClaim)
     @GetMapping("/countByTrainer/{trainer_id}")
     public ResponseEntity<Long>getReviewCountByTrainerId(@PathVariable Integer trainer_id){
         return ResponseEntity.ok(reviewService.getReviewCountByTrainerId(trainer_id));
     }
 
+    @PreAuthorize(RoleClaims.ReceptionistTrainerClaim)
     @GetMapping("/averageByTrainer/{trainer_id}")
     public ResponseEntity<Double>getAverageRatingByTrainerId(@PathVariable Integer trainer_id){
         return ResponseEntity.ok(reviewService.getAverageRatingByTrainerId(trainer_id));
     }
 
+    @PreAuthorize(RoleClaims.ReceptionistTrainerClaim)
     @GetMapping("/getByTrainer/{trainer_id}")
     public ResponseEntity<Iterable<NotDetailedReviewDTO>>getNotDetailedReviewsByTrainerId(@PathVariable Integer trainer_id){
         return ResponseEntity.ok(reviewService.getNotDetailedReviewsByTrainerId(trainer_id));
@@ -59,6 +68,7 @@ public class ReviewController {
 
     //----POST----//
 
+    @PreAuthorize(RoleClaims.ClientClaim)
     @PostMapping
     public ResponseEntity<Void>addReview(@RequestBody ReviewCreateDTO dto){
         reviewService.addReview(dto);

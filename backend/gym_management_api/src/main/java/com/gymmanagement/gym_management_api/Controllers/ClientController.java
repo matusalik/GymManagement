@@ -1,5 +1,6 @@
 package com.gymmanagement.gym_management_api.Controllers;
 
+import com.gymmanagement.gym_management_api.Common.RoleClaims;
 import com.gymmanagement.gym_management_api.Common.Tags;
 import com.gymmanagement.gym_management_api.DTO.Client.ChangeStatusRequest;
 import com.gymmanagement.gym_management_api.DTO.Client.ClientCreateDTO;
@@ -26,40 +27,47 @@ public class ClientController {
 
     //-----GET------//
 
+    @PreAuthorize(RoleClaims.ReceptionistClaim)
     @GetMapping
     public ResponseEntity<Iterable<ClientDTO>>getClients() {
         return ResponseEntity.ok(clientService.getClients());
     }
 
+    @PreAuthorize(RoleClaims.ReceptionistClaim)
     @GetMapping("/{id}")
     public ResponseEntity<ClientDetailedDTO> getClientById(@PathVariable Integer id) {
         ClientDetailedDTO clientDto = clientService.getClientById(id);
         return ResponseEntity.ok(clientDto);
     }
 
+    @PreAuthorize(RoleClaims.ReceptionistClientClaim)
     @GetMapping("/status/{id}")
     public ResponseEntity<String> getClientStatus(@PathVariable Integer id) {
         String status = clientService.getClientStatus(id);
         return ResponseEntity.ok(status);
     }
 
+    @PreAuthorize(RoleClaims.ReceptionistClientClaim)
     @GetMapping("/membership_name/{id}")
     public ResponseEntity<String> getClientMembershipName(@PathVariable Integer id) {
         String status = clientService.getClientMembershipName(id);
         return ResponseEntity.ok(status);
     }
 
+    @PreAuthorize(RoleClaims.ReceptionistClientClaim)
     @GetMapping("/training_goal_name/{id}")
     public ResponseEntity<String>getClientTrainingGoalName(@PathVariable Integer id){
         String training_goal = clientService.getClientTrainingGoalName(id);
         return ResponseEntity.ok(training_goal);
     }
 
+    @PreAuthorize(RoleClaims.ReceptionistClaim)
     @GetMapping("/count")
     public ResponseEntity<Long>getClientCount(){
         return ResponseEntity.ok(clientService.getClientCount());
     }
 
+    @PreAuthorize(RoleClaims.ReceptionistClaim)
     @GetMapping("/revenue")
     public ResponseEntity<Double>getClientRevenue(){
         return ResponseEntity.ok(clientService.getClientRevenue());
@@ -67,6 +75,7 @@ public class ClientController {
 
     //-----POST-----//
 
+    @PreAuthorize(RoleClaims.ReceptionistClaim)
     @PostMapping
     public ResponseEntity<Void>addClient(@RequestBody ClientCreateDTO dto) {
         clientService.addClient(dto);
@@ -75,12 +84,14 @@ public class ClientController {
 
     //----PATCH----//
 
+    @PreAuthorize(RoleClaims.ReceptionistClientClaim)
     @PatchMapping("/training_goal/{client_id}/{training_goal_id}")
     public ResponseEntity<Void>changeTrainingGoal(@PathVariable Integer client_id, @PathVariable Integer training_goal_id){
         clientService.changeTrainingGoal(client_id, training_goal_id);
         return ResponseEntity.ok().build();
     }
 
+    @PreAuthorize(RoleClaims.ReceptionistClaim)
     @PatchMapping("/status")
     public ResponseEntity<Void>changeStatus(@RequestBody ChangeStatusRequest request){
         clientService.changeStatus(request);
@@ -89,6 +100,7 @@ public class ClientController {
 
     //----DELETE----//
 
+    @PreAuthorize(RoleClaims.ReceptionistClaim)
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteClient(@PathVariable Integer id) {
         clientService.deleteClient(id);

@@ -1,5 +1,6 @@
 package com.gymmanagement.gym_management_api.Controllers;
 
+import com.gymmanagement.gym_management_api.Common.RoleClaims;
 import com.gymmanagement.gym_management_api.Common.Tags;
 import com.gymmanagement.gym_management_api.DTO.Exercise.ExerciseCreateDTO;
 import com.gymmanagement.gym_management_api.DTO.Exercise.ExerciseDTO;
@@ -8,6 +9,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
@@ -19,11 +21,13 @@ public class ExerciseController {
 
     //-----GET-----//
 
+    @PreAuthorize(RoleClaims.ReceptionistTrainerClaim)
     @GetMapping
     public ResponseEntity<Iterable<ExerciseDTO>>getExercises(){
         return ResponseEntity.ok(exerciseService.getExercises());
     }
 
+    @PreAuthorize(RoleClaims.ReceptionistClaim)
     @GetMapping("/{id}")
     public ResponseEntity<ExerciseDTO>getExerciseById(@PathVariable Integer id){
         return ResponseEntity.ok(exerciseService.getExerciseById(id));
@@ -31,6 +35,7 @@ public class ExerciseController {
 
     //-----POST-----//
 
+    @PreAuthorize(RoleClaims.ReceptionistClaim)
     @PostMapping
     public ResponseEntity<Void>addExercise(@RequestBody ExerciseCreateDTO dto){
         exerciseService.addExercise(dto);

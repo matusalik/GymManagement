@@ -1,5 +1,6 @@
 package com.gymmanagement.gym_management_api.Controllers;
 
+import com.gymmanagement.gym_management_api.Common.RoleClaims;
 import com.gymmanagement.gym_management_api.Common.Tags;
 import com.gymmanagement.gym_management_api.DTO.Membership.MembershipCreateDTO;
 import com.gymmanagement.gym_management_api.DTO.Membership.MembershipDTO;
@@ -21,11 +22,13 @@ public class MembershipController {
 
     //------GET------//
 
+    @PreAuthorize(RoleClaims.ReceptionistClaim)
     @GetMapping
     public ResponseEntity<Iterable<MembershipDTO>>getMemberships(){
         return ResponseEntity.ok(membershipService.getMemberships());
     }
 
+    @PreAuthorize(RoleClaims.ReceptionistClaim)
     @GetMapping("/{id}")
     public ResponseEntity<MembershipDTO>getMembershipById(@PathVariable Integer id){
         return ResponseEntity.ok(membershipService.getMembershipById(id));
@@ -33,6 +36,7 @@ public class MembershipController {
 
     //------POST------//
 
+    @PreAuthorize(RoleClaims.ReceptionistClaim)
     @PostMapping
     public ResponseEntity<Void>addMembership(@RequestBody MembershipCreateDTO dto){
         membershipService.addMembership(dto);
