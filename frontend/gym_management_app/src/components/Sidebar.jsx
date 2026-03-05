@@ -13,7 +13,7 @@ export default function Sidebar({ menuItems }) {
   return (
     <aside className="w-64 bg-sidebar text-sidebar-foreground border-r border-sidebar-border min-h-screen flex flex-col">
       <div className="p-6 border-b border-sidebar-border">
-        <h1 className="text-2xl font-bold text-sidebar-primary">GymFlow</h1>
+        <h1 className="text-2xl font-bold text-sidebar-primary">GymMer</h1>
         <p className="text-sm text-sidebar-foreground/70 mt-1">{userRole}</p>
       </div>
 
